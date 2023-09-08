@@ -4,6 +4,7 @@ using namespace std;
 // Arrays
 // Continious blocks of memory
 // one of basic data structures of a particular datatype 
+// Arrays are by default pass by reference
 
 // static array - predefined array size ex int a[100]
 // methods -
