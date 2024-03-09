@@ -186,6 +186,26 @@ int ArrayPracticeL1() {
 
   cout << "Max Value is " << max_value << endl;
 
+  // reverse array 
+  // algo 
+  // use 2 pointers left as 0th index index and right as n-1 index
+  // while left is less than right swap left and right, increment left and decrement right
+  // if left < right exit
+  int left = 0;
+  int right = size - 1;
+
+  while (left < right) {
+    int temp = numArr[left];
+    numArr[left] = numArr[right];
+    numArr[right] = temp;
+    left++;
+    right--;
+  }
+
+  for(int i=0;i<size;i++) {
+    cout << numArr[i] << " ";
+  }
+  cout << endl;
 
   return 0;
 }
@@ -194,6 +214,6 @@ int main() {
   // Basic();
   // Loops();
   // ArraysL1();
-  ArrayPracticeL1();
+  // ArrayPracticeL1();
   return 0;
 }
