@@ -1,6 +1,11 @@
+#include <cmath>
 #include <iostream>
+#include <limits.h>
 using namespace std;
 
+// sizeof returns size of in bytes
+// to get the exact size of the array divide the value received from sizeof with
+// sizeof array's datatype
 int Loops() {
   int num = 700;
 
@@ -102,7 +107,7 @@ int Basic() {
   return 0;
 }
 
-int Arrays() {
+int ArraysL1() {
   int a[7] = {0, 1, 2, 3, 4, 5, 6}; // static array
   int arr[101];
   int ch[101];
@@ -123,7 +128,7 @@ int Arrays() {
     cout << "Char entered at index " << i << " is: " << cha[i] << endl;
   }
 
-  cout << "Size of array is " << sizeof(cha) << endl;
+  cout << "Size of array is " << sizeof(cha) / sizeof(cha[0]) << endl;
 
   // explicit array init with empty values
   int some[5] = {1, 2, 3};
@@ -132,35 +137,63 @@ int Arrays() {
   cout << "enter value for array" << endl;
   cin >> some[3];
   some[4] = 2;
-  for (int i = 0; i < sizeof(some); i++) {
+  for (int i = 0; i < (sizeof(some) / sizeof(some[0])); i++) {
     cout << some[i] << endl;
   }
 
-  // linear search 
+  // linear search
   bool flag = false;
-  int ar[5] = {1,3,5,7,8};
+  int ar[5] = {1, 3, 5, 7, 8};
 
-  for(int i=0; i < sizeof(ar); i++) {
-    if(ar[i] == 7) {
+  for (int i = 0; i < (sizeof(ar) / sizeof(ar[0])); i++) {
+    if (ar[i] == 7) {
       flag = true;
       break;
     }
   }
 
-  if(flag == 1) {
+  if (flag == 1) {
     cout << "target found" << endl;
   } else {
     cout << "target not found" << endl;
   }
 
+  return 0;
+}
+
+int ArrayPracticeL1() {
+  // minimum number in an array
+  int numArr[4] = {10, 1100, 2, 100};
+  int size = sizeof(numArr) / sizeof(numArr[0]);
+  int minValue = INT_MAX;
+
+  for (int i = 0; i < size; i++) {
+    if (numArr[i] < minValue) {
+      minValue = numArr[i];
+    }
+  }
+
+  cout << "Min Value is " << minValue << endl;
+
+  // maximum number in an array 
+  int max_value = INT_MIN;
+
+  for(int i=0; i < size; i++) {
+    if(numArr[i] > max_value) {
+      max_value = numArr[i];
+    }
+  }
+
+  cout << "Max Value is " << max_value << endl;
 
 
   return 0;
 }
 
 int main() {
-  //   Basic();
-  //   Loops();
-  Arrays();
+  // Basic();
+  // Loops();
+  // ArraysL1();
+  ArrayPracticeL1();
   return 0;
 }
