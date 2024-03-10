@@ -175,22 +175,22 @@ int ArrayPracticeL1() {
 
   cout << "Min Value is " << minValue << endl;
 
-  // maximum number in an array 
+  // maximum number in an array
   int max_value = INT_MIN;
 
-  for(int i=0; i < size; i++) {
-    if(numArr[i] > max_value) {
+  for (int i = 0; i < size; i++) {
+    if (numArr[i] > max_value) {
       max_value = numArr[i];
     }
   }
 
   cout << "Max Value is " << max_value << endl;
 
-  // reverse array 
-  // algo 
+  // reverse array
+  // algo
   // use 2 pointers left as 0th index index and right as n-1 index
-  // while left is less than right swap left and right, increment left and decrement right
-  // if left < right exit
+  // while left is less than right swap left and right, increment left and
+  // decrement right if left < right exit
   int left = 0;
   int right = size - 1;
 
@@ -202,10 +202,111 @@ int ArrayPracticeL1() {
     right--;
   }
 
-  for(int i=0;i<size;i++) {
+  for (int i = 0; i < size; i++) {
     cout << numArr[i] << " ";
   }
   cout << endl;
+
+  return 0;
+}
+
+void changeValue(int arr[]) { arr[2] = 101; }
+
+void printArray(int arr[], int size) {
+  cout << size << endl;
+  cout << "Array elements are: ";
+  for (int i = 0; i < size; i++) {
+    cout << arr[i] << " ";
+  }
+  cout << endl;
+}
+
+int getUniqueElementFromArray(int arr[], int size) {
+  int ans = 0;
+  for (int i = 0; i < size; i++) {
+    ans = ans ^ arr[i];
+  }
+  return ans;
+}
+
+void printDoublePairs(int arr[], int size) {
+  for (int i = 0; i < size; i++) {
+    for (int j = 0; j < size; j++) {
+      cout << arr[i] << ", " << arr[j] << endl;
+    }
+  }
+}
+void printTripletPairs(int arr[], int size) {
+  for (int i = 0; i < size; i++) {
+    for (int j = 0; j < size; j++) {
+      for (int k = 0; k < size; k++) {
+        cout << arr[i] << ", " << arr[j] << ", " << arr[k] << endl;
+      }
+    }
+  }
+}
+
+void sortZerosAndOnes(int arr[], int size) {
+  int zeroCount = 0;
+  int onesCount = 0;
+
+  for (int i = 0; i < size; i++) {
+    if (arr[i] == 0) {
+      zeroCount++;
+    }
+
+    if (arr[i] == 1) {
+      onesCount++;
+    }
+  }
+
+  int i = 0;
+  for (i = 0; i < zeroCount; i++) {
+    arr[i] = 0;
+  }
+  for (int j = i; j < onesCount; j++) {
+    arr[j] = 1;
+  }
+}
+
+void ShiftArray(int arr[], int size) {
+  int temp = arr[size-1];
+  // right shift 
+  for(int i=0; i < size; i++) {
+    arr[i] = arr[i-1];
+  }
+  arr[0] = temp;
+  // Left shift 
+}
+
+int ArrayL2() {
+  int a[4] = {0, 1, 2, 3};
+  int size = sizeof(a) / sizeof(a[0]);
+  changeValue(a);
+  printArray(a, size);
+
+  // unique elem
+  int b[] = {1, 1, 3, 4, 3, 4, 10, 8, 10};
+  int sizeb = sizeof(b) / sizeof(b[0]);
+  int ans = getUniqueElementFromArray(b, sizeb);
+  cout << "Unique element is: " << ans << endl;
+
+  // triplets pair print
+  int c[] = {10, 20, 30};
+  int sizec = sizeof(c) / sizeof(c[0]);
+  printDoublePairs(c, sizec);
+  printTripletPairs(c, sizec);
+
+  // separate out 0's and 1's in asc order
+  int arr[] = {0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0};
+  int arrSize = sizeof(arr) / sizeof(arr[0]);
+  sortZerosAndOnes(arr, arrSize);
+  printArray(arr, arrSize);
+
+  // Shift Array
+  int arrb[] = {10, 20, 30, 40, 50, 60};
+  int arrbSize = sizeof(arrb) / sizeof(arrb[0]);
+
 
   return 0;
 }
@@ -215,5 +316,6 @@ int main() {
   // Loops();
   // ArraysL1();
   // ArrayPracticeL1();
+  ArrayL2();
   return 0;
 }
