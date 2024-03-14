@@ -269,14 +269,21 @@ void sortZerosAndOnes(int arr[], int size) {
   }
 }
 
-void ShiftArray(int arr[], int size) {
+void RightShiftArray(int arr[], int size) {
   int temp = arr[size-1];
   // right shift 
-  for(int i=0; i < size; i++) {
+  for(int i=size-1; i >= 1; i--) {
     arr[i] = arr[i-1];
   }
   arr[0] = temp;
-  // Left shift 
+}
+
+void LeftShiftArray(int arr[], int size) {
+  int temp = arr[0];
+  for(int i=0; i<= size-1; i++) {
+    arr[i] = arr[i+1];
+  }
+  arr[size-1] = temp;
 }
 
 int ArrayL2() {
@@ -303,10 +310,15 @@ int ArrayL2() {
   sortZerosAndOnes(arr, arrSize);
   printArray(arr, arrSize);
 
-  // Shift Array
+  // right Shift Array
   int arrb[] = {10, 20, 30, 40, 50, 60};
   int arrbSize = sizeof(arrb) / sizeof(arrb[0]);
+  RightShiftArray(arrb, arrbSize);
+  printArray(arrb, arrbSize);
 
+  // left shift array
+  LeftShiftArray(arrb, arrbSize);
+  printArray(arrb, arrbSize);
 
   return 0;
 }
