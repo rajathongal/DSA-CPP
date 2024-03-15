@@ -323,11 +323,45 @@ int ArrayL2() {
   return 0;
 }
 
+int decimalToBinaryByDivisionMethod(int decimalNumber) {
+  int i=0;
+  int binaryNumber = 0;
+  while(decimalNumber > 0) {
+    cout << "i before " << i << endl;
+    cout << "binaryNumber before " << binaryNumber << endl;
+
+    int remainderOrBit = decimalNumber % 2;
+    binaryNumber = remainderOrBit * pow(10, i++) + binaryNumber;
+    cout << "i after " << i << endl;
+    cout << "binaryNumber after " << binaryNumber << endl;
+
+    decimalNumber = decimalNumber / 2;
+  }
+  return binaryNumber;
+}
+
+int NumberSystem() {
+  // we will be using cmath lib to get pow(powertothe) functionality 
+  int n;
+  int binaryNumber;
+
+  cout << "Enter a Decimal Number" << endl;
+  cin >> n;
+
+  // decimal to binary conversion by division method
+  binaryNumber = decimalToBinaryByDivisionMethod(n);
+
+  cout << "Decimal to Binary Conversion of " << n << " by division method is " << binaryNumber << endl << endl;
+
+  return 0;
+}
+
 int main() {
   // Basic();
   // Loops();
   // ArraysL1();
   // ArrayPracticeL1();
-  ArrayL2();
+  // ArrayL2();
+  NumberSystem();
   return 0;
 }
