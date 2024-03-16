@@ -340,6 +340,31 @@ int decimalToBinaryByDivisionMethod(int decimalNumber) {
   return binaryNumber;
 }
 
+int decimalToBinaryUsingBitwise(int decimalNumber) {
+  int binaryNumber = 0;
+  int i=0;
+  while(decimalNumber > 0) {
+    int remainderBit = (decimalNumber & 1);
+    binaryNumber = remainderBit * pow(10, i++) + binaryNumber;
+    decimalNumber = decimalNumber >> 1;
+  }
+  return binaryNumber;
+}
+
+// not working needs fix
+int decimalToBinaryUsingBitwisePlaceValue(int decimalNumber) {
+  int binaryNumber = 0;
+  int placeValue = 1;
+
+  while(decimalNumber > 0) {
+    int remainderBit = decimalNumber % 2;
+    binaryNumber += remainderBit * placeValue;
+    decimalNumber = decimalNumber / 2;
+    placeValue = placeValue << 1; // every Left shift is equivalent to multiplying by 2
+  }
+  return binaryNumber;
+}
+
 int NumberSystem() {
   // we will be using cmath lib to get pow(powertothe) functionality 
   int n;
@@ -352,6 +377,14 @@ int NumberSystem() {
   binaryNumber = decimalToBinaryByDivisionMethod(n);
 
   cout << "Decimal to Binary Conversion of " << n << " by division method is " << binaryNumber << endl << endl;
+
+  binaryNumber = decimalToBinaryUsingBitwise(n);
+
+  cout << "Decimal to Binary Conversion of " << n << " by bitwise division method is " << binaryNumber << endl << endl;
+
+  binaryNumber = decimalToBinaryUsingBitwisePlaceValue(n);
+
+  cout << "Decimal to Binary Converion of " << n << " by bitwise place value method is " << binaryNumber << endl;
 
   return 0;
 }
