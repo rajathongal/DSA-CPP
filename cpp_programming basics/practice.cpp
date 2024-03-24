@@ -270,20 +270,20 @@ void sortZerosAndOnes(int arr[], int size) {
 }
 
 void RightShiftArray(int arr[], int size) {
-  int temp = arr[size-1];
-  // right shift 
-  for(int i=size-1; i >= 1; i--) {
-    arr[i] = arr[i-1];
+  int temp = arr[size - 1];
+  // right shift
+  for (int i = size - 1; i >= 1; i--) {
+    arr[i] = arr[i - 1];
   }
   arr[0] = temp;
 }
 
 void LeftShiftArray(int arr[], int size) {
   int temp = arr[0];
-  for(int i=0; i<= size-1; i++) {
-    arr[i] = arr[i+1];
+  for (int i = 0; i <= size - 1; i++) {
+    arr[i] = arr[i + 1];
   }
-  arr[size-1] = temp;
+  arr[size - 1] = temp;
 }
 
 int ArrayL2() {
@@ -324,9 +324,9 @@ int ArrayL2() {
 }
 
 int decimalToBinaryByDivisionMethod(int decimalNumber) {
-  int i=0;
+  int i = 0;
   int binaryNumber = 0;
-  while(decimalNumber > 0) {
+  while (decimalNumber > 0) {
     cout << "i before " << i << endl;
     cout << "binaryNumber before " << binaryNumber << endl;
 
@@ -342,8 +342,8 @@ int decimalToBinaryByDivisionMethod(int decimalNumber) {
 
 int decimalToBinaryUsingBitwise(int decimalNumber) {
   int binaryNumber = 0;
-  int i=0;
-  while(decimalNumber > 0) {
+  int i = 0;
+  while (decimalNumber > 0) {
     int remainderBit = (decimalNumber & 1);
     binaryNumber = remainderBit * pow(10, i++) + binaryNumber;
     decimalNumber = decimalNumber >> 1;
@@ -356,17 +356,18 @@ int decimalToBinaryUsingBitwisePlaceValue(int decimalNumber) {
   int binaryNumber = 0;
   int placeValue = 1;
 
-  while(decimalNumber > 0) {
+  while (decimalNumber > 0) {
     int remainderBit = decimalNumber % 2;
     binaryNumber += remainderBit * placeValue;
     decimalNumber = decimalNumber / 2;
-    placeValue = placeValue << 1; // every Left shift is equivalent to multiplying by 2
+    placeValue = placeValue
+                 << 1; // every Left shift is equivalent to multiplying by 2
   }
   return binaryNumber;
 }
 
 int NumberSystem() {
-  // we will be using cmath lib to get pow(powertothe) functionality 
+  // we will be using cmath lib to get pow(powertothe) functionality
   int n;
   int binaryNumber;
 
@@ -376,15 +377,84 @@ int NumberSystem() {
   // decimal to binary conversion by division method
   binaryNumber = decimalToBinaryByDivisionMethod(n);
 
-  cout << "Decimal to Binary Conversion of " << n << " by division method is " << binaryNumber << endl << endl;
+  cout << "Decimal to Binary Conversion of " << n << " by division method is "
+       << binaryNumber << endl
+       << endl;
 
   binaryNumber = decimalToBinaryUsingBitwise(n);
 
-  cout << "Decimal to Binary Conversion of " << n << " by bitwise division method is " << binaryNumber << endl << endl;
+  cout << "Decimal to Binary Conversion of " << n
+       << " by bitwise division method is " << binaryNumber << endl
+       << endl;
 
   binaryNumber = decimalToBinaryUsingBitwisePlaceValue(n);
 
-  cout << "Decimal to Binary Converion of " << n << " by bitwise place value method is " << binaryNumber << endl;
+  cout << "Decimal to Binary Converion of " << n
+       << " by bitwise place value method is " << binaryNumber << endl;
+
+  return 0;
+}
+
+int Operators() {
+
+  // Bitwise ops
+  int a = 1;
+  int b = 12;
+
+  bool bof = false;
+  bool bot = true;
+
+  // bitwise and op
+  cout << (a & b) << endl;
+
+  // bitwise OR op
+  cout << (a | b) << endl;
+
+  // bitwise NOT op
+  cout << ~a << endl;
+  cout << ~bof << endl;
+  cout << ~bot << endl;
+
+  // bitwise XOR op
+  cout << (a ^ b) << endl;
+
+  // left shift
+  cout << (a << b) << endl;
+
+  // right shift
+  cout << (a >> b) << endl;
+
+  unsigned int num = -1;
+  cout << (num >> 1) << endl;
+
+  // break and continue
+  for (int i = 0; i < 5; i++) {
+    cout << i << endl;
+    if (i == 3) {
+      break;
+    }
+  }
+
+  for (int i = 0; i < 7; i++) {
+    if (i == 4) {
+      continue;
+    }
+
+    cout << i << endl;
+  }
+
+  // pre post operators
+  cout << "initial value of a " << a << endl;
+  cout << "pre increment " << ++a << endl;
+  cout << "post increment " << a++ << endl;
+  cout << "after post incr " << a << endl;
+
+  cout << "pre decrement " << --a << endl;
+  cout << "post decr" << a-- << endl;
+  cout << "after post decr " << a << endl;
+
+  // Variable Scoping
+  
 
   return 0;
 }
@@ -395,6 +465,7 @@ int main() {
   // ArraysL1();
   // ArrayPracticeL1();
   // ArrayL2();
-  NumberSystem();
+  // NumberSystem();
+  Operators();
   return 0;
 }
