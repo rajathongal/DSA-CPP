@@ -492,6 +492,59 @@ int Operators() {
   return 0;
 }
 
+// Functions
+void printGreetings();
+
+int Hello(string userName) {
+  cout << userName << endl;
+  return 0;
+}
+
+void sumOfNumbers(int a, int b, int c) {
+  int answer = a + b + c;
+  cout << "Answer is " << answer << endl;
+  return;
+}
+
+int sumByReturn(int a, int b, int c) {
+  // abc have different memory location than the passed values during function call
+  // this is an example for pass by value 
+  int answer = a + b + c;
+  return answer;
+}
+
+// example for pass by reference
+void solve(int& a) {
+  a++;
+  cout << "Print inside solve Fn " << a << endl;
+}
+
+void solve2(int& a) {
+  a--;
+  a= a * 2;
+  cout << "Print inside solve2 fn " << a << endl;
+}
+
+int Functions() {
+  printGreetings();
+  Hello("Rajath");
+  sumOfNumbers(3, 5, 7);
+  int sum = sumByReturn(2, 7, 3);
+  cout << "Sum " << sum << endl;
+
+  solve(sum);
+  cout << "Print outside solve Fn " << sum << endl;
+
+  sum++;
+  solve2(sum);
+  cout << "Print outside solve2 fn " << sum << endl;
+
+
+  return 0;
+}
+
+void printGreetings() { cout << "Greetings" << endl; }
+
 int main() {
   // Basic();
   // Loops();
@@ -499,6 +552,7 @@ int main() {
   // ArrayPracticeL1();
   // ArrayL2();
   // NumberSystem();
-  Operators();
+  // Operators();
+  Functions();
   return 0;
 }
