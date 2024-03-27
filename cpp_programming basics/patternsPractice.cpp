@@ -78,8 +78,53 @@ void hollowRectangle() {
   }
 }
 
-void HalfPyramid() {
-     
+void HalfPyramidRightToLeft() {
+  int size;
+  cout << "Enter size of Pyramid" << endl;
+  cin >> size;
+
+  // outer loop thru all rows
+  for (int row = 0; row < size; row = row + 1) {
+    // loop thru cols which is less than rows + 1
+    for (int col = 0; col < row + 1; col = col + 1) {
+      cout << "* ";
+    }
+    cout << endl;
+  }
+}
+
+void HalfPyramidLeftToRight() {
+  int size;
+  cout << "Enter Size of Pyramid" << endl;
+  cin >> size;
+  for (int row = 0; row < size; row++) {
+    // print spaces first
+    for (int col = 0; col < (size - (row + 1)); col++) {
+      cout << "  ";
+    }
+
+    for (int col = 0; col < row + 1; col++) {
+      cout << "* ";
+    }
+    cout << endl;
+  }
+}
+
+void Pyramid() {
+  int size;
+  cout << "Enter Size of Pyramid" << endl;
+  cin >> size;
+  for (int row = 0; row < size; row++) {
+    // print spaces first
+    for (int col = 0; col < (size - (row + 1)); col++) {
+      cout << " ";
+    }
+
+    for (int col = 0; col < row + 1; col++) {
+      cout << "* ";
+    }
+    cout << endl;
+  }
 }
 
 int main() {
@@ -87,5 +132,8 @@ int main() {
   // rectangle();
   // hollowSquare();
   // hollowRectangle();
+  // HalfPyramidRightToLeft();
+  // HalfPyramidLeftToRight();
+  // Pyramid();
   return 0;
 }
