@@ -127,6 +127,45 @@ void Pyramid() {
   }
 }
 
+void HollowHalfPyramidRightToLeft() {
+  int size;
+  cout << "Enter Size of Pyramid" << endl;
+  cin >> size;
+
+  // loop thru all rows
+  for (int row = 0; row < size; row++) {
+    // loop thru columns
+    for (int col = 0; col < size; col++) {
+      if (row == col || row == size - 1 || col == 0) {
+        cout << "* ";
+      } else {
+        cout << "  ";
+      }
+    }
+    cout << endl;
+  }
+}
+
+void HollowHalfPyramidLeftToRight() {
+
+  int size = 5;
+  for (int row = 1; row <= size; ++row) {
+    // Print spaces for left alignment
+    for (int col = size - row; col >= 1; --col) {
+      cout << "  ";
+    }
+    // Print stars
+    for (int col = 1; col <= row; ++col) {
+      if (col == 1 || row == size || col == row) {
+        cout << "* ";
+      } else {
+        cout << "  ";
+      }
+    }
+    cout << endl; // Move to the next line
+  }
+}
+
 int main() {
   // square();
   // rectangle();
@@ -135,5 +174,7 @@ int main() {
   // HalfPyramidRightToLeft();
   // HalfPyramidLeftToRight();
   // Pyramid();
+  // HollowHalfPyramidRightToLeft();
+  // HollowHalfPyramidLeftToRight();
   return 0;
 }
