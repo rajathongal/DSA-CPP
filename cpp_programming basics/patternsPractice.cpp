@@ -210,9 +210,10 @@ void HollowPyramid() {
           // k is 0 after you enter a row and 2* row is end of the stars example
           // row 2 in pyramid we used to print 5 stars indexing from 0-4 and in
           // hollow pyramid k==0 is start and 2 time of row i.e 2*2 = 4 is the
-          // end and to print the bottom stars we need to identify the row a last row 
-          // to do so we can compare row no === total no fo row 
-          // exaample total rows is 5 and r4 == row-1; r4 == 4; indexing starts from 0; 0-4=5
+          // end and to print the bottom stars we need to identify the row a
+          // last row to do so we can compare row no === total no fo row
+          // exaample total rows is 5 and r4 == row-1; r4 == 4; indexing starts
+          // from 0; 0-4=5
           cout << "* ";
         } else {
           cout << "  "; //  spaces for between the stars
@@ -228,6 +229,43 @@ void HollowPyramid() {
   }
 }
 
+void InvertedLeftHalfPyramid() {
+  int rows;
+  cout << "Enter Size of Pyramid" << endl;
+  cin >> rows;
+
+  for (int row = 0; row < rows; row++) {
+    // print spaces
+    for (int col = 0; col < row; col++) {
+      cout << "  ";
+    }
+
+    for (int col = 0; col < rows - row; col++) {
+      cout << "* ";
+    }
+    cout << endl;
+  }
+}
+
+void InvertedHollowLeftHalfPyramid() {
+  int rows;
+  cout << "Enter Size of Pyramid" << endl;
+  cin >> rows;
+
+  for (int row = 0; row < rows; row++) {
+    
+    for (int col = 0; col < rows; col++) {
+
+      if (row == col || row == 0 || col == rows - 1) {
+        cout << "* ";
+      } else {
+        cout << "  ";
+      }
+    }
+    cout << endl;
+  }
+}
+
 int main() {
   // square();
   // rectangle();
@@ -239,6 +277,8 @@ int main() {
   // HollowHalfPyramidRightToLeft();
   // HollowHalfPyramidLeftToRight();
   // PyramidV2();
-  HollowPyramid();
+  // HollowPyramid();
+  // InvertedLeftHalfPyramid();
+  InvertedHollowLeftHalfPyramid();
   return 0;
 }
