@@ -3,23 +3,24 @@ using namespace std;
 
 int main() {
 
-    int n;
-    cout << "Enter n" << endl;
+    int rows = 5;
+    
+    for (int i = 1; i <= rows; ++i) {
+        // Print leading spaces
+        for (int j = 1; j <= rows - i; ++j) {
+            cout << "  ";
+        }
 
-    cin >> n;
-
-    for(int row = 0; row < n; row=row+1) {
-        int k=0;
-        for( int col = 0; col < (2 * n) - 1; col = col + 1) {
-            if(col < n - row - 1) {
-                cout << " ";
-            } else if(k < (2 * row) + 1) {
+        // Print stars (first and last of the row, and the bottom row)
+        for (int k = 1; k <= 2 * i - 1; ++k) {
+            if (k == 1 || k == 2 * i - 1 || i == rows) {
                 cout << "* ";
             } else {
-                cout << " ";
+                cout << "  ";
             }
         }
-        cout << endl;
+
+        cout << endl; // Move to the next line
     }
     return 0;
 }
