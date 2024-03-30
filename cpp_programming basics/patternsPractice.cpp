@@ -308,7 +308,6 @@ void InvertedPyramid() {
     }
     for (int col = 0; col < (cols - (row * 2)); col++) {
       cout << "* ";
-
     }
     cout << endl;
   }
@@ -332,6 +331,65 @@ void InvertedHollowPyramid() {
   }
 }
 
+void NumericHalfPyramid() {
+  int rows;
+  cout << "Enter Size of Pyramid" << endl;
+  cin >> rows;
+
+  for (int row = 0; row < rows; row++) {
+    for (int col = 0; col <= row; col++) {
+      cout << col + 1 << " ";
+    }
+    cout << endl;
+  }
+}
+
+void InvertedNumericHalfPyramid() {
+  int rows;
+  cout << "Enter Size of Pyramid" << endl;
+  cin >> rows;
+
+  for (int row = 0; row < rows; row++) {
+    for (int col = 0; col < rows - row; col++) {
+      cout << col + 1 << " ";
+    }
+    cout << endl;
+  }
+}
+
+void Diamond() {
+  int size;
+  cout << "Enter Size of Diamond" << endl;
+  cin >> size;
+
+  // Upper half
+  for (int row = 0; row < size; row++) {
+    // printing spaces
+    for (int col = 0; col < (size - row - 1); col++) {
+      cout << "  ";
+    }
+
+    for (int col = 0; col < (2 * row + 1); col++) {
+      cout << "* ";
+    }
+    cout << endl;
+  }
+
+  // below half except the middle
+  for (int row = 0; row < size - 1; row++) {
+    // print space
+    for (int col = 0; col < (row + 1); col++) {
+      cout << "  ";
+    }
+
+    // print stars
+    for (int col = 0; col < (2*size -1) - (2 * (row + 1)); col++) {
+      cout << "* ";
+    }
+    cout << endl;
+  }
+}
+
 int main() {
   // square();
   // rectangle();
@@ -350,5 +408,8 @@ int main() {
   // InvertedHollowRightHalfPyramid();
   // InvertedPyramid();
   // InvertedHollowPyramid();
+  // NumericHalfPyramid();
+  // InvertedNumericHalfPyramid();
+  Diamond();
   return 0;
 }
