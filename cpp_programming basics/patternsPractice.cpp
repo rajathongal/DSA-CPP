@@ -253,10 +253,76 @@ void InvertedHollowLeftHalfPyramid() {
   cin >> rows;
 
   for (int row = 0; row < rows; row++) {
-    
+
     for (int col = 0; col < rows; col++) {
 
       if (row == col || row == 0 || col == rows - 1) {
+        cout << "* ";
+      } else {
+        cout << "  ";
+      }
+    }
+    cout << endl;
+  }
+}
+
+void InvertedRightHalfPyramid() {
+  int rows;
+  cout << "Enter Size of Pyramid" << endl;
+  cin >> rows;
+
+  for (int row = 0; row < rows; row++) {
+    for (int col = 0; col < (rows - row); col++) {
+      cout << "* ";
+    }
+    cout << endl;
+  }
+}
+
+void InvertedHollowRightHalfPyramid() {
+  int rows;
+  cout << "Enter Size of Pyramid" << endl;
+  cin >> rows;
+
+  for (int row = 0; row < rows; row++) {
+    for (int col = 0; col < rows; col++) {
+      if (col == rows - row - 1 || row == 0 || col == 0) {
+        cout << "* ";
+      } else {
+        cout << "  ";
+      }
+    }
+    cout << endl;
+  }
+}
+
+void InvertedPyramid() {
+  int rows;
+  cout << "Enter Size of Pyramid" << endl;
+  cin >> rows;
+  int cols = (2 * rows - 1);
+
+  for (int row = 0; row < rows; row++) {
+    for (int col = 0; col < row; col++) {
+      cout << "  ";
+    }
+    for (int col = 0; col < (cols - (row * 2)); col++) {
+      cout << "* ";
+
+    }
+    cout << endl;
+  }
+}
+
+void InvertedHollowPyramid() {
+  int rows;
+  cout << "Enter Size of Pyramid" << endl;
+  cin >> rows;
+  int cols = (2 * rows - 1);
+
+  for (int row = 0; row < rows; row++) {
+    for (int col = 0; col < cols; col++) {
+      if (row == 0 || col == row || col == cols - row - 1) {
         cout << "* ";
       } else {
         cout << "  ";
@@ -279,6 +345,10 @@ int main() {
   // PyramidV2();
   // HollowPyramid();
   // InvertedLeftHalfPyramid();
-  InvertedHollowLeftHalfPyramid();
+  // InvertedHollowLeftHalfPyramid();
+  // InvertedRightHalfPyramid();
+  // InvertedHollowRightHalfPyramid();
+  // InvertedPyramid();
+  // InvertedHollowPyramid();
   return 0;
 }
