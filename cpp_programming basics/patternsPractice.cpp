@@ -383,8 +383,30 @@ void Diamond() {
     }
 
     // print stars
-    for (int col = 0; col < (2*size -1) - (2 * (row + 1)); col++) {
+    for (int col = 0; col < (2 * size - 1) - (2 * (row + 1)); col++) {
       cout << "* ";
+    }
+    cout << endl;
+  }
+}
+
+void HollowDiamond() {
+  int size;
+  cout << "Enter Size of Diamond" << endl;
+  cin >> size;
+
+  for (int row = 0; row < size; row++) {
+    for (int col = 0; col < size - row - 1; col++) {
+      cout << "##";
+    }
+
+    for (int col = 0; col < (2 * row - 1); col++) {
+      if (col == size - row - 1 || col == size + row) {
+        cout << "* " << (col == size - row - 1) << (col == size + row) << row
+             << col;
+      } else {
+        cout << "  ";
+      }
     }
     cout << endl;
   }
@@ -410,6 +432,7 @@ int main() {
   // InvertedHollowPyramid();
   // NumericHalfPyramid();
   // InvertedNumericHalfPyramid();
-  Diamond();
+  // Diamond();
+  HollowDiamond();
   return 0;
 }
