@@ -391,23 +391,40 @@ void Diamond() {
 }
 
 void HollowDiamond() {
-  int size;
-  cout << "Enter Size of Diamond" << endl;
-  cin >> size;
+  int rows;
+  cout << "Enter Size of Pyramid" << endl;
+  cin >> rows;
 
-  for (int row = 0; row < size; row++) {
-    for (int col = 0; col < size - row - 1; col++) {
-      cout << "##";
-    }
-
-    for (int col = 0; col < (2 * row - 1); col++) {
-      if (col == size - row - 1 || col == size + row) {
-        cout << "* " << (col == size - row - 1) << (col == size + row) << row
-             << col;
-      } else {
+  for (int row = 0; row < rows; row++) {
+    int k = 0; // k denotes no of stars to be printed and it becomes zero after
+               // every row
+    for (int col = 0; col < (2 * rows) - 1; col++) {
+      if (col < rows - row - 1) { // this is used to print trailing spaces
         cout << "  ";
+      } else if (k < (2 * row + 1)) { // print star
+        // since we were printing stars here directly
+        // cout << "* ";
+
+        // we will only print for borders left , right and bottom
+        if (k == 0 || k == 2 * row ) {
+          // k is 0 after you enter a row and 2* row is end of the stars example
+          // row 2 in pyramid we used to print 5 stars indexing from 0-4 and in
+          // hollow pyramid k==0 is start and 2 time of row i.e 2*2 = 4 is the
+          // end and to print the bottom stars we need to identify the row a
+          // last row to do so we can compare row no === total no fo row
+          // exaample total rows is 5 and r4 == row-1; r4 == 4; indexing starts
+          // from 0; 0-4=5
+          cout << "* ";
+        } else {
+          cout << "  "; //  spaces for between the stars
+        }
+        k++; // increment k
+      } else {
+        cout << "  "; // ending spaces for row
       }
     }
+
+    // after every col move to next line;
     cout << endl;
   }
 }
