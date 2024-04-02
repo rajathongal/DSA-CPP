@@ -404,8 +404,8 @@ void HollowDiamond() {
       } else if (k < (2 * row + 1)) { // print star
         // since we were printing stars here directly
         // cout << "* ";
-
-        // we will only print for borders left , right and bottom
+        cout << k << 2*row << row;
+        // we will only print for borders left , right 
         if (k == 0 || k == 2 * row ) {
           // k is 0 after you enter a row and 2* row is end of the stars example
           // row 2 in pyramid we used to print 5 stars indexing from 0-4 and in
