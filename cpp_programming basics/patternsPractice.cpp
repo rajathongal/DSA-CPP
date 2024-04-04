@@ -423,7 +423,7 @@ void HollowDiamond() {
 
   // Lower half
   for (int row = 0; row < rows - 1; row++) {
-    int k=0;
+    int k = 0;
     // for (int col = 0; col < row + 1; col++) {
     //   cout << "##";
     // }
@@ -435,6 +435,51 @@ void HollowDiamond() {
         cout << "  ";
       }
       k++;
+    }
+    cout << endl;
+  }
+}
+
+void FlippedSolidDiamond() {
+  int size;
+  cout << "Enter Size of Diamond" << endl;
+  cin >> size;
+
+  // Upper half
+  for (int row = 0; row < size - 1; row++) {
+    // printing stars left half
+    for (int col = 0; col < (size - row - 1); col++) {
+      cout << "* ";
+    }
+
+    // middle spaces
+    for (int col = 0; col < (2 * row + 1); col++) {
+      cout << "  ";
+    }
+
+    // printing stars right half
+    for (int col = 0; col < (size - row - 1); col++) {
+      cout << "* ";
+    }
+    cout << endl;
+  }
+
+  // below half except the middle
+  for (int row = 0; row < size - 1; row++) {
+    // printing stars left half
+
+    for (int col = 0; col < (row + 1); col++) {
+      cout << "* ";
+    }
+
+    // print spaces
+    for (int col = 0; col < (2 * size - 1) - (2 * (row + 1)); col++) {
+      cout << "  ";
+    }
+    // printing stars right half
+
+    for (int col = 0; col < (row + 1); col++) {
+      cout << "* ";
     }
     cout << endl;
   }
@@ -461,6 +506,7 @@ int main() {
   // NumericHalfPyramid();
   // InvertedNumericHalfPyramid();
   // Diamond();
-  HollowDiamond();
+  // HollowDiamond();
+  FlippedSolidDiamond();
   return 0;
 }
