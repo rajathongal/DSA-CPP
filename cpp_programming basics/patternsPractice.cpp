@@ -485,6 +485,56 @@ void FlippedSolidDiamond() {
   }
 }
 
+void FancyPatternOne() {
+  int size;
+  cout << "Enter Size of pattern" << endl;
+  cin >> size;
+
+  for (int row = 0; row <= size; row++) {
+    for (int col = 0; col < 2 * row - 1; col++) {
+      if ((col % 2) == 1) {
+        cout << "* ";
+      } else {
+        cout << row << " ";
+      }
+    }
+    cout << endl;
+  }
+}
+
+void FancyPatternTwo() {
+  int size;
+  cout << "Enter Size of pattern" << endl;
+  cin >> size;
+
+  // upper half
+  for (int row = 1; row <= size; row++) {
+    for (int col = 0; col < 2 * row - 1; col++) {
+      if ((col % 2) == 1) {
+        cout << "* ";
+      } else {
+        cout << row << " ";
+      }
+    }
+    cout << endl;
+  }
+
+  // lower half
+  int totalColsForLowerhalf = 2 * (size) -2;
+
+  for(int row = 0; row < size; row ++) {
+    for(int col=0; col < totalColsForLowerhalf - row - 1; col++) {
+      if ((col % 2) == 1) {
+        cout << "* ";
+      } else {
+        cout << size - row - 1 << " ";
+      }
+    }
+    cout << endl;
+
+  }
+}
+
 int main() {
   // square();
   // rectangle();
@@ -507,6 +557,8 @@ int main() {
   // InvertedNumericHalfPyramid();
   // Diamond();
   // HollowDiamond();
-  FlippedSolidDiamond();
+  // FlippedSolidDiamond();
+  // FancyPatternOne();
+  FancyPatternTwo();
   return 0;
 }
