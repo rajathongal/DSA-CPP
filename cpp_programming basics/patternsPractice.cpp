@@ -520,18 +520,16 @@ void FancyPatternTwo() {
   }
 
   // lower half
-  int totalColsForLowerhalf = 2 * (size) -2;
+  for (int row = 0; row < size; row++) {
+    for (int col = 0; col < size - row - 1; col++) {
+      if (col == size - row - 2) {
+        cout << size - row - 1;
 
-  for(int row = 0; row < size; row ++) {
-    for(int col=0; col < totalColsForLowerhalf - row - 1; col++) {
-      if ((col % 2) == 1) {
-        cout << "* ";
       } else {
-        cout << size - row - 1 << " ";
+        cout << size - row - 1 << " * ";
       }
     }
     cout << endl;
-
   }
 }
 
