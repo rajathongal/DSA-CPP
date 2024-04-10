@@ -570,7 +570,27 @@ void NumericHollowHalfPyramid() {
       }
     }
     cout << endl;
+  }
+}
 
+void InvertedHollowNumericHalfPyramid() {
+  int size;
+  cout << "Enter Size of pattern" << endl;
+  cin >> size;
+
+  for (int row = 0; row < size; row++) {
+    for (int col = 0; col < size - row; col++) {
+      if (row == 0) {
+        cout << col + 1 << " ";
+      } else if (col == 0) {
+        cout << row + 1 << " ";
+      } else if (col == size - row - 1) {
+        cout << size << " ";
+      } else {
+        cout << "  ";
+      }
+    }
+    cout << endl;
   }
 }
 
@@ -600,6 +620,7 @@ int main() {
   // FancyPatternOne();
   // FancyPatternTwo();
   // FancyPatternThree();
-  NumericHollowHalfPyramid();
+  // NumericHollowHalfPyramid();
+  InvertedHollowNumericHalfPyramid();
   return 0;
 }
