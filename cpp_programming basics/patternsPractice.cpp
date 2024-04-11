@@ -680,6 +680,20 @@ void SolidHalfDiamond() {
   }
 }
 
+void FloydsTriangle() {
+  int size;
+  cout << "Enter Size of pattern" << endl;
+  cin >> size;
+  int k = 1;
+  for (int row = 0; row < size; row++) {
+    for (int col = 0; col < row + 1; col++) {
+      cout << k << "  ";
+      k++;
+    }
+    cout << endl;
+  }
+}
+
 int main() {
   // square();
   // rectangle();
@@ -692,10 +706,10 @@ int main() {
   // HollowHalfPyramidLeftToRight();
   // PyramidV2();
   // HollowPyramid();
+  // InvertedHollowRightHalfPyramid();
   // InvertedLeftHalfPyramid();
   // InvertedHollowLeftHalfPyramid();
   // InvertedRightHalfPyramid();
-  // InvertedHollowRightHalfPyramid();
   // InvertedPyramid();
   // InvertedHollowPyramid();
   // NumericHalfPyramid();
@@ -711,6 +725,7 @@ int main() {
   // AlphabeticalHalfPyramidPattern();
   // NumericPalindromeEquilateralPyramid();
   // FancyPatternFour();
-  SolidHalfDiamond();
+  // SolidHalfDiamond();
+  FloydsTriangle();
   return 0;
 }
