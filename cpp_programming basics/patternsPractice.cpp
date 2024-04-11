@@ -694,6 +694,40 @@ void FloydsTriangle() {
   }
 }
 
+void ButterFlyPattern() {
+  int size;
+  cout << "Enter Size of pattern" << endl;
+  cin >> size;
+
+  for (int row = 0; row < size; row++) {
+    for (int col = 0; col < row + 1; col++) {
+      cout << "* ";
+    }
+
+    for (int col = 0; col < (2 * size) - 2 * (row + 1); col++) {
+      cout << "  ";
+    }
+
+    for (int col = 0; col < row + 1; col++) {
+      cout << "* ";
+    }
+    cout << endl;
+  }
+
+  for (int row = 0; row < size - 1; row++) {
+    for (int col = 0; col < size - row - 1; col++) {
+      cout << "* ";
+    }
+    for (int col = 0; col < (2 * row) + 2; col++) {
+      cout << "  ";
+    }
+    for (int col = 0; col < size - row - 1; col++) {
+      cout << "* ";
+    }
+    cout << endl;
+  }
+}
+
 int main() {
   // square();
   // rectangle();
@@ -726,6 +760,7 @@ int main() {
   // NumericPalindromeEquilateralPyramid();
   // FancyPatternFour();
   // SolidHalfDiamond();
-  FloydsTriangle();
+  // FloydsTriangle();
+  ButterFlyPattern();
   return 0;
 }
