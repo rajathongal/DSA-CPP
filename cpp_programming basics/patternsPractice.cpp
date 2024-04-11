@@ -618,21 +618,44 @@ void NumericPalindromeEquilateralPyramid() {
   cout << "Enter Size of pattern" << endl;
   cin >> size;
 
-  for(int row=0; row< size; row++) {
+  for (int row = 0; row < size; row++) {
     int k = 1;
 
-    for(int col = 0; col < size-row-1; col++) {
+    for (int col = 0; col < size - row - 1; col++) {
       cout << "  ";
     }
-    for(int col = 0; col < row + 1; col++) {
+    for (int col = 0; col < row + 1; col++) {
       cout << k << " ";
       k++;
     }
 
-    for(int col = k -2; col > 0; col--) {
+    for (int col = k - 2; col > 0; col--) {
       cout << col << " ";
     }
 
+    cout << endl;
+  }
+}
+
+void FancyPatternFour() {
+  int size;
+  cout << "Enter Size of pattern" << endl;
+  cin >> size;
+
+  for (int row = 0; row < size; row++) {
+    for (int col = 0; col < (2 * size - row - 2); col++) {
+      cout << "* ";
+    }
+    for(int col=0; col < row + 1; col ++) {
+      if(col == row) {
+        cout << row + 1 << " ";
+      } else {
+        cout << row + 1 << " * ";
+      }
+    }
+    for (int col = 0; col < (2 * size - row - 2); col++) {
+      cout << "* ";
+    }
     cout << endl;
   }
 }
@@ -666,6 +689,7 @@ int main() {
   // NumericHollowHalfPyramid();
   // InvertedHollowNumericHalfPyramid();
   // AlphabeticalHalfPyramidPattern();
-  NumericPalindromeEquilateralPyramid();
+  // NumericPalindromeEquilateralPyramid();
+  FancyPatternFour();
   return 0;
 }
