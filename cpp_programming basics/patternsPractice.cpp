@@ -613,6 +613,30 @@ void AlphabeticalHalfPyramidPattern() {
   }
 }
 
+void NumericPalindromeEquilateralPyramid() {
+  int size;
+  cout << "Enter Size of pattern" << endl;
+  cin >> size;
+
+  for(int row=0; row< size; row++) {
+    int k = 1;
+
+    for(int col = 0; col < size-row-1; col++) {
+      cout << "  ";
+    }
+    for(int col = 0; col < row + 1; col++) {
+      cout << k << " ";
+      k++;
+    }
+
+    for(int col = k -2; col > 0; col--) {
+      cout << col << " ";
+    }
+
+    cout << endl;
+  }
+}
+
 int main() {
   // square();
   // rectangle();
@@ -641,6 +665,7 @@ int main() {
   // FancyPatternThree();
   // NumericHollowHalfPyramid();
   // InvertedHollowNumericHalfPyramid();
-  AlphabeticalHalfPyramidPattern();
+  // AlphabeticalHalfPyramidPattern();
+  NumericPalindromeEquilateralPyramid();
   return 0;
 }
