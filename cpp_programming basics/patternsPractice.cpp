@@ -646,14 +646,34 @@ void FancyPatternFour() {
     for (int col = 0; col < (2 * size - row - 2); col++) {
       cout << "* ";
     }
-    for(int col=0; col < row + 1; col ++) {
-      if(col == row) {
+    for (int col = 0; col < row + 1; col++) {
+      if (col == row) {
         cout << row + 1 << " ";
       } else {
         cout << row + 1 << " * ";
       }
     }
     for (int col = 0; col < (2 * size - row - 2); col++) {
+      cout << "* ";
+    }
+    cout << endl;
+  }
+}
+
+void SolidHalfDiamond() {
+  int size;
+  cout << "Enter Size of pattern" << endl;
+  cin >> size;
+
+  for (int row = 0; row < size; row++) {
+    for (int col = 0; col < row + 1; col++) {
+      cout << "* ";
+    }
+    cout << endl;
+  }
+
+  for (int row = 0; row < size - 1; row++) {
+    for (int col = 0; col < size - row - 1; col++) {
       cout << "* ";
     }
     cout << endl;
@@ -690,6 +710,7 @@ int main() {
   // InvertedHollowNumericHalfPyramid();
   // AlphabeticalHalfPyramidPattern();
   // NumericPalindromeEquilateralPyramid();
-  FancyPatternFour();
+  // FancyPatternFour();
+  SolidHalfDiamond();
   return 0;
 }
