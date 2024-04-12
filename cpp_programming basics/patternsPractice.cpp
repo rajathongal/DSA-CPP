@@ -728,6 +728,21 @@ void ButterFlyPattern() {
   }
 }
 
+void pascalsTriangle() {
+  int size;
+  cout << "Enter Size of pattern" << endl;
+  cin >> size;
+
+  for(int row=1; row<= size;row++) {
+    int C=1;
+    for(int col=1; col<=row; col++) {
+      cout << C << " ";
+      C = C*(row-col) / col;
+    }
+    cout << endl;
+  }
+}
+
 int main() {
   // square();
   // rectangle();
@@ -761,6 +776,7 @@ int main() {
   // FancyPatternFour();
   // SolidHalfDiamond();
   // FloydsTriangle();
-  ButterFlyPattern();
+  // ButterFlyPattern();
+  pascalsTriangle();
   return 0;
 }
