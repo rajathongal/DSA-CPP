@@ -733,12 +733,45 @@ void pascalsTriangle() {
   cout << "Enter Size of pattern" << endl;
   cin >> size;
 
-  for(int row=1; row<= size;row++) {
-    int C=1;
-    for(int col=1; col<=row; col++) {
+  for (int row = 1; row <= size; row++) {
+    int C = 1;
+    for (int col = 1; col <= row; col++) {
       cout << C << " ";
-      C = C*(row-col) / col;
+      C = C * (row - col) / col;
     }
+    cout << endl;
+  }
+}
+
+void FancyPatternsFive() {
+  int size;
+  cout << "Enter Size of pattern" << endl;
+  cin >> size;
+  int num = 1;
+  for (int row = 0; row < size; row++) {
+    for (int col = 0; col < row + 1; col++) {
+      if (col == row) {
+        cout << num;
+      } else {
+        cout << num << " * ";
+      }
+      num++;
+    }
+
+    cout << endl;
+  }
+  int start = num - size;
+  for (int row = 0; row < size; row++) {
+    int k = start;
+    for (int col = 0; col < size - row; col++) {
+      if (col == size - row - 1) {
+        cout << k;
+      } else {
+        cout << k << " * ";
+      }
+      k++;
+    }
+    start = start - (size - row - 1);
     cout << endl;
   }
 }
@@ -777,6 +810,7 @@ int main() {
   // SolidHalfDiamond();
   // FloydsTriangle();
   // ButterFlyPattern();
-  pascalsTriangle();
+  // pascalsTriangle();
+  FancyPatternsFive();
   return 0;
 }
