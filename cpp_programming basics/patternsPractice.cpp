@@ -776,6 +776,58 @@ void FancyPatternsFive() {
   }
 }
 
+void FancyPatternSix() {
+  int size;
+  cout << "Enter Size of pattern" << endl;
+  cin >> size;
+
+  for (int row = 0; row < size; row++) {
+    int k = 1;
+    for (int col = 0; col < row + 1; col++) {
+      if (col == 0) {
+        cout << "* ";
+      } else {
+        cout << k << " ";
+        k++;
+      }
+    }
+
+    for (int col = k - 2; col >= 0; col--) {
+      if (col == 1) {
+        cout << col << " ";
+      } else if (col == 0) {
+        cout << "*";
+      } else {
+        cout << col << " ";
+      }
+    }
+    cout << endl;
+  }
+
+  for (int row = 0; row < size - 1; row++) {
+    int k = 1;
+    for (int col = 0; col < size - row - 1; col++) {
+      if (col == 0) {
+        cout << "* ";
+      } else {
+        cout << k << " ";
+        k++;
+      }
+    }
+
+    for (int col = k - 2; col >= 0; col--) {
+      if (col == 1) {
+        cout << col << " ";
+      } else if (col == 0) {
+        cout << "*";
+      } else {
+        cout << col << " ";
+      }
+    }
+    cout << endl;
+  }
+}
+
 int main() {
   // square();
   // rectangle();
@@ -811,6 +863,7 @@ int main() {
   // FloydsTriangle();
   // ButterFlyPattern();
   // pascalsTriangle();
-  FancyPatternsFive();
+  // FancyPatternsFive();
+  FancyPatternSix();
   return 0;
 }
