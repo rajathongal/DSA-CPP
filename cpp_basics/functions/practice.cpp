@@ -1,3 +1,4 @@
+#include <cmath>
 #include <iostream>
 using namespace std;
 
@@ -92,6 +93,23 @@ void SumOfOneToNEvenAndOdd(int N) {
   cout << "Sum of all odd numbers from 1 to " << N << " is:" << odd << endl;
 }
 
+// Area of a circle
+void AreaOfACircle(double radius) {
+  double area = M_PI * radius * radius;
+  cout << "Area of circle with radius " << radius << " is: " << area << endl;
+}
+// find the factorial
+// print all prime from 1 to N
+// check prime
+// reverse an integer
+// set k- th bit
+// convert temperature
+// count all set bits
+// create number using digits
+// print all digits of an Integer
+// KM to miles
+// debug problems
+
 int main() {
   MaxOfThreeNumbers(200, 5, 9);
   CountingFrom1ToN(5);
@@ -104,6 +122,7 @@ int main() {
   CheckPrime(7);
   CheckPrime(15);
   CheckPrime(11);
-
+  AreaOfACircle(90);
+  AreaOfACircle(3.1256);
   return 0;
 }
