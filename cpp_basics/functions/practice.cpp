@@ -98,7 +98,20 @@ void AreaOfACircle(double radius) {
   double area = M_PI * radius * radius;
   cout << "Area of circle with radius " << radius << " is: " << area << endl;
 }
+
 // find the factorial
+unsigned int factorial(unsigned int num) {
+  if (num == 0 || num == 1) {
+    return 1;
+  }
+  return num * factorial(num - 1);
+}
+
+void factorialMain(unsigned int num) {
+  unsigned int factorialOfNum = factorial(num);
+
+  cout << "Factorial of " << num << " is: " << factorialOfNum << endl;
+}
 // print all prime from 1 to N
 // check prime
 // reverse an integer
@@ -124,5 +137,7 @@ int main() {
   CheckPrime(11);
   AreaOfACircle(90);
   AreaOfACircle(3.1256);
+  factorialMain(6);
+  
   return 0;
 }
