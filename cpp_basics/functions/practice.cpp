@@ -27,7 +27,7 @@ void CountingFrom1ToN(int N) {
 }
 
 // check prime or not
-void CheckPrime(int num) {
+bool CheckPrime(int num, bool printFlag) {
   // divisible by one or self only.
   // not perfectly divisible by other numbers
 
@@ -40,13 +40,17 @@ void CheckPrime(int num) {
 
   for (int i = 2; i < num; i++) {
     if (num % i == 0) {
-      cout << num << " is not a prime number" << endl;
-      return;
+      if (printFlag) {
+        cout << num << " is not a prime number" << endl;
+      }
+      return false;
     }
   }
 
-  cout << num << " is a prime number" << endl;
-  return;
+  if (printFlag) {
+    cout << num << " is a prime number" << endl;
+  }
+  return true;
 }
 
 // check even or odd
@@ -113,6 +117,17 @@ void factorialMain(unsigned int num) {
   cout << "Factorial of " << num << " is: " << factorialOfNum << endl;
 }
 // print all prime from 1 to N
+void PrintPrimeFromOneToN(int N) {
+  cout << "Prime Number from 1 to " << N << " are ";
+
+  for (int i = 1; i <= N; i++) {
+    bool isPrime = CheckPrime(i, false);
+    if (isPrime) {
+      cout << i << " ";
+    }
+  }
+  cout << endl;
+}
 // check prime
 // reverse an integer
 // set k- th bit
@@ -132,12 +147,12 @@ int main() {
   CheckEvenOdd(10);
   SumOfOneToN(100);
   SumOfOneToNEvenAndOdd(100);
-  CheckPrime(7);
-  CheckPrime(15);
-  CheckPrime(11);
+  CheckPrime(7, true);
+  CheckPrime(15, true);
+  CheckPrime(11, true);
   AreaOfACircle(90);
   AreaOfACircle(3.1256);
   factorialMain(6);
-  
+  PrintPrimeFromOneToN(100);
   return 0;
 }
