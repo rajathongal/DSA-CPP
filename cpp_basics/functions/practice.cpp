@@ -128,8 +128,21 @@ void PrintPrimeFromOneToN(int N) {
   }
   cout << endl;
 }
-// check prime
 // reverse an integer
+void ReverseIntger(int x) {
+  int ans = 0, rem = 0;
+  bool isNeg = false;
+  if (x < 0) {
+    isNeg = true;
+    x = -x;
+  }
+  while (x > 0) {
+    int digit = x % 10;
+    ans = ans * 10 + digit;
+    x = x / 10;
+  }
+  cout << (isNeg ? -ans : ans) << endl;
+}
 // set k- th bit
 // convert temperature
 // count all set bits
@@ -154,5 +167,7 @@ int main() {
   AreaOfACircle(3.1256);
   factorialMain(6);
   PrintPrimeFromOneToN(100);
+  ReverseIntger(567);
+  ReverseIntger(-789);
   return 0;
 }
