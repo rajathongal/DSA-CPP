@@ -1,5 +1,6 @@
 #include <cmath>
 #include <iostream>
+#include <vector>
 using namespace std;
 
 // find max of 3 numbers
@@ -145,6 +146,16 @@ void ReverseIntger(int x) {
 }
 // set k- th bit
 // convert temperature
+void ConvertTemperature(double celcius) {
+  double kelvin = celcius + 273.15;
+  double fahrenheit = celcius * 1.80 + 32.00;
+
+  vector<double> answer;
+  answer.push_back(kelvin);
+  answer.push_back(fahrenheit);
+
+  cout << answer.back() << endl << answer.front() << endl;
+}
 // count all set bits
 // create number using digits
 // print all digits of an Integer
@@ -169,5 +180,7 @@ int main() {
   PrintPrimeFromOneToN(100);
   ReverseIntger(567);
   ReverseIntger(-789);
+  ConvertTemperature(100);
+  ConvertTemperature(39);
   return 0;
 }
