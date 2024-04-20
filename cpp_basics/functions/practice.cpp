@@ -160,6 +160,9 @@ void ConvertTemperature(double celcius) {
 // create number using digits
 // print all digits of an Integer
 // KM to miles
+void KMToMiles(int KMs) {
+  cout << KMs << " KMs is: " << (KMs * 0.621371) << " miles" << endl;
+}
 // debug problems
 
 int main() {
@@ -182,5 +185,9 @@ int main() {
   ReverseIntger(-789);
   ConvertTemperature(100);
   ConvertTemperature(39);
+  KMToMiles(1);
+  KMToMiles(100);
+  KMToMiles(23);
+
   return 0;
 }
