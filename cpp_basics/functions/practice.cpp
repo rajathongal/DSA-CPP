@@ -1,5 +1,6 @@
 #include <cmath>
 #include <iostream>
+#include <limits.h>
 #include <vector>
 using namespace std;
 
@@ -144,7 +145,6 @@ void ReverseIntger(int x) {
   }
   cout << (isNeg ? -ans : ans) << endl;
 }
-// set k- th bit
 // convert temperature
 void ConvertTemperature(double celcius) {
   double kelvin = celcius + 273.15;
@@ -157,6 +157,37 @@ void ConvertTemperature(double celcius) {
   cout << answer.back() << endl << answer.front() << endl;
 }
 // count all set bits
+// set bit - count no of 1's in binary representation of an integer
+void CountSetBits(int decimalNumber) {
+  int i = 0;
+  int setBitCount = 0;
+  int num = decimalNumber;
+  while (decimalNumber > 0) {
+    int remainderBit = (decimalNumber & 1);
+    if (remainderBit == 1) {
+      setBitCount += 1;
+    }
+    decimalNumber = decimalNumber >> 1;
+  }
+
+  cout << "No of set bits in " << num << " is: " << setBitCount << endl;
+}
+
+// set k- th bit
+// a value k is given which represent index value of binary representation of an
+// integer the index starts from right to left ex 3210 <-- the program is
+// written to achieve -> replace k the position in binary representation of an
+// integer to 1 k can be converted into bitwise representation by left shift the
+// value of k with 1 ex 1 << k by doing a bitwise OR we will be able to achieve
+// this efficiently
+
+void SetKthBit(int decimalNumber, int k) {
+  int mask = 1 << k;
+  int result = decimalNumber | mask;
+  cout << "Result after set bit of " << decimalNumber << " with " << k
+       << " bits is: " << result << endl;
+}
+
 // create number using digits
 // print all digits of an Integer
 // KM to miles
@@ -188,6 +219,9 @@ int main() {
   KMToMiles(1);
   KMToMiles(100);
   KMToMiles(23);
-
+  CountSetBits(20);
+  CountSetBits(239);
+  CountSetBits(10);
+  SetKthBit(10, 2);
   return 0;
 }
