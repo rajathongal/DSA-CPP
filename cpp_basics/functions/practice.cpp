@@ -188,12 +188,39 @@ void SetKthBit(int decimalNumber, int k) {
        << " bits is: " << result << endl;
 }
 
-// create number using digits
-// print all digits of an Integer
 // KM to miles
 void KMToMiles(int KMs) {
   cout << KMs << " KMs is: " << (KMs * 0.621371) << " miles" << endl;
 }
+
+// create number using digits
+void CreateNumberUsingDigits() {
+  int numberOfDigits = 0;
+  int digit;
+  int num = 0;
+  cout << "Enter the number of digits you want to enter" << endl;
+  cin >> numberOfDigits;
+  for (int i = 0; i < numberOfDigits; ++i) {
+    cout << "Enter digit: " << endl;
+    cin >> digit;
+    num = num * 10 + digit;
+    cout << "The Number formed so far " << num << endl;
+  }
+
+  cout << endl << "The Final Number formed is " << num << endl;
+}
+
+// print all digits of an Integer
+void PrintAllDigitsOfInteger(int num) {
+  while(num > 0) {
+    int onesPlaceDigit = num % 10;
+    cout << "Digit is " << onesPlaceDigit << endl;
+    num = num / 10;
+  }
+  cout << endl;
+
+}
+
 // debug problems
 
 int main() {
@@ -223,5 +250,8 @@ int main() {
   CountSetBits(239);
   CountSetBits(10);
   SetKthBit(10, 2);
+  CreateNumberUsingDigits();
+  PrintAllDigitsOfInteger(100);
+  PrintAllDigitsOfInteger(9927292);
   return 0;
 }
