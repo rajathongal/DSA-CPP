@@ -47,6 +47,20 @@ void solve2(int &a) {
   cout << "Print inside solve " << a << endl;
 }
 
+void incrementBy1(int &num) {
+    num++;
+}
+
+void basicCallByRef() {
+    int n;
+    cout << "Enter Value of n" << endl;
+    cin >> n;
+
+    incrementBy1(n);
+
+    cout << "Value of n after increment " << n << endl;
+}
+
 int main() {
   int a = 5;
   solve(a);
@@ -57,4 +71,5 @@ int main() {
   cout << "Print inside main " << a << endl;
 
   referenceVariable();
+  basicCallByRef();
 }
