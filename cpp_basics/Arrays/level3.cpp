@@ -1,5 +1,7 @@
+#include <climits>
 #include <iostream>
 #include <limits.h>
+#include <vector>
 using namespace std;
 
 void print2DArray(int arr[][4], int rows, int cols) {
@@ -10,6 +12,14 @@ void print2DArray(int arr[][4], int rows, int cols) {
     }
     cout << endl;
   }
+}
+
+void print1DArray(int arr[], int size) {
+  cout << "Printing Array" << endl;
+  for (int i = 0; i < size; i++) {
+    cout << arr[i] << " ";
+  }
+  cout << endl;
 }
 
 void print2DArrayColWise(int arr[][4], int rows, int cols) {
@@ -207,13 +217,252 @@ void transposeOfMatrix() {
   // }
 
   for (int i = 0; i < 4; i++) {
-    for (int j = i; j < 4 - i ; j++) {
+    for (int j = i; j < 4 - i; j++) {
       swap(a[i][j], a[j][i]);
     }
   }
 
   cout << "Transaposed Matrix is: " << endl;
   print2DArray(a, 4, 4);
+}
+
+void shiftNegativeNumbersLeftSide() {
+  int arr[] = {0, -23, -7, 12, -10, 1, 40, -60, 89};
+  int size = 7;
+
+  int dropNegNumPos = 0;
+
+  for (int index = 0; index < size; index++) {
+    if (arr[index] < 0) {
+      swap(arr[index], arr[dropNegNumPos]);
+      dropNegNumPos++;
+    }
+  }
+
+  print1DArray(arr, size);
+}
+
+void printVector(vector<int> v) {
+  cout << "Printing Vector" << endl;
+  int size = v.size();
+  for (int i = 0; i < size; i++) {
+    // cout << v[i] << " "; // method 1
+    cout << v.at(i) << " ";
+  }
+  cout << endl;
+}
+
+void sortColorsInPlace() {
+  // 0 - red, 1- white, 2-blue
+  // input [2,0,1,2,2,0,1]
+  // output [0,0,1,1,2,2,2]
+  // leetcode 75
+  // solve using 2 pointer without using any extra space
+
+  vector<int> arr;
+  arr.push_back(1);
+  arr.push_back(0);
+  arr.push_back(2);
+  arr.push_back(2);
+  arr.push_back(1);
+  arr.push_back(0);
+  arr.push_back(1);
+  arr.push_back(0);
+
+  cout << "Existing Array" << endl;
+  printVector(arr);
+
+  // approach
+  // increment index
+  // if 0 found swap index with left
+  // if 2 found swap index with right
+  // if 1 ignore
+
+  int size = arr.size();
+  int index = 0;
+  int left = 0;
+  int right = size - 1;
+
+  while (index <= right) {
+    if (arr[index] == 0) {
+      swap(arr[index], arr[left]);
+      left++;
+      index++;
+    } else if (arr[index] == 2) {
+      swap(arr[index], arr[right]);
+      right--; // do not increase index since the swapped element might be 2 or
+               // 1
+    } else {
+      index++;
+    }
+  }
+
+  printVector(arr);
+}
+
+void rightRotateArrayByKTimes() {
+  vector<int> nums;
+  nums.push_back(1);
+  nums.push_back(2);
+  nums.push_back(3);
+  nums.push_back(4);
+  nums.push_back(5);
+  nums.push_back(6);
+  nums.push_back(7);
+
+  int size = nums.size();
+
+  vector<int> ans(size);
+  int k = 3; // k should be non negative
+
+  for (int index = 0; index < size; index++) {
+    int insertionIndex = (index + k) % size;
+    ans[insertionIndex] = nums[index];
+  }
+  nums = ans;
+
+  printVector(ans);
+}
+
+void findMissingNumberInArray() { // leetcode 268 O(n)
+  vector<int> nums;
+  nums.push_back(3);
+  nums.push_back(0);
+  nums.push_back(1);
+
+  // AP Arithmetic Progresseion
+
+  int sum = 0;
+  int size = nums.size();
+  for (int i = 0; i < size; i++) {
+    sum += nums[i];
+  }
+
+  int totalSum = ((size) * (size + 1)) / 2;
+  int ans = totalSum - sum;
+  cout << ans << endl;
+}
+
+// leetcode 2149 HW
+// leetcode 2643
+void findRowWithMaxOnes() {
+  vector<vector<int> > mat;
+  vector<int> a;
+  vector<int> b;
+  vector<int> c;
+  vector<int> d;
+  vector<int> e;
+
+  a.push_back(1);
+  a.push_back(0);
+  a.push_back(0);
+  a.push_back(0);
+
+  b.push_back(0);
+  b.push_back(1);
+  b.push_back(1);
+  b.push_back(0);
+
+  c.push_back(0);
+  c.push_back(1);
+  c.push_back(1);
+  c.push_back(0);
+
+  d.push_back(1);
+  d.push_back(1);
+  d.push_back(1);
+  d.push_back(0);
+
+  e.push_back(0);
+  e.push_back(0);
+  e.push_back(1);
+  e.push_back(0);
+
+  mat.push_back(a);
+  mat.push_back(b);
+  mat.push_back(c);
+  mat.push_back(d);
+  mat.push_back(e);
+
+  vector<int> ans;
+  int n = mat.size();
+
+  // will store max no of 1's in a row
+  int oneCount = INT_MIN;
+  // will store index no of max no of 1's row
+  int rowNo = -1;
+
+  for (int i = 0; i < n; i++) {
+    int count = 0;
+    for (int j = 0; j < mat[i].size(); j++) {
+      if(mat[i][j] == 1) {
+        count++;
+      }
+    }
+    // after row completion compare count with oneCount
+    if(count > oneCount) {
+      oneCount = count;
+      rowNo = i;
+    }
+  }
+
+  ans.push_back(rowNo);
+  ans.push_back(oneCount);
+
+  printVector(ans);
+}
+
+void print2DVector(vector<vector<int> > arr) {
+  for (int i = 0; i < arr.size(); i++) {
+    for (int j = 0; j < arr[i].size(); j++) {
+      cout << arr[i][j] << "  ";
+    }
+    cout << endl;
+  }
+}
+
+// leetcode 48 
+void RotateImage() {
+  // nxn 2d matrix 
+  // in place means no additional array for answer
+
+  vector<vector<int> > mat;
+  vector<int> a;
+  vector<int> b;
+  vector<int> c;
+
+  a.push_back(1);
+  a.push_back(2);
+  a.push_back(3);
+
+  b.push_back(4);
+  b.push_back(5);
+  b.push_back(6);
+
+  c.push_back(7);
+  c.push_back(8);
+  c.push_back(9);
+
+  mat.push_back(a);
+  mat.push_back(b);
+  mat.push_back(c);
+
+  int n = mat.size();
+
+  // transpose
+  for (int i = 0; i < n; i++) {
+    for (int j = i; j < n; j++) {
+      swap(mat[i][j], mat[j][i]);
+    }
+  }
+
+  // reverse each row
+  for(int i=0; i<n; i++) {
+    reverse(mat[i].begin(), mat[i].end());
+  }
+
+  print2DVector(mat);
+  
 }
 
 int main() {
@@ -225,6 +474,12 @@ int main() {
   // colWiseSum();
   // diagonalSum();
   // diagonalCrossSum();
-  transposeOfMatrix();
+  // transposeOfMatrix();
+  // shiftNegativeNumbersLeftSide();
+  // sortColorsInPlace();
+  // rightRotateArrayByKTimes();
+  // findMissingNumberInArray();
+  // findRowWithMaxOnes();
+  RotateImage();
   return 0;
 }
