@@ -4,7 +4,51 @@
 #include <vector>
 using namespace std;
 
-void FindPivotIndex() {}
+void FindPivotIndex() {
+  vector<int> nums;
+  // case 1 ans 3
+  // nums.push_back(1);
+  // nums.push_back(7);
+  // nums.push_back(3);
+  // nums.push_back(6);
+  // nums.push_back(5);
+  // nums.push_back(6);
+
+  // case 2 ans -1
+  // nums.push_back(1);
+  // nums.push_back(2);
+  // nums.push_back(3);
+
+  // case 3 ans 0
+  nums.push_back(2);
+  nums.push_back(1);
+  nums.push_back(-1);
+
+  vector<int> leftSum(nums.size(), 0);
+  vector<int> rightSum(nums.size(), 0);
+
+  // Calculate left Sum
+  for (int i = 1; i < nums.size(); ++i) {
+    leftSum[i] = leftSum[i - 1] + nums[i - 1];
+    // cout << leftSum[i] << leftSum[i - 1] << nums[i - 1] << endl; // debugging
+  }
+
+  // Calculate right Sum
+  for (int i = nums.size() - 2; i >= 0; --i) {
+    rightSum[i] = rightSum[i + 1] + nums[i + 1];
+    // cout << rightSum[i] << rightSum[i + 1] << nums[i + 1] << endl; // debugging
+  
+  }
+
+  // check
+  for (int i = 0; i < nums.size(); ++i) {
+    if (leftSum[i] == rightSum[i]) {
+      cout << "Pivot Index is: " << i << endl;
+      return;
+    }
+  }
+  cout << "Pivot Index is: " << -1 << endl;
+}
 
 void FindPivotIndexBruteForce() {
   vector<int> nums;
@@ -32,69 +76,8 @@ void FindPivotIndexBruteForce() {
   }
 }
 
-// for pivot index below is the tried solution but doesnot satisfy all the cases
-//   vector<int> nums;
-//   // nums.push_back(1);
-//   // nums.push_back(7);
-//   // nums.push_back(3);
-//   // nums.push_back(6);
-//   // nums.push_back(5);
-//   // nums.push_back(6);
-
-//   // nums.push_back(1);
-//   // nums.push_back(2);
-//   // nums.push_back(3);
-
-//   nums.push_back(2);
-//   nums.push_back(1);
-//   nums.push_back(-1);
-
-//   int left = 0;
-//   int right = nums.size() - 1;
-//   int leftSum = 0;
-//   int rightSum = 0;
-//   int index = 0;
-
-//   while (index <= right) {
-//     // handling left Sum
-//     if (left == 0) {
-//       left++;
-//     } else {
-//       leftSum += nums[left - 1];
-//       left++;
-//     }
-
-//     // handling right Sum
-//     if (right == nums.size() - 1) {
-//       rightSum += nums[right];
-//       right--;
-//     } else if (!(right - 1 == left || right == left || index == right ||
-//                  right < index)) {
-//       rightSum += nums[right];
-//       right--;
-//     }
-
-//     index++;
-//     if (rightSum == leftSum) {
-//       cout << left << " " << right << " " << index << " " << rightSum << " "
-//            << leftSum << endl;
-//       if (index == 0) {
-//         cout << "Pivot Index is: " << index << endl;
-
-//       } else {
-//         cout << "Pivot Index is: " << index - 1 << endl;
-//       }
-//       return;
-//     }
-//   }
-
-//   cout << left << " " << right << " " << index << " " << rightSum << " "
-//        << leftSum << endl;
-
-//   cout << "Pivot Index is: " << -1 << endl;
-
 int main() {
   FindPivotIndex();
-  FindPivotIndexBruteForce();
+  // FindPivotIndexBruteForce();
   return 0;
 }
