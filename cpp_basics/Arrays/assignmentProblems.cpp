@@ -163,16 +163,70 @@ void sortColors() {
 
 // leetcode 268
 void missingNumber() {
+  // method 1
   int nums[9] = {9, 6, 4, 2, 3, 5, 7, 0, 1};
   int size = 9;
+
+  // AP method
   int totalSum = ((size) * (size + 1)) / 2;
 
   int sum = 0;
   for (int i = 0; i < size; i++) {
     sum += nums[i];
   }
-
   cout << "The missing number is: " << totalSum - sum << endl;
+}
+
+void missingNumberBySortMethod() {
+  // method 2
+  // sorting method complexity o(nlogn) + o(n) = o(nlogn) TC, o(1) SC
+  vector<int> nums2;
+  nums2.push_back(0);
+  nums2.push_back(1);
+
+  sort(nums2.begin(), nums2.end());
+  for (int i = 0; i < nums2.size(); i++) {
+    if (i == nums2[i]) {
+      continue;
+    } else {
+      cout << "The missing number using Sort Method is: " << i << endl;
+      return;
+    }
+  }
+
+  // if all index match with nums2[index] then size is the missing number or n
+  cout << "The missing number using Sort Method is: " << nums2.size() << endl;
+}
+
+void missingNumberByXORMethod() {
+  // method 3
+  // TC - O(n) and SC - O(1)
+  vector<int> arr;
+  arr.push_back(9);
+  arr.push_back(6);
+  arr.push_back(4);
+  arr.push_back(2);
+  arr.push_back(3);
+  arr.push_back(5);
+  arr.push_back(7);
+  arr.push_back(0);
+  arr.push_back(1);
+
+  // XOR i^i = 0 else some number
+  // method
+  // XOR given arr and XOR from 0 - n
+  int ans = 0;
+  // XOR all values of array
+  for (int i = 0; i < arr.size(); i++) {
+    ans ^= arr[i];
+  }
+
+  // XOR all range items ot 0-n
+  for (int i = 0; i <= arr.size(); i++) {
+    ans ^= i;
+  }
+
+  cout << "The missing element using XOR is: " << ans << endl;
 }
 
 int main() {
@@ -180,6 +234,8 @@ int main() {
   // FindPivotIndexBruteForce();
   // keyPairTwoSum();
   // sortColors();
-  missingNumber();
+  // missingNumber();
+  // missingNumberBySortMethod();
+  // missingNumberByXORMethod();
   return 0;
 }
