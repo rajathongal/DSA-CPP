@@ -4,6 +4,16 @@
 #include <vector>
 using namespace std;
 
+void printVector(vector<int> v) {
+  cout << "Printing Vector" << endl;
+  int size = v.size();
+  for (int i = 0; i < size; i++) {
+    // cout << v[i] << " "; // method 1
+    cout << v.at(i) << " ";
+  }
+  cout << endl;
+}
+
 void printArray(int arr[], int size) {
   cout << size << endl;
   cout << "Array elements are: ";
@@ -117,9 +127,59 @@ void keyPairTwoSum() {
   }
 }
 
+// leetcode 75 sort colors
+void sortColors() {
+  vector<int> arr;
+  arr.push_back(1);
+  arr.push_back(0);
+  arr.push_back(2);
+  arr.push_back(2);
+  arr.push_back(1);
+  arr.push_back(0);
+  arr.push_back(1);
+  arr.push_back(0);
+  printVector(arr);
+
+  int size = arr.size();
+  int left = 0;
+  int right = size - 1;
+  int index = 0;
+
+  while (index <= right) {
+    if (arr[index] == 0) {
+      swap(arr[index], arr[left]);
+      left++;
+      index++;
+    } else if (arr[index] == 2) {
+      swap(arr[index], arr[right]);
+      right--;
+    } else {
+      index++;
+    }
+  }
+
+  printVector(arr);
+}
+
+// leetcode 268
+void missingNumber() {
+  int nums[9] = {9, 6, 4, 2, 3, 5, 7, 0, 1};
+  int size = 9;
+  int totalSum = ((size) * (size + 1)) / 2;
+
+  int sum = 0;
+  for (int i = 0; i < size; i++) {
+    sum += nums[i];
+  }
+
+  cout << "The missing number is: " << totalSum - sum << endl;
+}
+
 int main() {
   // FindPivotIndex();
   // FindPivotIndexBruteForce();
-  keyPairTwoSum();
+  // keyPairTwoSum();
+  // sortColors();
+  missingNumber();
   return 0;
 }
