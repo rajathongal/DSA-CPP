@@ -4,6 +4,15 @@
 #include <vector>
 using namespace std;
 
+void printArray(int arr[], int size) {
+  cout << size << endl;
+  cout << "Array elements are: ";
+  for (int i = 0; i < size; i++) {
+    cout << arr[i] << " ";
+  }
+  cout << endl;
+}
+
 void FindPivotIndex() {
   vector<int> nums;
   // case 1 ans 3
@@ -79,8 +88,38 @@ void FindPivotIndexBruteForce() {
   }
 }
 
+// leetcode 1
+void keyPairTwoSum() {
+  // sum of 2 number in array should match with the target
+  int target = 9;
+  int nums[6] = {22, 2, 7, 11, 15, 3};
+
+  sort(nums, nums + 6);
+  printArray(nums, 6);
+  int low = 0;
+  int high = 6 - 1;
+
+  while (low < high) {
+    int sum = nums[low] + nums[high];
+
+    if (sum == target) {
+      cout << low << high << "Target Exists" << endl;
+      return;
+    }
+
+    if (sum > target) {
+      high--;
+    }
+
+    if (sum < target) {
+      low++;
+    }
+  }
+}
+
 int main() {
-  FindPivotIndex();
+  // FindPivotIndex();
   // FindPivotIndexBruteForce();
+  keyPairTwoSum();
   return 0;
 }
