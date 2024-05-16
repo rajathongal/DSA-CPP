@@ -2,6 +2,7 @@
 #include <iostream>
 #include <limits.h>
 #include <vector>
+#include <cmath>
 using namespace std;
 
 void printVector(vector<int> v) {
@@ -229,6 +230,110 @@ void missingNumberByXORMethod() {
   cout << "The missing element using XOR is: " << ans << endl;
 }
 
+// Move all negative number to left side of the array in place
+// no order required
+void sortNegNumbersToLeft() {
+  // aproach 1 sort the arr TC- Onlogn SC- O(n) n-> size of ar
+  // aproach 2 Dutch National flag method or 2 pointer
+
+  vector<int> arr;
+  arr.push_back(-9);
+  arr.push_back(6);
+  arr.push_back(4);
+  arr.push_back(2);
+  arr.push_back(-3);
+  arr.push_back(5);
+  arr.push_back(-7);
+  arr.push_back(0);
+  arr.push_back(-1);
+
+  // low - manages neg numbers
+  // high - manages pos numbers
+
+  int left = 0;
+  int right = arr.size() - 1;
+
+  while (left < right) {
+    if (arr[left] < 0) {
+      left++;
+    } else if (arr[right] > 0) {
+      right--;
+    } else {
+      swap(arr[left], arr[right]);
+    }
+  }
+
+  printVector(arr);
+
+  // TC - O(n)
+  // SC - O(1)
+}
+
+// Find Duplicate number mid level 287 only 1 integer will be repeating many
+// times arr will be of size n and belong to [1,N]
+
+void findDuplicateNumberInPlace() {
+  vector<int> arr;
+  arr.push_back(1);
+  arr.push_back(3);
+  arr.push_back(4);
+  arr.push_back(2);
+  arr.push_back(2);
+
+  vector<int> nums;
+  nums.push_back(3);
+  nums.push_back(1);
+  nums.push_back(3);
+  nums.push_back(4);
+  nums.push_back(2);
+
+  vector<int> num;
+  num.push_back(3);
+  num.push_back(1);
+  num.push_back(3);
+  num.push_back(4);
+  num.push_back(2);
+
+  // aproach 1 would be to sort and compare i = i+1 then return duplicate number
+  // i visit the loop only til N-1 not N because i+1 will be out of bound
+  sort(arr.begin(), arr.end());
+  for (int i = 0; i < arr.size() - 1; i++) {
+    if (arr[i] == arr[i + 1]) {
+      cout << "Duplicate Number is: " << arr[i] << endl;
+      break;
+    }
+  }
+
+  // aproach 2  Negative marking method
+  int ans = -1;
+
+  for (int i = 0; i < nums.size(); i++) {
+
+    int index = abs(nums[i]);
+
+    // already visited check
+    if (nums[index] < 0) {
+      ans = index;
+      break;
+    }
+
+    // mark visited
+    nums[index] *= -1;
+  }
+
+  cout << "The duplicate number is: " << ans << endl;
+
+  // approach 3 positioning method
+  while(num[0] != num[num[0]]) {
+    swap(num[0], num[num[0]]);
+  }
+
+  cout << "The duplicate number is: " << num[0] << endl;
+
+  // approach 4 solve with binary search without modifying array
+
+}
+
 int main() {
   // FindPivotIndex();
   // FindPivotIndexBruteForce();
@@ -237,5 +342,7 @@ int main() {
   // missingNumber();
   // missingNumberBySortMethod();
   // missingNumberByXORMethod();
+  // sortNegNumbersToLeft();
+  findDuplicateNumberInPlace();
   return 0;
 }
