@@ -2,6 +2,8 @@
 #include <cmath>
 #include <iostream>
 #include <limits.h>
+#include <set>
+#include <unordered_map>
 #include <vector>
 using namespace std;
 
@@ -22,6 +24,23 @@ void printArray(int arr[], int size) {
     cout << arr[i] << " ";
   }
   cout << endl;
+}
+
+void printSet(set<int> mySet) {
+  // Print the elements of the set (elements will be sorted)
+  for (auto element : mySet) {
+    cout << element << " ";
+  }
+  cout << endl;
+}
+
+void print2DVector(vector<vector<int> > arr) {
+  for (int i = 0; i < arr.size(); i++) {
+    for (int j = 0; j < arr[i].size(); j++) {
+      cout << arr[i][j] << "  ";
+    }
+    cout << endl;
+  }
 }
 
 void FindPivotIndex() {
@@ -352,12 +371,218 @@ void findMissingElementWithDuplicates() {
   printVector(nums);
 
   cout << "The missing numbers are ";
-  for(int i=0;i<nums.size(); i++) {
-    if(nums[i] > 0) 
+  for (int i = 0; i < nums.size(); i++) {
+    if (nums[i] > 0)
       cout << i + 1 << " ";
   }
 
   cout << endl;
+}
+
+// first repeating element GFG
+// Given an array arrl] of size n, find the first repeating element. The element
+// should occur more than once and the index of its first occurrence should be
+// the smallest. Note:- The position you return should be according to 1-based
+// indexing. Example 1: Input: n = 7 arr] = {1, 5, 3, 4, 3, 5, 6} Output: 2
+// Explanation:
+// 5 is appearing twice and its first appearence is at index 2 which is less
+// than 3 whose first occuring index is 3.
+
+void findFirstRepeatingElement() {
+  vector<int> nums;
+  nums.push_back(1);
+  nums.push_back(5);
+  nums.push_back(3);
+  nums.push_back(4);
+  nums.push_back(3);
+  nums.push_back(5);
+  nums.push_back(6);
+
+  // // brute force approach compare each element and return first occurance
+  // for (int i = 0; i < nums.size(); i++) {
+
+  //   for (int j = i + 1; j < nums.size(); j++) {
+  //     if (nums[i] == nums[j]) {
+
+  //       cout << "Repeated Number Index is: " << i + 1 << endl;
+  //       return;
+  //     }
+  //   }
+  // }
+  // // TC is O(n) + O(n-1) = O(n^2) SC - O(1)
+  // cout << "Repeated Number Index is: " << -1 << endl;
+
+  // optimised soln
+  // storing the occurance of numbers in hash unordered map
+  // Hashing
+  unordered_map<int, int> hash;
+  for (int i = 0; i < nums.size(); i++) {
+    hash[nums[i]]++;
+  }
+
+  for (int i = 0; i < nums.size(); i++) {
+    if (hash[nums[i]] > 1) {
+      cout << "Repeated Number index is: " << i + 1 << endl;
+      return;
+    }
+  }
+  // TC is O(n) sc is O(1)
+  cout << "Repeated Number Index is: " << -1 << endl;
+}
+
+// Given three arrays sorted in increasing order. Find the elements that are
+// common in all three arrays. Note: can you take care of the duplicates without
+// using any additional Data Structure? Example 1: Input: n1 = 6; A = （1,5, 10,
+// 20, 40, 80｝ n2 = 5; B = {6, 7, 20, 80, 100} n3 = 8; C = {3, 4, 15, 20, 30,
+// 70, 80, 120} Output: 20 80 Explanation: 20 and 80 are the only common
+// elements in A, B and C.
+
+// Expected Time Complexity: 0(n1 + n2 + n3)
+// Expected Auxiliary Space: 0(n1 + n2 + n3)
+// Constraints:
+// 1 <= n1, n2, n3 <= 10^5
+// The array elements can be both positive or negative integers.
+void findCommonElementsIn3SortedArray() {
+  int n1 = 6;
+  int a[6] = {1, 5, 10, 20, 40, 80};
+  int n2 = 5;
+  int b[5] = {6, 7, 20, 80, 100};
+  int n3 = 8;
+  int c[8] = {3, 4, 15, 20, 30, 70, 80, 120};
+
+  set<int> ans;
+  int i, j, k;
+  i = j = k = 0;
+
+  while (i < n1 && j < n2 && k < n3) {
+    if (a[i] == b[j] && b[j] == c[k]) {
+      ans.insert(a[i]);
+      i++;
+      j++;
+      k++;
+    } else if (a[i] < b[j]) {
+      i++;
+    } else if (b[j] < c[k]) {
+      j++;
+    } else {
+      k++;
+    }
+  }
+
+  cout << "Common element are: ";
+  printSet(ans);
+}
+
+// Wave print a matrix
+void WavePrintMatrix() {
+  int r1[] = {1, 2, 3, 4};
+  int r2[] = {5, 6, 7, 8};
+  int r3[] = {9, 10, 11, 12};
+  int r4[] = {13, 14, 15, 16};
+  int r5[] = {17, 18, 19, 20};
+
+  vector<int> row1(r1, r1 + sizeof(r1) / sizeof(r1[0]));
+  vector<int> row2(r2, r2 + sizeof(r2) / sizeof(r2[0]));
+  vector<int> row3(r3, r3 + sizeof(r3) / sizeof(r3[0]));
+  vector<int> row4(r4, r4 + sizeof(r4) / sizeof(r4[0]));
+  vector<int> row5(r5, r5 + sizeof(r5) / sizeof(r5[0]));
+
+  vector<vector<int> > v;
+  v.push_back(row1);
+  v.push_back(row2);
+  v.push_back(row3);
+  v.push_back(row4);
+  v.push_back(row5);
+
+  int rows = v.size();
+  int cols = v[0].size();
+  for (int startCol = 0; startCol < cols; startCol++) {
+    // even col print top to bottom
+    if ((startCol & 1) == 0) {
+      for (int row = 0; row < rows; row++) {
+        cout << v[row][startCol] << " ";
+      }
+    } else {
+      // odd col print bottom to top
+      for (int row = rows - 1; row >= 0; row--) {
+        cout << v[row][startCol] << " ";
+      }
+    }
+  }
+}
+
+// spiralprint matrix leet code 54
+void SpiralPrintMatrix() {
+  int r1[] = {1, 2, 3, 4};
+  int r2[] = {5, 6, 7, 8};
+  int r3[] = {9, 10, 11, 12};
+  int r4[] = {13, 14, 15, 16};
+  int r5[] = {17, 18, 19, 20};
+
+  vector<int> row1(r1, r1 + sizeof(r1) / sizeof(r1[0]));
+  vector<int> row2(r2, r2 + sizeof(r2) / sizeof(r2[0]));
+  vector<int> row3(r3, r3 + sizeof(r3) / sizeof(r3[0]));
+  vector<int> row4(r4, r4 + sizeof(r4) / sizeof(r4[0]));
+  vector<int> row5(r5, r5 + sizeof(r5) / sizeof(r5[0]));
+
+  vector<vector<int> > v;
+  v.push_back(row1);
+  v.push_back(row2);
+  v.push_back(row3);
+  v.push_back(row4);
+  v.push_back(row5);
+  print2DVector(v);
+
+  vector<int> ans;
+  int rows = v.size();
+  int cols = v[0].size();
+  int totalElements = rows * cols;
+
+  int startingRow = 0;
+  int endingCol = cols - 1;
+  int endingRow = rows - 1;
+  int startingCol = 0;
+
+  int count = 0;
+
+  while (count < totalElements) {
+    // print starting row
+    for (int i = startingCol; i <= endingCol && count < totalElements; i++) {
+      ans.push_back(v[startingRow][i]);
+      count++;
+      // if(count >= totalElements) {
+      //   break;
+      // }
+    }
+    startingRow++;
+
+    // print ending col
+    for (int i = startingRow; i <= endingRow && count < totalElements; i++) {
+      ans.push_back(v[i][endingCol]);
+      count++;
+    }
+    endingCol--;
+
+    // print ending row
+    for (int i = endingCol; i >= startingCol && count < totalElements; i--) {
+      ans.push_back(v[endingRow][i]);
+      count++;
+    }
+    endingRow--;
+
+    // print starting col
+    for (int i = endingRow; i >= startingRow && count < totalElements; i--) {
+      ans.push_back(v[i][startingCol]);
+      count++;
+    }
+    startingCol++;
+  }
+
+  printVector(ans);
+}
+
+void findFactorialOfALargeNumber() {
+
 }
 
 int main() {
@@ -370,6 +595,11 @@ int main() {
   // missingNumberByXORMethod();
   // sortNegNumbersToLeft();
   // findDuplicateNumberInPlace();
-  findMissingElementWithDuplicates();
+  // findMissingElementWithDuplicates();
+  // findFirstRepeatingElement();
+  // findCommonElementsIn3SortedArray();
+  // WavePrintMatrix();
+  // SpiralPrintMatrix();
+  findFactorialOfALargeNumber();
   return 0;
 }
