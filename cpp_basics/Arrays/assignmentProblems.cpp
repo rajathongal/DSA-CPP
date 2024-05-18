@@ -1,8 +1,8 @@
 #include <climits>
+#include <cmath>
 #include <iostream>
 #include <limits.h>
 #include <vector>
-#include <cmath>
 using namespace std;
 
 void printVector(vector<int> v) {
@@ -324,14 +324,40 @@ void findDuplicateNumberInPlace() {
   cout << "The duplicate number is: " << ans << endl;
 
   // approach 3 positioning method
-  while(num[0] != num[num[0]]) {
+  while (num[0] != num[num[0]]) {
     swap(num[0], num[num[0]]);
   }
 
   cout << "The duplicate number is: " << num[0] << endl;
 
   // approach 4 solve with binary search without modifying array
+}
 
+void findMissingElementWithDuplicates() {
+  vector<int> nums;
+  nums.push_back(1);
+  nums.push_back(3);
+  nums.push_back(5);
+  nums.push_back(3);
+  nums.push_back(4);
+
+  // by visiting method
+  for (int i = 0; i < nums.size(); i++) {
+    int index = abs(nums[i]);
+    if (nums[index - 1] > 0) {
+      nums[index - 1] *= -1;
+    }
+  }
+
+  printVector(nums);
+
+  cout << "The missing numbers are ";
+  for(int i=0;i<nums.size(); i++) {
+    if(nums[i] > 0) 
+      cout << i + 1 << " ";
+  }
+
+  cout << endl;
 }
 
 int main() {
@@ -343,6 +369,7 @@ int main() {
   // missingNumberBySortMethod();
   // missingNumberByXORMethod();
   // sortNegNumbersToLeft();
-  findDuplicateNumberInPlace();
+  // findDuplicateNumberInPlace();
+  findMissingElementWithDuplicates();
   return 0;
 }
