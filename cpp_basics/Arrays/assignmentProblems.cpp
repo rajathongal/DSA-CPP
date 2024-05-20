@@ -581,9 +581,143 @@ void SpiralPrintMatrix() {
   printVector(ans);
 }
 
+// Given two array A[O...N-1] and BIO....M-1] of size N and M respectively,
+// representing two numbers such that every element of arrays represent a digit.
+// For example, Al] = {1, 2, 3} and BI] = {2, 1,4 } represent 123 and 214
+// respectively. The task is to find the sum of both the numbers.
+
+// Input : All = (1, 23, BO] = (2, 1}
+// Output : 33
+// Explanation:
+// N=2, and All=(1,2)
+// M=2, and BIl=(2,1}
+// Number represented by first array is 12.
+// Number represented by second array is 21
+// Sum=12+21=33
+
+// Input : A[] = {9, 5, 4, 9}, B[] = {2, 1, 4}
+// Output : 9763
+
+void AddTwoNumbersByTwoArrays() {
+  int a[] = {0, 9, 5, 4, 9};
+  int b[] = {2, 1, 4};
+
+  string ans;
+  int i = 4;
+  int j = 2;
+  int carry = 0;
+  // adding both the arrays till the both the index are same
+  while (i >= 0 && j >= 0) {
+    int x = a[i] + b[j] + carry;
+    int digit = x % 10;
+    carry = x / 10;
+    ans.push_back(digit + '0');
+    i--;
+    j--;
+  }
+
+  // if some left most digits are left to add in array a
+  while (i >= 0) {
+    int x = a[i] + carry;
+    int digit = x % 10;
+    carry = x / 10;
+    ans.push_back(digit + '0');
+    i--;
+  }
+
+  // if some left most digits are left to add in array b
+  while (j >= 0) {
+    int x = b[j] + carry;
+    int digit = x % 10;
+    carry = x / 10;
+    ans.push_back(digit + '0');
+    j--;
+  }
+
+  if (carry) {
+    ans.push_back(carry + '0');
+  }
+
+  // to remove extra zeros in the starting
+  while (ans[ans.size() - 1] == '0') {
+    ans.pop_back();
+  }
+  // the answer should be reversed to
+  reverse(ans.begin(), ans.end());
+
+  cout << ans << endl;
+}
+
 void findFactorialOfALargeNumber() {
+  int n = 50;
+  vector<int> ans;
+  ans.push_back(1);
+  int carry = 0;
+  for (int i = 2; i <= n; i++) {
+    for (int j = 0; j < ans.size(); j++) {
+      int x = ans[j] * i + carry;
+      ans[j] = x % 10;
+      carry = x / 10;
+    }
+    // if(carry) {
+    //   ans.push_back(carry);
+    // }
+
+    // if carry is also in double digit
+    while (carry) {
+      ans.push_back(carry % 10);
+      carry = carry / 10;
+    }
+
+    carry = 0;
+  }
+  reverse(ans.begin(), ans.end());
+  printVector(ans);
+}
+
+// Leetcode 26
+// Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same. Then return the number of unique elements in nums.
+// Consider the number of unique elements of nums to be k, to get accepted, you need to do the following things:
+// • Change the array nums such that the first k elements of nums contain the unique elements in the order they were present in nums initially. The remaining elements of nums are not important as well as the size of nums:.
+// • Return k.
+// Remove Duplicates
+// Input: nums = [0,0,1, 1, 1,2,2,3,3,4]
+// Output: 5, nums =
+// ［0,1,2,3,4._,_,_,_,_］
+// Explanation: Your function should return k = 5, with the
+// first five elements of nums being 0, 1, 2, 3, and 4 respectively.
+// It does not matter what you leave beyond the returned k (hence they are underscores).
+void removeDuplicates() {
+  vector<int> arr;
+  arr.push_back(0);
+  arr.push_back(0);
+  arr.push_back(1);
+  arr.push_back(1);
+  arr.push_back(1);
+  arr.push_back(2);
+  arr.push_back(2);
+  arr.push_back(3);
+  arr.push_back(3);
+  arr.push_back(4);
+
+  int i=1, j=0;
+
+  while(i < arr.size()) {
+    if(arr[i] == arr[j]) {
+      i++;
+    } else arr[++j] = arr[i++];
+    // else {
+    //   j++;
+    //   arr[j] = arr[i];
+    //   i++;
+    // }
+  }
+  cout << "K is: " << j + 1 << endl;
+  printVector(arr);
+
 
 }
+
 
 int main() {
   // FindPivotIndex();
@@ -600,6 +734,8 @@ int main() {
   // findCommonElementsIn3SortedArray();
   // WavePrintMatrix();
   // SpiralPrintMatrix();
-  findFactorialOfALargeNumber();
+  // AddTwoNumbersByTwoArrays();
+  // findFactorialOfALargeNumber();
+  removeDuplicates();
   return 0;
 }
