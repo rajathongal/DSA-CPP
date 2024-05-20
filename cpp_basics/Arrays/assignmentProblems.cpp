@@ -676,17 +676,22 @@ void findFactorialOfALargeNumber() {
 }
 
 // Leetcode 26
-// Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same. Then return the number of unique elements in nums.
-// Consider the number of unique elements of nums to be k, to get accepted, you need to do the following things:
-// • Change the array nums such that the first k elements of nums contain the unique elements in the order they were present in nums initially. The remaining elements of nums are not important as well as the size of nums:.
-// • Return k.
+// Given an integer array nums sorted in non-decreasing order, remove the
+// duplicates in-place such that each unique element appears only once. The
+// relative order of the elements should be kept the same. Then return the
+// number of unique elements in nums. Consider the number of unique elements of
+// nums to be k, to get accepted, you need to do the following things: • Change
+// the array nums such that the first k elements of nums contain the unique
+// elements in the order they were present in nums initially. The remaining
+// elements of nums are not important as well as the size of nums:. • Return k.
 // Remove Duplicates
 // Input: nums = [0,0,1, 1, 1,2,2,3,3,4]
 // Output: 5, nums =
 // ［0,1,2,3,4._,_,_,_,_］
 // Explanation: Your function should return k = 5, with the
 // first five elements of nums being 0, 1, 2, 3, and 4 respectively.
-// It does not matter what you leave beyond the returned k (hence they are underscores).
+// It does not matter what you leave beyond the returned k (hence they are
+// underscores).
 void removeDuplicates() {
   vector<int> arr;
   arr.push_back(0);
@@ -700,12 +705,13 @@ void removeDuplicates() {
   arr.push_back(3);
   arr.push_back(4);
 
-  int i=1, j=0;
+  int i = 1, j = 0;
 
-  while(i < arr.size()) {
-    if(arr[i] == arr[j]) {
+  while (i < arr.size()) {
+    if (arr[i] == arr[j]) {
       i++;
-    } else arr[++j] = arr[i++];
+    } else
+      arr[++j] = arr[i++];
     // else {
     //   j++;
     //   arr[j] = arr[i];
@@ -714,10 +720,86 @@ void removeDuplicates() {
   }
   cout << "K is: " << j + 1 << endl;
   printVector(arr);
-
-
 }
 
+// leetcode 643
+// You are given an integer array nums consisting of n elements, and an integer
+// k. Find a contiguous subarray whose length is equal to k that has the maximum
+// average value and return this value. Any answer with a calculation error less
+// than 10-* will be accepted. Example 1: Input: nums = [1,12, -5, -6,50,31, k =
+// 4 Output: 12.75000 Explanation: Maximum average is (12 - 5 - 6 + 50) / 4 = 51
+// / 4 = 12.75 Example 2: Input: nums = [51, k = 1 Output: 5.00000 answer type
+// is double
+
+class maxAvgSubArray {
+
+  // method1 get all subarray sum of length k brute force
+public:
+  void bruteForce() {
+    vector<int> nums;
+    int k = 4;
+
+    nums.push_back(1);
+    nums.push_back(12);
+    nums.push_back(-5);
+    nums.push_back(-6);
+    nums.push_back(50);
+    nums.push_back(3);
+
+    int size = nums.size();
+
+    int maxSum = INT_MIN;
+    int i = 0, j = k - 1;
+
+    while (j <= size) {
+      int sum = 0;
+      for (int y = i; y <= j; y++) {
+        sum += nums[y];
+      }
+
+      maxSum = max(maxSum, sum);
+      i++;
+      j++;
+    }
+
+    double Avg = maxSum / (double)k;
+    cout << "Max Avg by brute force is: " << Avg << endl;
+    ;
+  }
+
+// Tc O(n)
+public:
+  void slidingWindowMethod() {
+    vector<int> nums;
+    int k = 4;
+
+    nums.push_back(1);
+    nums.push_back(12);
+    nums.push_back(-5);
+    nums.push_back(-6);
+    nums.push_back(50);
+    nums.push_back(3);
+
+    int size = nums.size();
+    int i = 0, j = k - 1;
+    int sum = 0;
+    for (int y = i; y <= j; ++y) {
+      sum += nums[y];
+    }
+
+    int maxSum = sum;
+    j++;
+    while (j < size) {
+      sum = sum - nums[i++];
+      sum = sum + nums[j++];
+      maxSum = max(maxSum, sum);
+    }
+
+    double Avg = maxSum / (double)k;
+    cout << "Max Avg by Sliding Window method is: " << Avg << endl;
+    ;
+  }
+};
 
 int main() {
   // FindPivotIndex();
@@ -736,6 +818,10 @@ int main() {
   // SpiralPrintMatrix();
   // AddTwoNumbersByTwoArrays();
   // findFactorialOfALargeNumber();
-  removeDuplicates();
+  // removeDuplicates();
+  maxAvgSubArray MaxAvgSubArrInst;
+  MaxAvgSubArrInst.bruteForce();
+  MaxAvgSubArrInst.slidingWindowMethod();
+
   return 0;
 }
