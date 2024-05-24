@@ -26,7 +26,74 @@ void basicBinarySearch() {
   cout << "Target Not Found" << endl;
 }
 
+int findFirstOccurance() {
+  int arr[8] = {10, 20, 20, 30, 30, 30, 40, 50};
+  int target = 30;
+  int start = 0;
+  int end = 7;
+  // int mid = (start + end) / 2;
+  int mid = start + (end - start) / 2; // Best Practice
+  int answer = -1;
+
+  while (start <= end) {
+    if (arr[mid] == target) {
+      answer = mid;
+      // move towards left
+      end = mid - 1;
+    } else if (target > arr[mid]) {
+      start = mid + 1;
+    } else if (target < arr[mid]) {
+      end = mid - 1;
+    }
+
+    mid = (start + end) / 2;
+  }
+
+  cout << "First Occurance of target " << target << " is at: " << answer
+       << endl;
+  return answer;
+}
+
+int findLastOccurance() {
+  int arr[8] = {10, 20, 20, 30, 30, 30, 40, 50};
+  int target = 30;
+  int start = 0;
+  int end = 7;
+  // int mid = (start + end) / 2;
+  int mid = start + (end - start) / 2; // Best Practice
+  int answer = -1;
+
+  while (start <= end) {
+    if (arr[mid] == target) {
+      answer = mid;
+      // move towards left
+      start = mid + 1;
+    } else if (target > arr[mid]) {
+      start = mid + 1;
+    } else if (target < arr[mid]) {
+      end = mid - 1;
+    }
+
+    mid = (start + end) / 2;
+  }
+
+  cout << "Last Occurance of target " << target << " is at: " << answer << endl;
+  return answer;
+}
+
+void findTotalOccurance() {
+  int arr[8] = {10, 20, 20, 30, 30, 30, 40, 50};
+  int target = 30;
+  int start = 0;
+  int end = 7;
+  // int mid = (start + end) / 2;
+  int mid = start + (end - start) / 2; // Best Practice
+}
+
 int main() {
-  basicBinarySearch();
+  // basicBinarySearch();
+  // findFirstOccurance();
+  // findLastOccurance();
+  findTotalOccurance();
   return 0;
 }
