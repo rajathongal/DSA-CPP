@@ -82,12 +82,11 @@ int findLastOccurance() {
 }
 
 void findTotalOccurance() {
-  int arr[8] = {10, 20, 20, 30, 30, 30, 40, 50};
-  int target = 30;
-  int start = 0;
-  int end = 7;
-  // int mid = (start + end) / 2;
-  int mid = start + (end - start) / 2; // Best Practice
+  int firstOccurance = findFirstOccurance();
+  int lastOcurance = findLastOccurance();
+  int totalOccurance = lastOcurance - firstOccurance + 1;
+
+  cout << "Totol Occurance is: " << totalOccurance << endl;
 }
 
 int main() {
