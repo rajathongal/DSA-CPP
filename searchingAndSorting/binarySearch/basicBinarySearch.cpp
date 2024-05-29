@@ -27,6 +27,26 @@ void basicBinarySearch() {
   cout << "Target Not Found" << endl;
 }
 
+// same as above with returns
+int binarySearch(vector<int> &arr, int start, int end, int target) {
+  int size = arr.size();
+  int mid = (start + end) / 2;
+
+  while (start <= end) {
+    if (arr[mid] == target) {
+      return mid;
+    } else if (arr[mid] > target) {
+      end = mid - 1;
+    } else if (arr[mid] < target) {
+      start = mid + 1;
+    }
+
+    mid = (start + end) / 2;
+  }
+
+  return -1;
+}
+
 int findFirstOccurance() {
   int arr[8] = {10, 20, 20, 30, 30, 30, 40, 50};
   int target = 30;
@@ -148,6 +168,62 @@ void findPeakIndexInAMountainArray(int arr[], int size) {
   cout << "Peak element is: " << start << endl;
 }
 
+int findPivotIndex(vector<int> &arr) {
+  int size = arr.size();
+  int start = 0;
+  int end = size - 1;
+  int mid = start + (end - start) / 2;
+
+  while (start <= end) {
+    // corner case
+    if (start == end) {
+      return start;
+    }
+
+    // check if mid greater than next element
+    // make sure mid does not go out the range and is inside the size of the
+    // array since we are checking next element then we will make sure the next
+    // element is equal to end or less than end
+    if (mid + 1 <= end && arr[mid] > arr[mid + 1]) {
+      return mid; // example 16 > 2 then 16 is pivot
+    } else if (mid - 1 >= start && arr[mid] < arr[mid - 1]) {
+      // check if mid is less than the previous element
+      // make sure mid is not out of range and is inside the size of array
+      // since we are checking previous element then we need to make sure mid -
+      // 1 is greater than or equal to start
+      return mid - 1; // example 2 < 16 then pivot would be 16
+    } else if (arr[start] > arr[mid]) {
+      // lets move if the pivot is not yet found towards left
+      // if the increasing order 12, 14, 16 is on the left part and mid lies in
+      // 2,4,6,8,10 then we definetely should move towards left
+      end = mid - 1;
+    } else {
+      // move right
+      start = mid + 1;
+    }
+
+    // do not forget to update mid
+    mid = start + (end - start) / 2;
+  }
+
+  // when nothing found
+  return -1;
+}
+
+int search(vector<int> &nums, int target) {
+  int pivotIndex = findPivotIndex(nums);
+  int size = nums.size();
+  int ans = -1;
+
+  if (target >= nums[0] && target <= nums[pivotIndex]) {
+    ans = binarySearch(nums, 0, pivotIndex, target);
+  } else {
+    ans = binarySearch(nums, pivotIndex, size - 1, target);
+  }
+
+  return ans;
+}
+
 int main() {
   int arr[] = {1, 2, 3, 4, 5, 6, 7, 8}; // for missing elem
   int size = 9;                         // for missing elem
@@ -155,11 +231,32 @@ int main() {
   int arrA[] = {0, 2, 1, 0}; // for peak index
   int sizeA = 4;             // for peak index
 
+  // for pivot index
+  vector<int> v;
+
+  v.push_back(12);
+  v.push_back(14);
+  v.push_back(16);
+  v.push_back(2);
+  v.push_back(4);
+  v.push_back(6);
+  v.push_back(8);
+  v.push_back(10);
+
+  // // func calls
   // basicBinarySearch();
   // findFirstOccurance();
   // findLastOccurance();
   // findTotalOccurance();
   // findMissingElement(arr, size);
-  findPeakIndexInAMountainArray(arrA, sizeA);
+  // findPeakIndexInAMountainArray(arrA, sizeA);
+
+  // // pivot index
+  int pivotIndex = findPivotIndex(v);
+  cout << "Pivot Index is: " << pivotIndex << endl;
+  // search in rotated and sorted array
+  int ans = search(v, 8);
+  cout << "Target is at: " << ans << " Index" << endl;
+
   return 0;
 }
