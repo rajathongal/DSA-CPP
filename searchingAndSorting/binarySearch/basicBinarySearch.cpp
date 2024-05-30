@@ -274,7 +274,7 @@ int findSQRTWithPrecesion(int num) {
 double precesionSQRT(int n) {
   double sqrt = findSQRTWithPrecesion(51);
   double step = 0.1;
-  int precesion = 5;
+  int precesion = 10;
   for(int i=0; i< precesion; i++)
   {
     double j = sqrt;
