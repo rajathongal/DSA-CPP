@@ -275,8 +275,7 @@ double precesionSQRT(int n) {
   double sqrt = findSQRTWithPrecesion(51);
   double step = 0.1;
   int precesion = 10;
-  for(int i=0; i< precesion; i++)
-  {
+  for (int i = 0; i < precesion; i++) {
     double j = sqrt;
     while (j * j <= n) {
       sqrt = j;
@@ -285,6 +284,33 @@ double precesionSQRT(int n) {
     step /= 10;
   }
   return sqrt;
+}
+
+void findTargetIn2DSortedArray(vector<vector<int> > &arr, int target) {
+  int rows = arr.size();
+  int cols = arr[0].size();
+  int size = rows * cols;
+  int start = 0;
+  int end = size - 1;
+  int mid = start + (end - start) / 2;
+
+  while(start <= end) {
+    int rowIndex = mid/cols;
+    int colIndex = mid%cols;
+    int currentNum = arr[rowIndex][colIndex];
+
+    if(currentNum == target) {
+      cout << "Target found at: row - " << rowIndex << " col - " << colIndex << endl;
+      return;
+    } else if (currentNum > target) {
+      // move left 
+      end = mid - 1;
+    } else {
+      start = mid + 1;
+    }
+
+    mid = start + (end - start) / 2;
+  }
 }
 
 int main() {
@@ -306,6 +332,31 @@ int main() {
   v.push_back(8);
   v.push_back(10);
 
+  // for 2d array find
+  vector<int> row1;
+  vector<int> row2;
+  vector<int> row3;
+
+  row1.push_back(1);
+  row1.push_back(2);
+  row1.push_back(3);
+  row1.push_back(4);
+
+  row2.push_back(5);
+  row2.push_back(6);
+  row2.push_back(7);
+  row2.push_back(8);
+
+  row3.push_back(9);
+  row3.push_back(10);
+  row3.push_back(11);
+  row3.push_back(12);
+
+  vector<vector<int> > arrB;
+  arrB.push_back(row1);
+  arrB.push_back(row2);
+  arrB.push_back(row3);
+
   // // func calls
   // basicBinarySearch();
   // findFirstOccurance();
@@ -324,9 +375,9 @@ int main() {
   // findNearestSQRT();
   // findSQRTWithPrecesion(51);
   double sqrt = precesionSQRT(51);
-  // cout << "Precesion SQRT is: " << sqrt << endl; // wont show all precesion use printf
-  printf("%0.10f", sqrt);
-  cout << endl;
+  // cout << "Precesion SQRT is: " << sqrt << endl; // wont show all precesion
+  // use printf printf("%0.10f", sqrt); cout << endl;
 
+  findTargetIn2DSortedArray(arrB, 7);
   return 0;
 }
