@@ -294,16 +294,17 @@ void findTargetIn2DSortedArray(vector<vector<int> > &arr, int target) {
   int end = size - 1;
   int mid = start + (end - start) / 2;
 
-  while(start <= end) {
-    int rowIndex = mid/cols;
-    int colIndex = mid%cols;
+  while (start <= end) {
+    int rowIndex = mid / cols;
+    int colIndex = mid % cols;
     int currentNum = arr[rowIndex][colIndex];
 
-    if(currentNum == target) {
-      cout << "Target found at: row - " << rowIndex << " col - " << colIndex << endl;
+    if (currentNum == target) {
+      cout << "Target found at: row - " << rowIndex << " col - " << colIndex
+           << endl;
       return;
     } else if (currentNum > target) {
-      // move left 
+      // move left
       end = mid - 1;
     } else {
       start = mid + 1;
@@ -311,6 +312,38 @@ void findTargetIn2DSortedArray(vector<vector<int> > &arr, int target) {
 
     mid = start + (end - start) / 2;
   }
+}
+
+void getQuotient(int divisorIn, int dividendIn) {
+  int divisor = abs(divisorIn);
+  int dividend = abs(dividendIn);
+  int start = 0;
+  int end = dividend;
+  int mid = start + (end - start) / 2;
+  int ans = - 1;
+
+  while (start <= end) {
+    if (mid * divisor == dividend) {
+      ans = mid;
+      if((divisorIn > 0 && dividendIn < 0) || (divisorIn < 0 && dividendIn > 0)) {
+        ans = 0 - ans;
+      }
+
+      cout << "Quotient is nearest to: " << ans << endl;
+      return;
+    } else if (mid * divisor < dividend) {
+      ans = mid;       // possible ans
+      start = mid + 1; // move right
+    } else {
+      end = mid - 1; // move left
+    }
+    mid = start + (end - start) / 2;
+  }
+
+  if((divisorIn > 0 && dividendIn < 0) || (divisorIn < 0 && dividendIn > 0)) {
+    ans = 0 - ans;
+  }
+  cout << "Quotient is nearest to: " << ans << endl;
 }
 
 int main() {
@@ -374,10 +407,15 @@ int main() {
 
   // findNearestSQRT();
   // findSQRTWithPrecesion(51);
-  double sqrt = precesionSQRT(51);
+  // double sqrt = precesionSQRT(51);
   // cout << "Precesion SQRT is: " << sqrt << endl; // wont show all precesion
   // use printf printf("%0.10f", sqrt); cout << endl;
 
-  findTargetIn2DSortedArray(arrB, 7);
+  // findTargetIn2DSortedArray(arrB, 7);
+
+  getQuotient(7, 29);
+  getQuotient(2, 32);
+  getQuotient(-2, 32); // negative no check
+
   return 0;
 }
