@@ -224,6 +224,69 @@ int search(vector<int> &nums, int target) {
   return ans;
 }
 
+void findNearestSQRT() {
+  int num = 51;
+  int start = 0;
+  int end = num;
+  long long mid = start + (end - start) / 2;
+  int ans = -1;
+
+  while (start <= end) {
+    if (mid * mid == num) {
+      cout << "SQRT is: " << mid << endl;
+      return;
+    } else if (mid * mid <= num) {
+      // move right side
+      start = mid + 1;
+      ans = mid;
+    } else {
+      end = mid - 1;
+      ans = mid;
+    }
+
+    mid = start + (end - start) / 2;
+  }
+
+  cout << "SQRT is: " << ans << endl;
+}
+
+int findSQRTWithPrecesion(int num) {
+
+  int start = 0;
+  int end = num;
+  long long mid = start + (end - start) / 2;
+  int ans = -1;
+
+  while (start <= end) {
+    if (mid * mid <= num) {
+      ans = mid;
+      start = mid + 1; // move left
+    } else {
+      end = mid - 1;
+    }
+
+    mid = start + (end - start) / 2;
+  }
+
+  return ans;
+}
+
+double precesionSQRT(int n) {
+  double sqrt = findSQRTWithPrecesion(51);
+  double step = 0.1;
+  int precesion = 5;
+  for(int i=0; i< precesion; i++)
+  {
+    double j = sqrt;
+    while (j * j <= n) {
+      sqrt = j;
+      j += step;
+    }
+    step /= 10;
+  }
+  return sqrt;
+}
+
 int main() {
   int arr[] = {1, 2, 3, 4, 5, 6, 7, 8}; // for missing elem
   int size = 9;                         // for missing elem
@@ -252,11 +315,18 @@ int main() {
   // findPeakIndexInAMountainArray(arrA, sizeA);
 
   // // pivot index
-  int pivotIndex = findPivotIndex(v);
-  cout << "Pivot Index is: " << pivotIndex << endl;
+  // int pivotIndex = findPivotIndex(v);
+  // cout << "Pivot Index is: " << pivotIndex << endl;
   // search in rotated and sorted array
-  int ans = search(v, 8);
-  cout << "Target is at: " << ans << " Index" << endl;
+  // int ans = search(v, 8);
+  // cout << "Target is at: " << ans << " Index" << endl;
+
+  // findNearestSQRT();
+  // findSQRTWithPrecesion(51);
+  double sqrt = precesionSQRT(51);
+  // cout << "Precesion SQRT is: " << sqrt << endl; // wont show all precesion use printf
+  printf("%0.10f", sqrt);
+  cout << endl;
 
   return 0;
 }
