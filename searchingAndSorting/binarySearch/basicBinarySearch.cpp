@@ -320,12 +320,13 @@ void getQuotient(int divisorIn, int dividendIn) {
   int start = 0;
   int end = dividend;
   int mid = start + (end - start) / 2;
-  int ans = - 1;
+  int ans = -1;
 
   while (start <= end) {
     if (mid * divisor == dividend) {
       ans = mid;
-      if((divisorIn > 0 && dividendIn < 0) || (divisorIn < 0 && dividendIn > 0)) {
+      if ((divisorIn > 0 && dividendIn < 0) ||
+          (divisorIn < 0 && dividendIn > 0)) {
         ans = 0 - ans;
       }
 
@@ -340,7 +341,7 @@ void getQuotient(int divisorIn, int dividendIn) {
     mid = start + (end - start) / 2;
   }
 
-  if((divisorIn > 0 && dividendIn < 0) || (divisorIn < 0 && dividendIn > 0)) {
+  if ((divisorIn > 0 && dividendIn < 0) || (divisorIn < 0 && dividendIn > 0)) {
     ans = 0 - ans;
   }
   cout << "Quotient is nearest to: " << ans << endl;
@@ -349,26 +350,71 @@ void getQuotient(int divisorIn, int dividendIn) {
 void searchInNearlySortedArray(int arr[], int size, int target) {
 
   int start = 0;
-  int end = size -1;
-  int mid = start + (end-start) / 2;
+  int end = size - 1;
+  int mid = start + (end - start) / 2;
 
-  while(start <= end) {
-    if(mid + 1 < size && target == arr[mid + 1]) {
+  while (start <= end) {
+    if (mid + 1 < size && target == arr[mid + 1]) {
       cout << "Target found on index: " << mid + 1 << endl;
       return;
-    } else if(target == arr[mid]) {
+    } else if (target == arr[mid]) {
       cout << "Target found on index: " << mid << endl;
       return;
-    } else if(mid -1 >= 0 && target == arr[mid - 1]) {
+    } else if (mid - 1 >= 0 && target == arr[mid - 1]) {
       cout << "Target found on index: " << mid - 1 << endl;
       return;
-    } else if(target > arr[mid]) {
-      start = mid + 2; // move right 
+    } else if (target > arr[mid]) {
+      start = mid + 2; // move right
     } else {
-      end = mid -2;
+      end = mid - 2;
     }
-    mid = start + (end-start) / 2;
+    mid = start + (end - start) / 2;
   }
+}
+
+void findOddOccuringElement(int arr[], int size) {
+  int start = 0;
+  int end = size - 1;
+  int mid = start + (end - start) / 2;
+
+  while (start <= end) {
+    // single elem case
+    if (start == end) {
+      cout << "Odd Occuring Element Index is: " << start << endl;
+      return;
+    }
+
+    // check mid for even or odd
+    if (mid & 1) {
+      // odd case
+      if (mid - 1 >= 0 && arr[mid] == arr[mid - 1]) {
+        // move right by mid + 1 as we have checked only mid and mid -1
+        start = mid + 1;
+      } else {
+        // move left by mid - 1 as current mid - 1 can be the answer
+        end = mid - 1;
+      }
+
+    } else {
+      // even case
+      if (mid + 1 < size && arr[mid] == arr[mid + 1]) {
+        // move right as answer might exists in right side on even index and
+        // current even index has a pair ex(mid, mid +1) are pair
+        start = mid + 2; // +2 as we already know mid + 1 is same as mid so we
+                         // move right by 2 places
+      } else {
+        // move left as current mid might be an answer and mid + 1 is not same
+        // so we will get answer by start == end condition once we move left we
+        // might stand on answer with start and end on answer
+        end = mid; // current mid might be answer and doing mid - 1 we might
+                   // lose the answer
+      }
+    }
+
+    mid = start + (end - start) / 2;
+  }
+
+  cout << "Odd Occurance not found" << endl;
 }
 
 int main() {
@@ -416,9 +462,13 @@ int main() {
   arrB.push_back(row3);
 
   // for nearly sorted array check
-  int arrC[] = {20,10,30,50,40,70,60};
+  int arrC[] = {20, 10, 30, 50, 40, 70, 60};
   int sizeC = 7;
   int targetC = 70;
+
+  // for odd occuring element
+  int arrD[] = {1, 1, 5, 5, 2, 2, 3, 3, 2, 4, 4};
+  int sizeD = 11;
 
   // // func calls
   // basicBinarySearch();
@@ -447,7 +497,8 @@ int main() {
   // getQuotient(2, 32);
   // getQuotient(-2, 32); // negative no check
 
-  searchInNearlySortedArray(arrC, sizeC, targetC);
+  // searchInNearlySortedArray(arrC, sizeC, targetC);
+  findOddOccuringElement(arrD, sizeD);
 
   return 0;
 }
