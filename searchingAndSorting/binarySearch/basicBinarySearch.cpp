@@ -346,6 +346,31 @@ void getQuotient(int divisorIn, int dividendIn) {
   cout << "Quotient is nearest to: " << ans << endl;
 }
 
+void searchInNearlySortedArray(int arr[], int size, int target) {
+
+  int start = 0;
+  int end = size -1;
+  int mid = start + (end-start) / 2;
+
+  while(start <= end) {
+    if(mid + 1 < size && target == arr[mid + 1]) {
+      cout << "Target found on index: " << mid + 1 << endl;
+      return;
+    } else if(target == arr[mid]) {
+      cout << "Target found on index: " << mid << endl;
+      return;
+    } else if(mid -1 >= 0 && target == arr[mid - 1]) {
+      cout << "Target found on index: " << mid - 1 << endl;
+      return;
+    } else if(target > arr[mid]) {
+      start = mid + 2; // move right 
+    } else {
+      end = mid -2;
+    }
+    mid = start + (end-start) / 2;
+  }
+}
+
 int main() {
   int arr[] = {1, 2, 3, 4, 5, 6, 7, 8}; // for missing elem
   int size = 9;                         // for missing elem
@@ -390,6 +415,11 @@ int main() {
   arrB.push_back(row2);
   arrB.push_back(row3);
 
+  // for nearly sorted array check
+  int arrC[] = {20,10,30,50,40,70,60};
+  int sizeC = 7;
+  int targetC = 70;
+
   // // func calls
   // basicBinarySearch();
   // findFirstOccurance();
@@ -413,9 +443,11 @@ int main() {
 
   // findTargetIn2DSortedArray(arrB, 7);
 
-  getQuotient(7, 29);
-  getQuotient(2, 32);
-  getQuotient(-2, 32); // negative no check
+  // getQuotient(7, 29);
+  // getQuotient(2, 32);
+  // getQuotient(-2, 32); // negative no check
+
+  searchInNearlySortedArray(arrC, sizeC, targetC);
 
   return 0;
 }
