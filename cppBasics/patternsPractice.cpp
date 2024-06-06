@@ -522,10 +522,12 @@ void FancyPatternTwo() {
   // lower half
   for (int row = 0; row < size; row++) {
     for (int col = 0; col < size - row - 1; col++) {
+      // for last column
       if (col == size - row - 2) {
         cout << size - row - 1;
 
       } else {
+        // for rest of the columns
         cout << size - row - 1 << " * ";
       }
     }
