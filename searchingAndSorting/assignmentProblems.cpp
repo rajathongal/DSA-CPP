@@ -2,6 +2,7 @@
 #include <set>
 #include <utility>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 // Leetcode 532 K diff pairs
@@ -60,10 +61,8 @@ void kDiffPairsUsingTwoPointer() {
 }
 
 // using binary search
-int binarySearch(vector<int> &nums, int start, int target) {
+int binarySearch(vector<int> &nums, int start, int end, int target) {
 
-  int size = nums.size();
-  int end = size - 1;
   int mid = start + (end - start) / 2;
 
   while (start <= end) {
@@ -92,7 +91,7 @@ void kDiffPairsUsingBinarySearch() {
   sort(nums.begin(), nums.end());
   set<pair<int, int> > answer;
   for (int i = 0; i < nums.size(); i++) {
-    if (binarySearch(nums, i + 1, abs(nums[i] + k)) != -1) {
+    if (binarySearch(nums, i + 1, nums.size() - 1, abs(nums[i] + k)) != -1) {
       answer.insert(make_pair(nums[i], nums[i] + k));
     }
   }
@@ -184,10 +183,43 @@ void findKClosestElementsUsingBinarySearch() {
   cout << endl;
 }
 
+void exponentialSearch() {
+  vector<int> nums;
+  nums.push_back(3);
+  nums.push_back(4);
+  nums.push_back(5);
+  nums.push_back(6);
+  nums.push_back(11);
+  nums.push_back(13);
+  nums.push_back(14);
+  nums.push_back(15);
+  nums.push_back(56);
+  nums.push_back(70);
+
+  int target = 13;
+  int size = nums.size();
+  int ans = -1;
+
+  if(nums[0] == target) {
+    ans = 0;
+  }
+
+  int i=1;
+
+  while(i < size && nums[i] <= target) {
+    i *= 2; // or i = i * 2 or i = i<< 1
+  }
+
+  ans = binarySearch(nums, i/2, min(i, size - 1), target);
+
+  cout << "The target is at index: " << ans << endl;
+}
+
 int main() {
   // kDiffPairsUsingTwoPointer();
   // kDiffPairsUsingBinarySearch();
   // findKClosestElementsUsingTwoPointers();
-  findKClosestElementsUsingBinarySearch();
+  // findKClosestElementsUsingBinarySearch();
+  exponentialSearch();
   return 0;
 }
