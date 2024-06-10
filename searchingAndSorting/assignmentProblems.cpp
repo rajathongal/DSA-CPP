@@ -257,7 +257,8 @@ void exponentialSearch() {
 // value as the maximum limit of pages one can get. And check for the limit if
 // answer is valid then update the limit accordingly.
 
-bool isPossibleAnswer(int APageInBooks[], int NBooks, int MStudents, int solOrMid) {
+bool isPossibleAnswer(int APageInBooks[], int NBooks, int MStudents,
+                      int solOrMid) {
   // we need to store the total number of books or pages allocated to a
   // particular student
   //  we do that with below variable and reset for next student
@@ -299,15 +300,15 @@ bool isPossibleAnswer(int APageInBooks[], int NBooks, int MStudents, int solOrMi
       // if the current (i-th) book's page number when added to sum of
       // previously allocated pages sum
       // does not exceed the solution / mid
-      // then the current student can take another book or pages so 
+      // then the current student can take another book or pages so
       // add the current pages to the sum
       currentAllocationPageSum += APageInBooks[i];
     }
   }
 
-
-  // when the program reaches here then all students have been allocated sufficient number of books 
-  // and there are not any leftovers and there exists a possible solution
+  // when the program reaches here then all students have been allocated
+  // sufficient number of books and there are not any leftovers and there exists
+  // a possible solution
   return true;
 }
 
@@ -354,12 +355,61 @@ void bookPartition() {
   cout << "The answer is: " << ans << endl;
 }
 
+bool isPossibleSolutionForPainters(int a[], int n, int k, long long mid) {
+  long long timeSum = 0;
+  int painterCount = 1;
+
+  for (int i = 0; i < n; i++) {
+    if (a[i] > mid) {
+      return false;
+    }
+
+    if (a[i] + timeSum > mid) {
+      painterCount++;
+      timeSum = a[i];
+
+      if (painterCount > k) {
+        return false;
+      }
+    } else {
+      timeSum += a[i];
+    }
+  }
+
+  return true;
+}
+
+void paintersPartionProblem() {
+  int a[] = {5, 10, 30, 20, 15};
+  int n = 5;
+  int k = 3;
+
+  long long start = 0;
+  long long end = accumulate(a, a + n, 0);
+
+  long long ans = -1;
+
+  while (start <= end) {
+    long long mid = start + (end - start) / 2;
+
+    if (isPossibleSolutionForPainters(a, n, k, mid)) {
+      ans = mid;
+      end = mid -1;
+    } else {
+      start = mid + 1;
+    }
+  }
+
+  cout << "The answer is: " << ans << endl;
+}
+
 int main() {
   // kDiffPairsUsingTwoPointer();
   // kDiffPairsUsingBinarySearch();
   // findKClosestElementsUsingTwoPointers();
   // findKClosestElementsUsingBinarySearch();
   // exponentialSearch();
-  bookPartition();
+  // bookPartition();
+  paintersPartionProblem();
   return 0;
 }
