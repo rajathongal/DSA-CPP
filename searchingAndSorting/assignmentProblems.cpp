@@ -394,7 +394,7 @@ void paintersPartionProblem() {
 
     if (isPossibleSolutionForPainters(a, n, k, mid)) {
       ans = mid;
-      end = mid -1;
+      end = mid - 1;
     } else {
       start = mid + 1;
     }
@@ -403,26 +403,28 @@ void paintersPartionProblem() {
   cout << "The answer is: " << ans << endl;
 }
 
-bool isPossiblePlacementForAggressiveCows(vector<int> &stalls, int k, int mid) {
+bool isPossiblePlacementForAggressiveCows(vector< int > &stalls, int k,
+                                          int mid) {
   // can we place k cows with at least mid distance between cows
 
   int cowCount = 1;
   int currentStallPosition = stalls[0]; // start with first position
 
-  for(int i = 1; i< stalls.size(); i++) {
-    if(stalls[i] - currentStallPosition >= mid) {
+  for (int i = 1; i < stalls.size(); i++) {
+    if (stalls[i] - currentStallPosition >= mid) {
       cowCount++;
       currentStallPosition = stalls[i];
     }
 
-    if(cowCount == k) return true; // this means all cows are placed
+    if (cowCount == k)
+      return true; // this means all cows are placed
   }
 
   return false;
 }
 
 void aggressiveCowsPlacement() {
-  vector<int> stalls;
+  vector< int > stalls;
   stalls.push_back(10);
   stalls.push_back(1);
   stalls.push_back(2);
@@ -441,10 +443,10 @@ void aggressiveCowsPlacement() {
 
   int ans = -1;
 
-  while(start <=end) {
+  while (start <= end) {
     int mid = (start + end) >> 1;
 
-    if(isPossiblePlacementForAggressiveCows(stalls, k,  mid)) {
+    if (isPossiblePlacementForAggressiveCows(stalls, k, mid)) {
       ans = mid;
       start = mid + 1;
     } else {
@@ -453,7 +455,112 @@ void aggressiveCowsPlacement() {
   }
 
   cout << "The answer is: " << ans << endl;
+}
 
+// https://www.spoj.com/problems/EKO/
+// EKO Spoj
+
+// Lumberjack Mirko needs to chop down M metres of wood.
+// However, Mirko is only allowed to cut a single row of trees.
+
+// Mirko‟s machine works as follows: Mirko sets a height parameter H (in
+// metres), and the machine raises a giant sawblade to that height and cuts off
+// all tree parts higher than H (of course, trees not higher than H meters
+// remain intact). Mirko then takes the parts that were cut off. For example, if
+// the tree row contains trees with heights of 20, 15, 10, and 17 metres, and
+// Mirko raises his sawblade to 15 metres, the remaining tree heights after
+// cutting will be 15, 15, 10, and 15 metres, respectively, while Mirko will
+// take 5 metres off the first tree and 2 metres off the fourth tree (7 metres
+// of wood in total).
+
+// Mirko is ecologically minded, so he doesn‟t want to cut off more wood than
+// necessary. That‟s why he wants to set his sawblade as high as possible. 
+
+// Help Mirko find the maximum integer height of the sawblade that still allows him
+// to cut off at least M metres of wood.
+
+// Input
+
+// The first line of input contains two space-separated positive integers, N
+// (the number of trees, 1 ≤ N ≤ 1 000 000) and M (Mirko‟s required wood amount,
+// 1 ≤ M ≤ 2 000 000 000).
+
+// The second line of input contains N space-separated positive integers less
+// than 1 000 000 000, the heights of each tree (in metres). The sum of all
+// heights will exceed M, thus Mirko will always be able to obtain the required
+// amount of wood.
+
+// Output
+
+// The first and only line of output must contain the required height setting.
+
+// Input:
+// 4 7
+// 20 15 10 17
+
+// Output:
+// 15
+// Input:
+// 5 20
+// 4 42 40 26 46
+
+// Output:
+// 36
+
+// trees can be of length 10^6 and length can be 10^9
+// so use long long int as datatype
+
+bool isPossibleWoodUnits(vector<long long int> trees, long long int m, long long int mid) {
+  long long int woodUnitsCollected = 0;
+
+  for(int i =0; i< trees.size(); i++) {
+    if(trees[i] > mid) {
+      woodUnitsCollected += trees[i] - mid;
+    }
+  }
+
+  return woodUnitsCollected >= m;
+}
+
+long long int maxSawBladeHeight(vector<long long int> trees, long long int m) {
+  long long int start = 0;
+  long long int end = *max_element(trees.begin(), trees.end());
+  long long int answer = -1;
+
+  while(start <= end) {
+    long long int mid = start + (end - start) / 2;
+
+    if(isPossibleWoodUnits(trees, m, mid)) {
+      answer = mid;
+      start = mid + 1;
+    } else {
+      end = mid -1;
+    }
+  }
+
+  return answer;
+}
+
+void EKOSPOJ() {
+  long long int n, m;
+  cout << "Enter No of meters of wood required" << endl;
+  cin >> m;
+  
+  cout << "Enter No of trees available" << endl;
+  cin >> n;
+
+  vector<long long int> trees;
+
+  while(n--) {
+    long long int height;
+    cout << "Enter height of tree: " << n << endl;
+    cin >> height;
+
+    trees.push_back(height);
+  }
+
+  cout << "The Optimal Saw Blade Height is: ";
+  cout << maxSawBladeHeight(trees, m) << endl;
 }
 
 int main() {
@@ -464,6 +571,8 @@ int main() {
   // exponentialSearch();
   // bookPartition();
   // paintersPartionProblem();
-  aggressiveCowsPlacement();
+  // aggressiveCowsPlacement();
+  EKOSPOJ();
+
   return 0;
 }
