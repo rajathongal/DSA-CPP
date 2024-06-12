@@ -28,7 +28,7 @@ void basicBinarySearch() {
 }
 
 // same as above with returns
-int binarySearch(vector<int> &arr, int start, int end, int target) {
+int binarySearch(vector< int > &arr, int start, int end, int target) {
   int size = arr.size();
   int mid = (start + end) / 2;
 
@@ -168,7 +168,7 @@ void findPeakIndexInAMountainArray(int arr[], int size) {
   cout << "Peak element is: " << start << endl;
 }
 
-int findPivotIndex(vector<int> &arr) {
+int findPivotIndex(vector< int > &arr) {
   int size = arr.size();
   int start = 0;
   int end = size - 1;
@@ -210,7 +210,7 @@ int findPivotIndex(vector<int> &arr) {
   return -1;
 }
 
-int search(vector<int> &nums, int target) {
+int search(vector< int > &nums, int target) {
   int pivotIndex = findPivotIndex(nums);
   int size = nums.size();
   int ans = -1;
@@ -272,7 +272,7 @@ int findSQRTWithPrecesion(int num) {
 }
 
 double precesionSQRT(int n) {
-  double sqrt = findSQRTWithPrecesion(51);
+  double sqrt = findSQRTWithPrecesion(n);
   double step = 0.1;
   int precesion = 10;
   for (int i = 0; i < precesion; i++) {
@@ -286,7 +286,7 @@ double precesionSQRT(int n) {
   return sqrt;
 }
 
-void findTargetIn2DSortedArray(vector<vector<int> > &arr, int target) {
+void findTargetIn2DSortedArray(vector< vector< int > > &arr, int target) {
   int rows = arr.size();
   int cols = arr[0].size();
   int size = rows * cols;
@@ -314,7 +314,7 @@ void findTargetIn2DSortedArray(vector<vector<int> > &arr, int target) {
   }
 }
 
-void getQuotient(int divisorIn, int dividendIn) {
+int getQuotient(int divisorIn, int dividendIn) {
   int divisor = abs(divisorIn);
   int dividend = abs(dividendIn);
   int start = 0;
@@ -331,7 +331,7 @@ void getQuotient(int divisorIn, int dividendIn) {
       }
 
       cout << "Quotient is nearest to: " << ans << endl;
-      return;
+      return ans;
     } else if (mid * divisor < dividend) {
       ans = mid;       // possible ans
       start = mid + 1; // move right
@@ -345,6 +345,27 @@ void getQuotient(int divisorIn, int dividendIn) {
     ans = 0 - ans;
   }
   cout << "Quotient is nearest to: " << ans << endl;
+  return ans;
+}
+
+double precesionQuotient(int divisorIn, int dividendIn, int n) {
+  double quotient = getQuotient(divisorIn, dividendIn);
+  double dividend = abs(dividendIn);
+  double divisor = abs(divisorIn);
+
+  int precesion = 10;
+  double step = 0.1;
+
+  for (int i = 0; i < precesion; i++) {
+    double j = divisor;
+    while (dividend / divisor >= quotient) {
+      quotient = dividend / divisor;
+      divisor = j;
+      j += step;
+    }
+    step /= 10;
+  }
+  return quotient;
 }
 
 void searchInNearlySortedArray(int arr[], int size, int target) {
@@ -425,7 +446,7 @@ int main() {
   int sizeA = 4;             // for peak index
 
   // for pivot index
-  vector<int> v;
+  vector< int > v;
 
   v.push_back(12);
   v.push_back(14);
@@ -437,9 +458,9 @@ int main() {
   v.push_back(10);
 
   // for 2d array find
-  vector<int> row1;
-  vector<int> row2;
-  vector<int> row3;
+  vector< int > row1;
+  vector< int > row2;
+  vector< int > row3;
 
   row1.push_back(1);
   row1.push_back(2);
@@ -456,7 +477,7 @@ int main() {
   row3.push_back(11);
   row3.push_back(12);
 
-  vector<vector<int> > arrB;
+  vector< vector< int > > arrB;
   arrB.push_back(row1);
   arrB.push_back(row2);
   arrB.push_back(row3);
@@ -496,9 +517,10 @@ int main() {
   // getQuotient(7, 29);
   // getQuotient(2, 32);
   // getQuotient(-2, 32); // negative no check
-
+  double precesionQuo = precesionQuotient(7,647, 10);
+  printf("%0.10f", precesionQuo); cout << endl;
   // searchInNearlySortedArray(arrC, sizeC, targetC);
-  findOddOccuringElement(arrD, sizeD);
+  // findOddOccuringElement(arrD, sizeD);
 
   return 0;
 }
