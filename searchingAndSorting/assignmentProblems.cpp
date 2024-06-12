@@ -563,6 +563,76 @@ void EKOSPOJ() {
   cout << maxSawBladeHeight(trees, m) << endl;
 }
 
+// PRATA / ROTI SPOJ
+
+bool isPossibleSolutionForPrata(vector<int> cookRanks, int noOfPratasToMake, int mid) {
+  int cuurentPrata = 0;
+  for(int currentCook = 0; currentCook < cookRanks.size(); currentCook++) {
+    int currentCookRank = cookRanks[currentCook];
+    int prataCount = 1;
+    int timeTaken = 0;
+
+    while(true) {
+      if(timeTaken + prataCount * currentCookRank <= mid) {
+        ++cuurentPrata;
+        timeTaken += prataCount * currentCookRank;
+        ++prataCount;
+      } else {
+        break;
+      }
+    }
+
+    if(cuurentPrata >= noOfPratasToMake) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+int minTimeTakenToCompletePrataOrder(vector<int> cookRanks, int noOfPratasToMake) {
+  int start = 0;
+  int answer = -1;
+  int maxRankOfAllCooks =  *max_element(cookRanks.begin(), cookRanks.end());
+  int end = maxRankOfAllCooks* (noOfPratasToMake * (noOfPratasToMake + 1) / 2);
+
+  while(start <= end) {
+    int mid = start + (end - start) / 2;
+    if(isPossibleSolutionForPrata(cookRanks, noOfPratasToMake, mid)) {
+      answer = mid;
+      end = mid - 1;
+    } else {
+      start = mid + 1;
+    }
+  }
+
+  return answer;
+}
+
+void PrataSPOJ() {
+  int noOfTestCases; 
+  cout << "Enter no of test cases you want to run: " << endl;
+  cin >> noOfTestCases;
+
+  while(noOfTestCases--) {
+    int noOfPratasToMake, noOfCooks;
+    vector<int> cookRanks;
+    cout << "Enter no of Pratas to make: " << endl;
+    cin >> noOfPratasToMake;
+    cout << "Enter no of Cooks: " << endl;
+    cin >> noOfCooks;
+
+    while(noOfCooks--) {
+      int rank;
+      cout << "Enter rank for cook no: " << noOfCooks << endl;
+      cin >> rank;
+      cookRanks.push_back(rank);
+    }
+
+    cout << "Minimum Time Taken to make for test case "<< noOfTestCases << " is: " << minTimeTakenToCompletePrataOrder(cookRanks, noOfPratasToMake) << endl;
+  }
+}
+
 int main() {
   // kDiffPairsUsingTwoPointer();
   // kDiffPairsUsingBinarySearch();
@@ -572,7 +642,8 @@ int main() {
   // bookPartition();
   // paintersPartionProblem();
   // aggressiveCowsPlacement();
-  EKOSPOJ();
+  // EKOSPOJ();
+  PrataSPOJ();
 
   return 0;
 }
