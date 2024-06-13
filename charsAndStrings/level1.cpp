@@ -21,6 +21,7 @@ int findLength(char ch[], int size) {
   return length;
 }
 
+// sequence of chars
 void initChars() {
   // init char arrays
   char ch[20];
@@ -129,11 +130,42 @@ void checkPalindrome() {
   cout << "Palindrome" << endl;
 }
 
+void stringsInit() {
+  string name;
+  string str;
+
+  // cin >> name;
+  // cout << name << endl;
+  // cout << "Printing first char of string is: " << name[0] << endl;
+
+  // int index = 0;
+
+  // while(name[index] != '\0') {
+  //   cout << "Index: " << index << " charecter: " << name[index] << endl;
+  //   index++;
+  // }
+
+  getline(cin, str);
+  cout << str << endl;
+
+  // inbuilt functions
+  // size
+  // empty
+  // push_back
+  // pop_back
+  // append
+  // at
+  // substr
+  // compare
+
+}
+
 int main() {
   // initChars();
   // reverseString();
   // convertToUpperCase();
   // replaceAtWithSpace();
-  checkPalindrome();
+  // checkPalindrome();
+  stringsInit();
   return 0;
 }
