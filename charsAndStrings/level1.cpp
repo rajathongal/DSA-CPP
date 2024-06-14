@@ -123,7 +123,6 @@ void checkPalindrome() {
     } else {
       cout << "Not Palindrome" << endl;
       return;
-
     }
   }
 
@@ -145,7 +144,7 @@ void stringsInit() {
   //   index++;
   // }
 
-  getline(cin, str);
+  getline(cin, str); // Enter hello world
   cout << str << endl;
 
   // inbuilt functions
@@ -157,7 +156,70 @@ void stringsInit() {
   // at
   // substr
   // compare
+  // erase
 
+  cout << "Length of string: " << str.length() << endl;
+  cout << "isEmpty of name string: " << name.empty() << endl;
+  cout << "isEmpty of STR string: " << str.empty() << endl;
+
+  cout << "Char at 0 in str string: " << str.at(0) << endl;
+  cout << "Front char and back char in str string: " << str.front()
+       << " Back: " << str.back() << endl;
+
+  string appendStr = "Greetings ! ";
+  appendStr.append(str);
+  cout << "After appending: " << appendStr << endl;
+
+  // erase
+  appendStr.erase(9, 2);
+  cout << "After erase: " << appendStr << endl;
+
+  // insert a string at a given location
+  string insertionText = "Rajath ";
+
+  appendStr.insert(10, insertionText);
+  cout << "After insertion: " << appendStr << endl;
+
+  // push pop
+  appendStr.push_back('s');
+  cout << "After push back: " << appendStr << endl;
+
+  appendStr.pop_back();
+  cout << "After pop back: " << appendStr << endl;
+
+  // find str in str
+  // npos is for not found or no position
+  if (appendStr.find(str) == string::npos) {
+    cout << "Not Found" << endl;
+  } else {
+    cout << "Found" << endl;
+  }
+
+  if (appendStr.find("Hallu") == string::npos) {
+    cout << "Not Found" << endl;
+  } else {
+    cout << "Found" << endl;
+  }
+
+  // compare if strings match
+  string cmpStrOne = "Raja";
+  string cmpStrTwo = "Raja";
+  string cmpStrThree = "Rajat";
+
+  if (cmpStrOne.compare(cmpStrTwo) != 0) {
+    cout << "Not Match" << endl;
+  } else {
+    cout << "Match" << endl;
+  }
+
+  if (cmpStrThree.compare(cmpStrTwo) != 0) {
+    cout << "Not Match" << endl;
+  } else {
+    cout << "Match" << endl;
+  }
+
+  // generate substring or select certail part of string 
+  cout << "Substring: " << appendStr.substr(10, 5) << endl;
 }
 
 int main() {
