@@ -3,6 +3,15 @@
 #include <vector>
 using namespace std;
 
+void printStringVectorNativeMethod(vector<string> v) {
+  // for each loop
+  for (auto it : v) {
+    cout << it << " ";
+  }
+  cout << endl;
+
+}
+
 // leetcode 2325 Decode the message
 void decodeTheMessage(string key, string message) {
   // create mapping between a-z and the key // 0 -> char is NULL
@@ -100,6 +109,52 @@ void customSortString(string order, string s) {
   cout << s << endl;
 }
 
+// Leetcode 890
+
+void createMappingAlphabetically(string& str) {
+  // find mapping
+  char start = 'a';
+  char mapping[300] = {0};
+  for(auto ch: str) {
+    if(mapping[ch] == 0) {
+      mapping[ch] = start;
+      start++;
+    }
+  }
+
+  // update string according to mapping
+  for(int i=0; i<str.length(); i++) {
+    char ch = str[i];
+    str[i] = mapping[ch];
+  }
+
+}
+void findAndReplacePattern(vector< string > &words, string pattern) {
+  // create a mapping of pattern in terms of abc
+  // create a mapping for each of word in word with abc 
+  // compare both and return words which are same
+  vector< string > answer;
+
+
+  // create mapping of pattern
+  createMappingAlphabetically(pattern);
+
+  // create mapping for each word in words 
+  for(string s: words) {
+    string tempString = s;
+    // create mapping for s
+    createMappingAlphabetically(tempString);
+
+    if(tempString == pattern) {
+      // it means s is a valid answer 
+      answer.push_back(s);
+    }
+  }
+
+  printStringVectorNativeMethod(answer);
+
+}
+
 int main() {
   // decodeTheMessage("the quick brown fox jumps over the lazy dog",
   //                  "vkbs bs t suepuv");
@@ -131,8 +186,29 @@ int main() {
   // garbageCollection(garbageTestCaseOne, travelTestCaseOne);
   // garbageCollection(garbageTestCaseTwo, travelTestCaseTwo);
 
-  customSortString("cba", "abcd");
-  customSortString("bcafg", "abcd");
+  // customSortString("cba", "abcd");
+  // customSortString("bcafg", "abcd");
+
+  // for find and replace pattern
+  vector< string > wordsTestCaseOne;
+  string patternTestCaseOne = "abb";
+
+  wordsTestCaseOne.push_back("abc");
+  wordsTestCaseOne.push_back("deq");
+  wordsTestCaseOne.push_back("mee");
+  wordsTestCaseOne.push_back("aqq");
+  wordsTestCaseOne.push_back("dkd");
+  wordsTestCaseOne.push_back("ccc");
+
+  vector< string > wordsTestCaseTwo;
+  string patternTestCaseTwo = "a";
+
+  wordsTestCaseTwo.push_back("a");
+  wordsTestCaseTwo.push_back("b");
+  wordsTestCaseTwo.push_back("c");
+
+  findAndReplacePattern(wordsTestCaseOne, patternTestCaseOne);
+  findAndReplacePattern(wordsTestCaseTwo, patternTestCaseTwo);
 
   return 0;
 }
