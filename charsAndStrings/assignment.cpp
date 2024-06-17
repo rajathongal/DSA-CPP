@@ -1,8 +1,18 @@
 #include <ctype.h>
 #include <iostream>
+#include <map>
 #include <string.h>
 #include <vector>
 using namespace std;
+
+void print2DVector(vector<vector<string> > arr) {
+  for (int i = 0; i < arr.size(); i++) {
+    for (int j = 0; j < arr[i].size(); j++) {
+      cout << arr[i][j] << "  ";
+    }
+    cout << endl;
+  }
+}
 
 // Leetcode 242 Valid Anagram
 
@@ -183,6 +193,24 @@ void isIsomorphic(string s, string t) {
   cout << (s == t) << " " << s << " " << t << " " << endl;
 }
 
+// Leetcode 49 Group Anagrams
+void groupAnagrams(vector< string > &strs) {
+  // map string -> vector answer
+  map< string, vector< string > > mp;
+  for (auto str : strs) {
+    string s = str;
+    sort(s.begin(), s.end());
+    mp[s].push_back(str);
+  }
+
+  vector< vector< string > > answer;
+  for (auto it = mp.begin(); it != mp.end(); it++) {
+    answer.push_back(it->second); // key -> first, vector<string>
+  }
+
+  print2DVector(answer);
+}
+
 int main() {
   // isAnagram("anagram", "nagaram");
   // isAnagram("rat", "car");
@@ -212,9 +240,20 @@ int main() {
   // reverseOnlyVowels("hello");
   // reverseOnlyVowels("LeetCode");
 
-  isIsomorphic("egg", "add");
-  isIsomorphic("paper", "title");
-  isIsomorphic("foo", "bar");
+  // isIsomorphic("egg", "add");
+  // isIsomorphic("paper", "title");
+  // isIsomorphic("foo", "bar");
+
+  // for group anagrams
+  vector< string > strs;
+  strs.push_back("eat");
+  strs.push_back("tea");
+  strs.push_back("tan");
+  strs.push_back("ate");
+  strs.push_back("nat");
+  strs.push_back("bat");
+
+  groupAnagrams(strs);
 
   return 0;
 }
