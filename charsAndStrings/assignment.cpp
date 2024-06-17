@@ -78,14 +78,75 @@ void isAnagramByFrequencyMethod(string str, string testString) {
 } // TC = O(m) + O(n) + O(256) = O(m+n)
 
 // Leetcode 917 reverse only letters
-
 void reverseOnlyLetters(string str) {
   int low = 0, high = str.size() - 1;
   while (low < high) {
-    if(isalpha(str[low]) && isalpha(str[high])) {
+    if (isalpha(str[low]) && isalpha(str[high])) {
       swap(str[low], str[high]);
-      low++; high--;
-    } else if(!isalpha(str[low])) {
+      low++;
+      high--;
+    } else if (!isalpha(str[low])) {
+      low++;
+    } else {
+      high--;
+    }
+  }
+
+  cout << "String after reverse: " << str << endl;
+  return;
+}
+
+// Leetcode 14 find Longest Common prefix
+void findLongestCommonPrefix(vector< string > &strs) {
+  string answer = "";
+  int i = 0;
+  while (true) {
+    char currentChar = 0;
+    for (auto str : strs) {
+      if (i >= str[i]) {
+        // out of bound
+        currentChar = 0;
+        break;
+      }
+
+      if (currentChar == 0) {
+        currentChar = str[i];
+      } else if (str[i] != currentChar) {
+        currentChar = 0;
+        break;
+      }
+    }
+
+    if (currentChar == 0) {
+      break;
+    }
+    answer.push_back(currentChar);
+    i++;
+  }
+  if (answer == "") {
+    cout << "No Prefix found" << endl;
+
+  } else {
+    cout << answer << endl;
+  }
+  return;
+}
+
+// Leetcode 345 reverse only vowels
+
+bool isVowel(char ch) {
+  ch = tolower(ch);
+  return ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u';
+}
+void reverseOnlyVowels(string str) {
+  int low = 0, high = str.size() - 1;
+  string vowel = "aeiou";
+  while (low < high) {
+    if (isVowel(str[low]) && isVowel(str[high])) {
+      swap(str[low], str[high]);
+      low++;
+      high--;
+    } else if (!isVowel(str[low])) {
       low++;
     } else {
       high--;
@@ -103,10 +164,27 @@ int main() {
   // isAnagramByFrequencyMethod("anagram", "nagaram");
   // isAnagramByFrequencyMethod("rat", "car");
 
-  reverseOnlyLetters("ab-cd");
-  reverseOnlyLetters("Test1ng-Leet=code-Q!");
-  reverseOnlyLetters("a-bC-dEf-ghIj");
+  // reverseOnlyLetters("ab-cd");
+  // reverseOnlyLetters("Test1ng-Leet=code-Q!");
+  // reverseOnlyLetters("a-bC-dEf-ghIj");
 
+  // for longest prefix problem
+  // vector< string > strsTestCaseOne;
+  // vector< string > strsTestCaseTwo;
+
+  // strsTestCaseOne.push_back("flower");
+  // strsTestCaseOne.push_back("flow");
+  // strsTestCaseOne.push_back("flight");
+
+  // strsTestCaseTwo.push_back("dog");
+  // strsTestCaseTwo.push_back("racecar");
+  // strsTestCaseTwo.push_back("car");
+
+  // findLongestCommonPrefix(strsTestCaseOne);
+  // findLongestCommonPrefix(strsTestCaseTwo);
+
+  reverseOnlyVowels("hello");
+  reverseOnlyVowels("LeetCode");
 
   return 0;
 }
