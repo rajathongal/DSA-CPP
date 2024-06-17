@@ -157,6 +157,32 @@ void reverseOnlyVowels(string str) {
   return;
 }
 
+// leetcode 205 isomorphic strings
+
+void createMappingAlphabetically(string &str) {
+  // find mapping
+  char start = 'a';
+  char mapping[300] = {0};
+  for (auto ch : str) {
+    if (mapping[ch] == 0) {
+      mapping[ch] = start;
+      start++;
+    }
+  }
+
+  // update string according to mapping
+  for (int i = 0; i < str.length(); i++) {
+    char ch = str[i];
+    str[i] = mapping[ch];
+  }
+}
+
+void isIsomorphic(string s, string t) {
+  createMappingAlphabetically(s);
+  createMappingAlphabetically(t);
+  cout << (s == t) << " " << s << " " << t << " " << endl;
+}
+
 int main() {
   // isAnagram("anagram", "nagaram");
   // isAnagram("rat", "car");
@@ -183,8 +209,12 @@ int main() {
   // findLongestCommonPrefix(strsTestCaseOne);
   // findLongestCommonPrefix(strsTestCaseTwo);
 
-  reverseOnlyVowels("hello");
-  reverseOnlyVowels("LeetCode");
+  // reverseOnlyVowels("hello");
+  // reverseOnlyVowels("LeetCode");
+
+  isIsomorphic("egg", "add");
+  isIsomorphic("paper", "title");
+  isIsomorphic("foo", "bar");
 
   return 0;
 }
