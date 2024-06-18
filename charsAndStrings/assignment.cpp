@@ -5,7 +5,7 @@
 #include <vector>
 using namespace std;
 
-void print2DVector(vector<vector<string> > arr) {
+void print2DVector(vector< vector< string > > arr) {
   for (int i = 0; i < arr.size(); i++) {
     for (int j = 0; j < arr[i].size(); j++) {
       cout << arr[i][j] << "  ";
@@ -194,6 +194,12 @@ void isIsomorphic(string s, string t) {
 }
 
 // Leetcode 49 Group Anagrams
+// TC
+// N -> strs.length
+// K -> max length of largest string
+// O(N KlogK) -> KlogK is TC of map datastructure insert
+// SC
+// O(NK)
 void groupAnagrams(vector< string > &strs) {
   // map string -> vector answer
   map< string, vector< string > > mp;
@@ -208,6 +214,38 @@ void groupAnagrams(vector< string > &strs) {
     answer.push_back(it->second); // key -> first, vector<string>
   }
 
+  print2DVector(answer);
+}
+
+// group anagrams Method 2
+
+// avoiding sort
+// hash[256] ={0} // 0-256 -> all charecters
+
+// TC
+// N -> strs.length
+// K -> max length of largest string
+// O(NK)
+// SC
+// O(NK)
+
+array< int, 256 > hashStr(string s) {
+  array< int, 256 > hashArray = {0};
+  for (int i = 0; i < s.size(); i++) {
+    hashArray[s[i]]++;
+  }
+  return hashArray;
+}
+
+void groupAnagram2(vector< string > &strs) {
+  map< array< int, 256 >, vector< string > > mp;
+  for (auto str : strs) {
+    mp[hashStr(str)].push_back(str);
+  }
+  vector< vector< string > > answer;
+  for (auto it = mp.begin(); it != mp.end(); it++) {
+    answer.push_back(it->second); // key -> first, vector<string>
+  }
   print2DVector(answer);
 }
 
@@ -253,7 +291,8 @@ int main() {
   strs.push_back("nat");
   strs.push_back("bat");
 
-  groupAnagrams(strs);
+  // groupAnagrams(strs);
+  groupAnagram2(strs);
 
   return 0;
 }
