@@ -359,6 +359,23 @@ int compress(vector< char > &s) {
   return index;
 }
 
+// Leetcode 12: Integer to Roman
+void intToRoman(int num) {
+  string romanSymbols[] = {"M",  "CM", "D",  "CD", "C",  "XC", "L",
+                           "XL", "X",  "IX", "V",  "IV", "I"};
+  int values[] = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+
+  string answer = "";
+  for (int i = 0; i < 13; i++) {
+    while (num >= values[i]) {
+      answer += romanSymbols[i];
+      num -= values[i];
+    }
+  }
+
+  cout << "Answer " << answer << endl;
+}
+
 int main() {
   // isAnagram("anagram", "nagaram");
   // isAnagram("rat", "car");
@@ -413,52 +430,57 @@ int main() {
   // myAtoi("words and 987");
 
   // for string compression
-  vector< char > testCaseOne;
-  vector< char > testCaseTwo;
-  vector< char > testCaseThree;
+  // vector< char > testCaseOne;
+  // vector< char > testCaseTwo;
+  // vector< char > testCaseThree;
 
-  testCaseOne.push_back('a');
-  testCaseOne.push_back('a');
-  testCaseOne.push_back('b');
-  testCaseOne.push_back('b');
-  testCaseOne.push_back('c');
-  testCaseOne.push_back('c');
-  testCaseOne.push_back('c');
+  // testCaseOne.push_back('a');
+  // testCaseOne.push_back('a');
+  // testCaseOne.push_back('b');
+  // testCaseOne.push_back('b');
+  // testCaseOne.push_back('c');
+  // testCaseOne.push_back('c');
+  // testCaseOne.push_back('c');
 
-  testCaseTwo.push_back('a');
+  // testCaseTwo.push_back('a');
 
-  testCaseThree.push_back('a');
-  testCaseThree.push_back('a');
-  testCaseThree.push_back('b');
-  testCaseThree.push_back('b');
-  testCaseThree.push_back('b');
-  testCaseThree.push_back('b');
-  testCaseThree.push_back('b');
-  testCaseThree.push_back('b');
-  testCaseThree.push_back('b');
-  testCaseThree.push_back('b');
-  testCaseThree.push_back('b');
-  testCaseThree.push_back('b');
-  testCaseThree.push_back('b');
-  testCaseThree.push_back('b');
-  testCaseThree.push_back('b');
-  testCaseThree.push_back('b');
-  testCaseThree.push_back('b');
-  testCaseThree.push_back('b');
-  testCaseThree.push_back('b');
-  testCaseThree.push_back('b');
+  // testCaseThree.push_back('a');
+  // testCaseThree.push_back('a');
+  // testCaseThree.push_back('b');
+  // testCaseThree.push_back('b');
+  // testCaseThree.push_back('b');
+  // testCaseThree.push_back('b');
+  // testCaseThree.push_back('b');
+  // testCaseThree.push_back('b');
+  // testCaseThree.push_back('b');
+  // testCaseThree.push_back('b');
+  // testCaseThree.push_back('b');
+  // testCaseThree.push_back('b');
+  // testCaseThree.push_back('b');
+  // testCaseThree.push_back('b');
+  // testCaseThree.push_back('b');
+  // testCaseThree.push_back('b');
+  // testCaseThree.push_back('b');
+  // testCaseThree.push_back('b');
+  // testCaseThree.push_back('b');
+  // testCaseThree.push_back('b');
 
-  int res1 = compress(testCaseOne);
-  print1DCharVector(testCaseOne);
-  cout << "Result: " << res1 << endl;
+  // int res1 = compress(testCaseOne);
+  // print1DCharVector(testCaseOne);
+  // cout << "Result: " << res1 << endl;
 
-  int res2 = compress(testCaseTwo);
-  print1DCharVector(testCaseTwo);
-  cout << "Result: " << res2 << endl;
+  // int res2 = compress(testCaseTwo);
+  // print1DCharVector(testCaseTwo);
+  // cout << "Result: " << res2 << endl;
 
-  int res3 = compress(testCaseThree);
-  print1DCharVector(testCaseThree);
-  cout << "Result: " << res3 << endl;
+  // int res3 = compress(testCaseThree);
+  // print1DCharVector(testCaseThree);
+  // cout << "Result: " << res3 << endl;
+
+  intToRoman(3749);
+  intToRoman(58);
+  intToRoman(1994);
+  intToRoman(1999);
 
   return 0;
 }
