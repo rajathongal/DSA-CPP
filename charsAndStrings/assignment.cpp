@@ -1,3 +1,4 @@
+#include <climits>
 #include <ctype.h>
 #include <iostream>
 #include <map>
@@ -280,6 +281,40 @@ void longestPalindrome(string s) {
   cout << answer << endl;
 }
 
+// Leetcode 8. String to Integer (atoi)
+void myAtoi(string s) {
+
+  // int integer = atoi(s.c_str());
+  // cout << "Answer using In built Library " << integer << endl;
+
+  int num = 0, i = 0, sign = 1; // +1 and  -1
+
+  // iterate through leading whitespaces
+  while (s[i] == ' ') {
+    i++;
+  }
+
+  if (i < s.size() && (s[i] == '+' || s[i] == '-')) {
+    sign = s[i] == '+' ? 1 : -1;
+    ++i;
+  }
+
+  while (i < s.size() && isdigit(s[i])) {
+    if (num > INT_MAX / 10 || (num == INT_MAX / 10 && s[i] > '7')) {
+      cout << "Answer: " << (sign == -1 ? INT_MIN : INT_MAX )<< endl;
+      return;
+    }
+    num = num * 10 + (s[i] - '0');
+    i++;
+
+  }
+
+  cout << "Answer: " << num * sign << endl;
+  return;
+}
+
+// Leetcode 443. String Compression
+
 int main() {
   // isAnagram("anagram", "nagaram");
   // isAnagram("rat", "car");
@@ -325,7 +360,13 @@ int main() {
   // groupAnagrams(strs);
   // groupAnagram2(strs);
 
-  longestPalindrome("babad");
+  // longestPalindrome("babad");
+
+  myAtoi("42");
+  myAtoi(" -042");
+  myAtoi("1337c0d3");
+  myAtoi("0-1");
+  myAtoi("words and 987");
 
   return 0;
 }
