@@ -376,6 +376,48 @@ void intToRoman(int num) {
   cout << "Answer " << answer << endl;
 }
 
+// Leetcode 6. Zigzag Conversion
+void convert(string s, int numRows) {
+  if (numRows == 1) {
+    cout << "Answer: " << s << endl;
+    return;
+  }
+
+  int i = 0;
+  int row = 0;
+  bool direction = 1; // 1 -> Top to bottom 0 -> vice versa
+  vector< string > zigzag(numRows);
+
+  while (true) {
+    if (direction) {
+      // T -> B
+      while (
+          row < numRows &&
+          i < s.size()) { // out of range check and iterate thru all rows given
+        zigzag[row++].push_back(s[i++]);
+      }
+
+      // once the T->B conversion is done we need to be at a B->T row
+      row = numRows - 2;
+    } else {
+      // starting from zigzagrow to zero B->T
+      while (row >= 0 && i < s.size()) {
+        zigzag[row--].push_back(s[i++]);
+      }
+      row = 1; // we neednot to be at zero to T->B
+    }
+
+    if (i >= s.size())
+      break;                // break if all chars in string are iterated
+    direction = !direction; // update direction after operation is completed
+  }
+  cout << "Answer: ";
+  for (int k = 0; k < zigzag.size(); k++) {
+    cout << zigzag[k];
+  }
+  cout << endl;
+}
+
 int main() {
   // isAnagram("anagram", "nagaram");
   // isAnagram("rat", "car");
@@ -477,10 +519,14 @@ int main() {
   // print1DCharVector(testCaseThree);
   // cout << "Result: " << res3 << endl;
 
-  intToRoman(3749);
-  intToRoman(58);
-  intToRoman(1994);
-  intToRoman(1999);
+  // intToRoman(3749);
+  // intToRoman(58);
+  // intToRoman(1994);
+  // intToRoman(1999);
+
+  convert("PAYPALISHIRING", 3);
+  convert("PAYPALISHIRING", 4);
+  convert("A", 1);
 
   return 0;
 }
