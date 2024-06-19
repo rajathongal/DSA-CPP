@@ -7,13 +7,21 @@
 #include <vector>
 using namespace std;
 
-void print2DVector(vector< vector< string > > arr) {
+void print2DStringVector(vector< vector< string > > arr) {
   for (int i = 0; i < arr.size(); i++) {
     for (int j = 0; j < arr[i].size(); j++) {
       cout << arr[i][j] << "  ";
     }
     cout << endl;
   }
+}
+
+void print1DCharVector(vector< char > arr) {
+  cout << "Print Char Vector" << endl;
+  for (int i = 0; i < arr.size(); i++) {
+    cout << arr[i] << "  ";
+  }
+  cout << endl;
 }
 
 // Leetcode 242 Valid Anagram
@@ -216,7 +224,7 @@ void groupAnagrams(vector< string > &strs) {
     answer.push_back(it->second); // key -> first, vector<string>
   }
 
-  print2DVector(answer);
+  print2DStringVector(answer);
 }
 
 // group anagrams Method 2
@@ -248,7 +256,7 @@ void groupAnagram2(vector< string > &strs) {
   for (auto it = mp.begin(); it != mp.end(); it++) {
     answer.push_back(it->second); // key -> first, vector<string>
   }
-  print2DVector(answer);
+  print2DStringVector(answer);
 }
 
 // Leetcode 5 Longest Palindromic substring
@@ -301,12 +309,11 @@ void myAtoi(string s) {
 
   while (i < s.size() && isdigit(s[i])) {
     if (num > INT_MAX / 10 || (num == INT_MAX / 10 && s[i] > '7')) {
-      cout << "Answer: " << (sign == -1 ? INT_MIN : INT_MAX )<< endl;
+      cout << "Answer: " << (sign == -1 ? INT_MIN : INT_MAX) << endl;
       return;
     }
     num = num * 10 + (s[i] - '0');
     i++;
-
   }
 
   cout << "Answer: " << num * sign << endl;
@@ -314,6 +321,42 @@ void myAtoi(string s) {
 }
 
 // Leetcode 443. String Compression
+int compress(vector< char > &s) {
+  int index = 0;
+  int count = 1;
+  char prev = s[0];
+
+  for (int i = 1; i < s.size(); ++i) {
+    if (s[i] == prev) {
+      count++;
+    } else {
+      s[index++] = prev;
+      if (count > 1) {
+        int start = index;
+        while (count) {
+          s[index++] = (count % 10) + '0';
+          count /= 10;
+        }
+        reverse(s.begin() + start, s.begin() + index);
+      }
+      prev = s[i];
+      count = 1;
+    }
+  }
+
+  s[index++] = prev;
+  if (count > 1) {
+    int start = index;
+
+    while (count) {
+      s[index++] = (count % 10) + '0';
+      count /= 10;
+    }
+    reverse(s.begin() + start, s.begin() + index);
+  }
+
+  return index;
+}
 
 int main() {
   // isAnagram("anagram", "nagaram");
@@ -362,11 +405,59 @@ int main() {
 
   // longestPalindrome("babad");
 
-  myAtoi("42");
-  myAtoi(" -042");
-  myAtoi("1337c0d3");
-  myAtoi("0-1");
-  myAtoi("words and 987");
+  // myAtoi("42");
+  // myAtoi(" -042");
+  // myAtoi("1337c0d3");
+  // myAtoi("0-1");
+  // myAtoi("words and 987");
+
+  // for string compression
+  vector< char > testCaseOne;
+  vector< char > testCaseTwo;
+  vector< char > testCaseThree;
+
+  testCaseOne.push_back('a');
+  testCaseOne.push_back('a');
+  testCaseOne.push_back('b');
+  testCaseOne.push_back('b');
+  testCaseOne.push_back('c');
+  testCaseOne.push_back('c');
+  testCaseOne.push_back('c');
+
+  testCaseTwo.push_back('a');
+
+  testCaseThree.push_back('a');
+  testCaseThree.push_back('a');
+  testCaseThree.push_back('b');
+  testCaseThree.push_back('b');
+  testCaseThree.push_back('b');
+  testCaseThree.push_back('b');
+  testCaseThree.push_back('b');
+  testCaseThree.push_back('b');
+  testCaseThree.push_back('b');
+  testCaseThree.push_back('b');
+  testCaseThree.push_back('b');
+  testCaseThree.push_back('b');
+  testCaseThree.push_back('b');
+  testCaseThree.push_back('b');
+  testCaseThree.push_back('b');
+  testCaseThree.push_back('b');
+  testCaseThree.push_back('b');
+  testCaseThree.push_back('b');
+  testCaseThree.push_back('b');
+  testCaseThree.push_back('b');
+
+  int res1 = compress(testCaseOne);
+  print1DCharVector(testCaseOne);
+  cout << "Result: " << res1 << endl;
+
+  int res2 = compress(testCaseTwo);
+  print1DCharVector(testCaseTwo);
+  cout << "Result: " << res2 << endl;
+
+  int res3 = compress(testCaseThree);
+  print1DCharVector(testCaseThree);
+  cout << "Result: " << res3 << endl;
 
   return 0;
 }
