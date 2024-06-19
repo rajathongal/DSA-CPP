@@ -447,6 +447,56 @@ void largestNumber(vector< int > &nums) {
   cout << answer << endl;
 }
 
+// Leetcode 767. Reorganize String
+void reorganizeString(string s) {
+  int hash[26] = {0};
+
+  for (int i = 0; i < s.size(); i++) {
+    hash[s[i] - 'a']++;
+  }
+
+  // find most freq char
+  char maxFreqChar;
+  int maxFreq = INT_MIN;
+  for (int i = 0; i < 26; i++) {
+    if (hash[i] > maxFreq) {
+      maxFreq = hash[i];
+      maxFreqChar = i + 'a';
+    }
+  }
+
+  // try to place max freq char adjacently
+  int index = 0;
+  while (maxFreq > 0 && index < s.size()) {
+    s[index] = maxFreqChar;
+    maxFreq--;
+    index += 2;
+  }
+
+  // one or more max freq char was not able to place adacently
+  if (maxFreq != 0) {
+    cout << "Answer: "
+         << "" << endl;
+    return;
+  }
+
+  hash[maxFreqChar - 'a'] = 0;
+  // try to place the rest of char
+  for (int i = 0; i < 26; i++) {
+    while (hash[i] > 0) {
+      // since after placing most freq char index will be at s.size()
+      // check if its true bring to 1st index so that you can start placing rest
+      // chars else move how index is as it is
+      index = index >= s.size() ? 1 : index;
+      s[index] = i + 'a';
+      index += 2;
+      hash[i]--; // reduce frequency of char after placing 
+    }
+  }
+
+  cout << "Answer: " << s << endl;
+}
+
 int main() {
   // isAnagram("anagram", "nagaram");
   // isAnagram("rat", "car");
@@ -558,32 +608,33 @@ int main() {
   // convert("A", 1);
 
   // for largest number
-  vector< int > numsTestCaseOne;
-  vector< int > numsTestCaseTwo;
-  vector< int > numsTestCaseThree;
+  // vector< int > numsTestCaseOne;
+  // vector< int > numsTestCaseTwo;
+  // vector< int > numsTestCaseThree;
 
+  // numsTestCaseOne.push_back(10);
+  // numsTestCaseOne.push_back(2);
 
-  numsTestCaseOne.push_back(10);
-  numsTestCaseOne.push_back(2);
+  // numsTestCaseTwo.push_back(3);
+  // numsTestCaseTwo.push_back(30);
+  // numsTestCaseTwo.push_back(34);
+  // numsTestCaseTwo.push_back(5);
+  // numsTestCaseTwo.push_back(9);
 
-  numsTestCaseTwo.push_back(3);
-  numsTestCaseTwo.push_back(30);
-  numsTestCaseTwo.push_back(34);
-  numsTestCaseTwo.push_back(5);
-  numsTestCaseTwo.push_back(9);
+  // numsTestCaseThree.push_back(0);
+  // numsTestCaseThree.push_back(0);
+  // numsTestCaseThree.push_back(0);
+  // numsTestCaseThree.push_back(0);
+  // numsTestCaseThree.push_back(0);
+  // numsTestCaseThree.push_back(0);
 
-  numsTestCaseThree.push_back(0);
-  numsTestCaseThree.push_back(0);
-  numsTestCaseThree.push_back(0);
-  numsTestCaseThree.push_back(0);
-  numsTestCaseThree.push_back(0);
-  numsTestCaseThree.push_back(0);
+  // largestNumber(numsTestCaseOne);
+  // largestNumber(numsTestCaseTwo);
+  // largestNumber(numsTestCaseThree);
 
-
-  largestNumber(numsTestCaseOne);
-  largestNumber(numsTestCaseTwo);
-  largestNumber(numsTestCaseThree);
-
+  reorganizeString("aab");
+  reorganizeString("aaab");
+  reorganizeString("aaabc");
 
   return 0;
 }
