@@ -321,6 +321,7 @@ void myAtoi(string s) {
 }
 
 // Leetcode 443. String Compression
+// this algo is also called run length algo
 int compress(vector< char > &s) {
   int index = 0;
   int count = 1;
