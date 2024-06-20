@@ -550,7 +550,7 @@ string removeDuplicatesMethodOne(string s, int k) {
 }
 
 // Method 2
-// 2 pointer approach
+// 2 pointer approach TC - O(n) SC - O(n)
 string removeDuplicatesMethodTwo(string s, int k) {
   int i=0, j=0;
   vector<int> count(s.size(), 0);
