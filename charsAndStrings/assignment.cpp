@@ -615,6 +615,37 @@ int findMinimumTimeDifference(vector< string > &timePoints) {
   return answer;
 }
 
+// Leetcode 2125. Number of Laser Beams in a Bank
+// TC O(n^2)
+int countDevices(string &binary) {
+  int count = 0;
+  for(auto b:binary) {
+    count += b - '0';
+  }
+  return count;
+}
+int numberOfBeams(vector< string > &bank) {
+  vector<int> devices;
+  for(auto row: bank) {
+    devices.push_back(countDevices(row));
+  }
+
+  int beams = 0;
+  for(int i=0; i<devices.size(); i++) {
+    int j = i+1;
+    while(j < devices.size()) {
+      beams += devices[i] * devices[j];
+      if(devices[j] == 0) {
+        j++;
+      } else {
+        break;
+      }
+    }
+  }
+
+  return beams;
+}
+
 int main() {
   // isAnagram("anagram", "nagaram");
   // isAnagram("rat", "car");
@@ -768,26 +799,42 @@ int main() {
   // cout << removeDuplicatesMethodTwo("pbbcggttciiippooaais", 2) << endl;
 
   // For find minimm time difference
-  vector< string > timePointsTestCaseOne;
-  vector< string > timePointsTestCaseTwo;
-  vector< string > timePointsTestCaseThree;
+  // vector< string > timePointsTestCaseOne;
+  // vector< string > timePointsTestCaseTwo;
+  // vector< string > timePointsTestCaseThree;
 
-  timePointsTestCaseOne.push_back("23:59");
-  timePointsTestCaseOne.push_back("00:00");
+  // timePointsTestCaseOne.push_back("23:59");
+  // timePointsTestCaseOne.push_back("00:00");
 
-  timePointsTestCaseTwo.push_back("00:00");
-  timePointsTestCaseTwo.push_back("23:59");
-  timePointsTestCaseTwo.push_back("00:00");
+  // timePointsTestCaseTwo.push_back("00:00");
+  // timePointsTestCaseTwo.push_back("23:59");
+  // timePointsTestCaseTwo.push_back("00:00");
 
-  timePointsTestCaseThree.push_back("12:50");
-  timePointsTestCaseThree.push_back("23:59");
-  timePointsTestCaseThree.push_back("01:39");
+  // timePointsTestCaseThree.push_back("12:50");
+  // timePointsTestCaseThree.push_back("23:59");
+  // timePointsTestCaseThree.push_back("01:39");
 
-  cout << findMinimumTimeDifference(timePointsTestCaseOne) << endl;
+  // cout << findMinimumTimeDifference(timePointsTestCaseOne) << endl;
 
-  cout << findMinimumTimeDifference(timePointsTestCaseTwo) << endl;
+  // cout << findMinimumTimeDifference(timePointsTestCaseTwo) << endl;
 
-  cout << findMinimumTimeDifference(timePointsTestCaseThree) << endl;
+  // cout << findMinimumTimeDifference(timePointsTestCaseThree) << endl;
+
+  // for Laser beams
+  vector< string > testCaseOne;
+  vector< string > testCaseTwo;
+
+  testCaseOne.push_back("011001");
+  testCaseOne.push_back("000000");
+  testCaseOne.push_back("010100");
+  testCaseOne.push_back("001000");
+
+  testCaseTwo.push_back("000");
+  testCaseTwo.push_back("111");
+  testCaseTwo.push_back("000");
+
+  cout << "Total No of laser beams are: " << numberOfBeams(testCaseOne) << endl;
+  cout << "Total No of laser beams are: " << numberOfBeams(testCaseTwo) << endl;
 
   return 0;
 }
