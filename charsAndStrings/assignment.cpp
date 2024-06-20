@@ -497,6 +497,26 @@ void reorganizeString(string s) {
   cout << "Answer: " << s << endl;
 }
 
+// leetcode 28. Find the Index of the First Occurrence in a String O(mn)
+int strStr(string haystack, string needle) {
+  int sizeOfHaystack = haystack.size();
+  int sizeOfNeedle = needle.size();
+
+  for(int i=0; i <= sizeOfHaystack - sizeOfNeedle; i++){
+    for(int j=0; j<sizeOfNeedle; j++) {
+      if(needle[j] != haystack[i+j]) {
+        break;
+      }
+
+      if(j == sizeOfNeedle - 1) {
+        return i;
+      }
+    }
+  }
+
+  return -1;
+}
+
 int main() {
   // isAnagram("anagram", "nagaram");
   // isAnagram("rat", "car");
@@ -632,9 +652,14 @@ int main() {
   // largestNumber(numsTestCaseTwo);
   // largestNumber(numsTestCaseThree);
 
-  reorganizeString("aab");
-  reorganizeString("aaab");
-  reorganizeString("aaabc");
+  // reorganizeString("aab");
+  // reorganizeString("aaab");
+  // reorganizeString("aaabc");
+
+  cout << strStr("sadbutsad", "sad") << endl;
+  cout << strStr("sadbutsad", "but") << endl;
+  cout << strStr("sadbutsada", "da") << endl;
+  cout << strStr("leetcode", "leeto") << endl;
 
   return 0;
 }
