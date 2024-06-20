@@ -140,27 +140,6 @@ void validPalindrome(string str) {
   cout << "Palindrome" << endl;
 }
 
-// Leetcode 539. Minimum Time Difference
-// Given a list of 24-hour clock time points in "HH:MM" format, return the
-// minimum minutes difference between any two time-points in the list.
-// Example 1:
-
-// Input: timePoints = ["23:59","00:00"]
-// Output: 1
-
-// Example 2:
-
-// Input: timePoints = ["00:00","23:59","00:00"]
-// Output: 0
-
-void findMinimumTimeDifference(vector< string > &timePoints) {
-  // substr() -> fetch hrs and min strings
-  // stoi() -> string to integer conversion
-  // total minutes
-  // sort
-  // EDGE CASE ->
-}
-
 // leet code 647. Palindromic Substrings
 // Given a string s, return the number of palindromic substrings in it.
 
@@ -182,7 +161,7 @@ void findMinimumTimeDifference(vector< string > &timePoints) {
 int expand(string str, int low, int high) {
   int count = 0;
 
-  while(low >=0 && high < str.length() && str[low] == str[high]) {
+  while (low >= 0 && high < str.length() && str[low] == str[high]) {
     count++;
     low--;
     high++;
@@ -192,9 +171,9 @@ int expand(string str, int low, int high) {
 }
 
 void countPalindromicSubstrings(string str) {
-  int totalCount =0;
+  int totalCount = 0;
 
-  for(int center = 0; center < str.length(); center++) {
+  for (int center = 0; center < str.length(); center++) {
     // odd occurances -> for odd length string
     int oddCount = expand(str, center, center);
     // even occurances -> for even length string
@@ -218,32 +197,9 @@ int main() {
   // validPalindrome("ABCRRRCA");
   // validPalindrome("GRACABRG");
 
-  // // For find minimm time difference
-  // vector< string > timePointsTestCaseOne;
-  // vector< string > timePointsTestCaseTwo;
-  // vector< string > timePointsTestCaseThree;
-
-  // timePointsTestCaseOne.push_back("23:59");
-  // timePointsTestCaseOne.push_back("00:00");
-
-  // timePointsTestCaseTwo.push_back("00:00");
-  // timePointsTestCaseTwo.push_back("23:59");
-  // timePointsTestCaseTwo.push_back("00:00");
-
-  // timePointsTestCaseThree.push_back("12:50");
-  // timePointsTestCaseThree.push_back("23:59");
-  // timePointsTestCaseThree.push_back("01:39");
-
-  // findMinimumTimeDifference(timePointsTestCaseOne);
-  // findMinimumTimeDifference(timePointsTestCaseTwo);
-  // findMinimumTimeDifference(timePointsTestCaseThree);
-
-
   countPalindromicSubstrings("abc");
   countPalindromicSubstrings("aaa");
   countPalindromicSubstrings("madam");
-
-
 
   return 0;
 }

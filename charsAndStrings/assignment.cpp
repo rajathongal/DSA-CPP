@@ -521,9 +521,9 @@ int strStr(string haystack, string needle) {
 
 // Method 1 TC - O(NK)
 bool areLastK_1CharsSame(string &ans, char &newch, int K_1) {
-  int it = ans.size() -1;
-  for(int k=0;k< K_1; k++) {
-    if(newch != ans[it]) {
+  int it = ans.size() - 1;
+  for (int k = 0; k < K_1; k++) {
+    if (newch != ans[it]) {
       return false;
     }
     it--;
@@ -532,13 +532,13 @@ bool areLastK_1CharsSame(string &ans, char &newch, int K_1) {
 }
 string removeDuplicatesMethodOne(string s, int k) {
   string ans;
-  for(int i=0; i< s.size(); ++i) {
+  for (int i = 0; i < s.size(); ++i) {
     char &newchar = s[i];
-    if(ans.size() < k - 1) {
+    if (ans.size() < k - 1) {
       ans.push_back(newchar);
     } else {
-      if(areLastK_1CharsSame(ans, newchar, k-1)) {
-        for(int j=0; j< k-1; j++) {
+      if (areLastK_1CharsSame(ans, newchar, k - 1)) {
+        for (int j = 0; j < k - 1; j++) {
           ans.pop_back();
         }
       } else {
@@ -552,23 +552,67 @@ string removeDuplicatesMethodOne(string s, int k) {
 // Method 2
 // 2 pointer approach TC - O(n) SC - O(n)
 string removeDuplicatesMethodTwo(string s, int k) {
-  int i=0, j=0;
-  vector<int> count(s.size(), 0);
+  int i = 0, j = 0;
+  vector< int > count(s.size(), 0);
 
-  while(j < s.size()) {
+  while (j < s.size()) {
     s[i] = s[j];
     count[i] = 1;
-    if(i > 0 && s[i] == s[i-1]) {
-      count[i] += count[i-1];
-    } 
-     if(count[i] == k) {
+    if (i > 0 && s[i] == s[i - 1]) {
+      count[i] += count[i - 1];
+    }
+    if (count[i] == k) {
       i -= k;
     }
-    ++i; ++j;
+    ++i;
+    ++j;
   }
 
-  return s.substr(0,i);
+  return s.substr(0, i);
+}
 
+// Leetcode 539. Minimum Time Difference
+// Given a list of 24-hour clock time points in "HH:MM" format, return the
+// minimum minutes difference between any two time-points in the list.
+// Example 1:
+
+// Input: timePoints = ["23:59","00:00"]
+// Output: 1
+
+// Example 2:
+
+// Input: timePoints = ["00:00","23:59","00:00"]
+// Output: 0
+
+int convertToMins(string time) {
+  int hour = stoi(time.substr(0, 2));
+  int mins = stoi(time.substr(3, 2));
+  return 60 * hour + mins;
+}
+int findMinimumTimeDifference(vector< string > &timePoints) {
+  // substr() -> fetch hrs and min strings
+  // stoi() -> string to integer conversion
+  // total minutes
+  // sort
+  // EDGE CASE ->
+
+  // min = 60 * HH + MM
+
+  vector< int > mins;
+  for (auto time : timePoints) {
+    mins.push_back(convertToMins(time));
+  }
+  sort(mins.begin(), mins.end());
+  int answer = INT_MAX; // stores minimum differnce
+  for (int i = 0; i < mins.size() - 1; ++i) {
+    answer = min(answer, mins[i + 1] - mins[i]);
+  }
+
+  // last hour difference
+  int lastDiff = mins[0] + 1440 - mins[mins.size() - 1];
+  answer = min(answer, lastDiff);
+
+  return answer;
 }
 
 int main() {
@@ -715,14 +759,35 @@ int main() {
   // cout << strStr("sadbutsada", "da") << endl;
   // cout << strStr("leetcode", "leeto") << endl;
 
-  cout << removeDuplicatesMethodOne("deeedbbcccbdaa", 3) << endl;
-  cout << removeDuplicatesMethodOne("abcd", 2) << endl;
-  cout << removeDuplicatesMethodOne("pbbcggttciiippooaais", 2) << endl;
+  // cout << removeDuplicatesMethodOne("deeedbbcccbdaa", 3) << endl;
+  // cout << removeDuplicatesMethodOne("abcd", 2) << endl;
+  // cout << removeDuplicatesMethodOne("pbbcggttciiippooaais", 2) << endl;
 
-  cout << removeDuplicatesMethodTwo("deeedbbcccbdaa", 3) << endl;
-  cout << removeDuplicatesMethodTwo("abcd", 2) << endl;
-  cout << removeDuplicatesMethodTwo("pbbcggttciiippooaais", 2) << endl;
+  // cout << removeDuplicatesMethodTwo("deeedbbcccbdaa", 3) << endl;
+  // cout << removeDuplicatesMethodTwo("abcd", 2) << endl;
+  // cout << removeDuplicatesMethodTwo("pbbcggttciiippooaais", 2) << endl;
 
+  // For find minimm time difference
+  vector< string > timePointsTestCaseOne;
+  vector< string > timePointsTestCaseTwo;
+  vector< string > timePointsTestCaseThree;
+
+  timePointsTestCaseOne.push_back("23:59");
+  timePointsTestCaseOne.push_back("00:00");
+
+  timePointsTestCaseTwo.push_back("00:00");
+  timePointsTestCaseTwo.push_back("23:59");
+  timePointsTestCaseTwo.push_back("00:00");
+
+  timePointsTestCaseThree.push_back("12:50");
+  timePointsTestCaseThree.push_back("23:59");
+  timePointsTestCaseThree.push_back("01:39");
+
+  cout << findMinimumTimeDifference(timePointsTestCaseOne) << endl;
+
+  cout << findMinimumTimeDifference(timePointsTestCaseTwo) << endl;
+
+  cout << findMinimumTimeDifference(timePointsTestCaseThree) << endl;
 
   return 0;
 }
