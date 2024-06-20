@@ -490,7 +490,7 @@ void reorganizeString(string s) {
       index = index >= s.size() ? 1 : index;
       s[index] = i + 'a';
       index += 2;
-      hash[i]--; // reduce frequency of char after placing 
+      hash[i]--; // reduce frequency of char after placing
     }
   }
 
@@ -502,19 +502,73 @@ int strStr(string haystack, string needle) {
   int sizeOfHaystack = haystack.size();
   int sizeOfNeedle = needle.size();
 
-  for(int i=0; i <= sizeOfHaystack - sizeOfNeedle; i++){
-    for(int j=0; j<sizeOfNeedle; j++) {
-      if(needle[j] != haystack[i+j]) {
+  for (int i = 0; i <= sizeOfHaystack - sizeOfNeedle; i++) {
+    for (int j = 0; j < sizeOfNeedle; j++) {
+      if (needle[j] != haystack[i + j]) {
         break;
       }
 
-      if(j == sizeOfNeedle - 1) {
+      if (j == sizeOfNeedle - 1) {
         return i;
       }
     }
   }
 
   return -1;
+}
+
+// Leetcode 1209. Remove All Adjacent Duplicates in String II
+
+// Method 1 TC - O(NK)
+bool areLastK_1CharsSame(string &ans, char &newch, int K_1) {
+  int it = ans.size() -1;
+  for(int k=0;k< K_1; k++) {
+    if(newch != ans[it]) {
+      return false;
+    }
+    it--;
+  }
+  return true;
+}
+string removeDuplicatesMethodOne(string s, int k) {
+  string ans;
+  for(int i=0; i< s.size(); ++i) {
+    char &newchar = s[i];
+    if(ans.size() < k - 1) {
+      ans.push_back(newchar);
+    } else {
+      if(areLastK_1CharsSame(ans, newchar, k-1)) {
+        for(int j=0; j< k-1; j++) {
+          ans.pop_back();
+        }
+      } else {
+        ans.push_back(newchar);
+      }
+    }
+  }
+  return ans;
+}
+
+// Method 2
+// 2 pointer approach
+string removeDuplicatesMethodTwo(string s, int k) {
+  int i=0, j=0;
+  vector<int> count(s.size(), 0);
+
+  while(j < s.size()) {
+    s[i] = s[j];
+    count[i] = 1;
+    if(i > 0 && s[i] == s[i-1]) {
+      count[i] += count[i-1];
+    } 
+     if(count[i] == k) {
+      i -= k;
+    }
+    ++i; ++j;
+  }
+
+  return s.substr(0,i);
+
 }
 
 int main() {
@@ -656,10 +710,19 @@ int main() {
   // reorganizeString("aaab");
   // reorganizeString("aaabc");
 
-  cout << strStr("sadbutsad", "sad") << endl;
-  cout << strStr("sadbutsad", "but") << endl;
-  cout << strStr("sadbutsada", "da") << endl;
-  cout << strStr("leetcode", "leeto") << endl;
+  // cout << strStr("sadbutsad", "sad") << endl;
+  // cout << strStr("sadbutsad", "but") << endl;
+  // cout << strStr("sadbutsada", "da") << endl;
+  // cout << strStr("leetcode", "leeto") << endl;
+
+  cout << removeDuplicatesMethodOne("deeedbbcccbdaa", 3) << endl;
+  cout << removeDuplicatesMethodOne("abcd", 2) << endl;
+  cout << removeDuplicatesMethodOne("pbbcggttciiippooaais", 2) << endl;
+
+  cout << removeDuplicatesMethodTwo("deeedbbcccbdaa", 3) << endl;
+  cout << removeDuplicatesMethodTwo("abcd", 2) << endl;
+  cout << removeDuplicatesMethodTwo("pbbcggttciiippooaais", 2) << endl;
+
 
   return 0;
 }
