@@ -1,6 +1,6 @@
+#include <cmath> // for sqrt
 #include <iostream>
 #include <vector>
-#include <cmath> // for sqrt
 using namespace std;
 #define M 1000000007
 
@@ -102,12 +102,24 @@ vector< bool > SegmentedSieveOfE(long long int L, long long int R) {
     first_mul = first_mul < L ? first_mul + prime : first_mul;
     long long int j = max(first_mul, prime * prime);
     while (j <= R) {
-      // j-L is to fit in right array indexes as it start from 0-sizeofR 
-      segSieve[j - L] = false; 
+      // j-L is to fit in right array indexes as it start from 0-sizeofR
+      segSieve[j - L] = false;
       j += prime;
     }
   }
   return segSieve;
+}
+
+long long primeProduct(long long L, long long R) {
+  vector< bool > segSieve = SegmentedSieveOfE(L, R);
+  long long int ans = 1;
+  for (long long int i = 0; i < segSieve.size(); i++) {
+    if (segSieve[i]) {
+      long long int actualPrime = (L + i) % M;
+      ans = (ans * actualPrime) % M;
+    }
+  }
+  return ans;
 }
 
 int main() {
@@ -115,10 +127,11 @@ int main() {
   // vector< bool > sieve = SieveOfE(num);
   // printSieveVector(sieve);
 
-  int L = 110;
-  int R = 130;
-  vector< bool > SegSieve = SegmentedSieveOfE(L, R);
-  printSegSieveVector(SegSieve, L);
-
+  long long int L = 110;
+  long long int R = 130;
+  // vector< bool > SegSieve = SegmentedSieveOfE(L, R);
+  // printSegSieveVector(SegSieve, L);
+  
+  cout << primeProduct(L, R) << endl;
   return 0;
 }
