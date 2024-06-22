@@ -74,25 +74,89 @@ void pointersInit() {
   cout << endl << e << endl;
   cout << &e << " " << eptr << " " << &eptr << endl;
   cout << *eptr << endl;
-  
-  // pointer copy 
+
+  // pointer copy
   int *q = eptr;
   cout << endl << q << endl;
   cout << &q << " " << *q << endl;
 
   int f = 50;
-  int* fptr = &f;
-  int* pptr = fptr;
-  int* qptr = fptr;
+  int *fptr = &f;
+  int *pptr = fptr;
+  int *qptr = fptr;
 
   cout << endl << f << " " << &f << endl;
   cout << fptr << " " << &fptr << " " << *fptr << endl;
   cout << pptr << " " << &pptr << " " << *pptr << endl;
   cout << qptr << " " << &qptr << " " << *qptr << endl;
+}
 
+void arrayPointers() {
+  int arr[5] = {10, 20, 30, 40, 50};
+
+  cout << arr << " " << &arr << " " << &arr[0] << endl;
+  cout << arr[0] << endl;
+
+  cout << *arr << endl;
+
+  cout << *arr + 1 << endl;
+  cout << *(arr) + 1 << endl;
+
+  cout << *(arr + 1) << endl;
+  cout << *(arr + 2) << endl;
+  cout << *(arr + 3) << endl;
+
+  cout << *(arr + 3) + 3 << endl;
+
+  cout << 1 [arr] << " or " << arr[1] << endl;
+
+  // int a = 11;
+  // int* p = &a;
+  // p = p+1;
+  // cout << *p << endl; // garbage value
+
+  // arr = arr + 1; // not possible in arrays
+
+  int *p = arr;
+  int *q = arr + 1; // arr + 1 possible for storing/updating in pointers
+
+  cout << endl << arr << " " << &arr << " " << arr[0] << " " << &arr[0] << endl;
+  cout << p << " " << &p << " " << *p << endl;
+  cout << q << " " << &q << " " << *q << endl;
+  cout << *p + 1 << " " << *(p) + 2 << endl;
+  cout << *(q) + 2 << " " << *q + 4 << " " << *(q + 2) << endl;
+  cout << sizeof(arr) << " " << sizeof(p) << endl;
+
+  char ch[50] = "statement";
+  char *chptr = ch; // or you can use &ch both gives base address of array
+
+  cout << endl << chptr << endl;                 // print entire string
+  cout << *chptr << " " << *(chptr + 1) << endl; // gives ch[0]
+  cout << &ch << " " << &chptr << " " << &ch[0] << endl;
+
+  char ch2[50] = "statement";
+  char *cptr = &ch2[0];
+
+  cout << endl << ch2 << endl;
+  cout << &ch2 << " " << *(ch + 3) << " " << cptr << " " << &cptr << endl;
+  cout << *(cptr + 3) << " " << cptr + 2 << " " << *cptr << " " << cptr + 8
+       << endl;
+
+  cout << endl;
+
+  char ch3 = 'a';
+  char *ch3ptr = &ch3;
+  cout << ch3ptr << endl; // print a and untill null char is found with garbage values
+
+  cout << endl;
+
+  char ch4[10] = {'a'};
+  char *ch4ptr = ch4; // &ch4 will give address of all 10 location's base address but pointer declared is for only one char
+  cout << ch4ptr << endl;
 }
 
 int main() {
-  pointersInit();
+  // pointersInit();
+  arrayPointers();
   return 0;
 }
