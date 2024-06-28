@@ -36,23 +36,35 @@ void printReverseCount(int n) {
 int pow(int n) {
   // base case
   // base case
-  if (n == 0 ) {
+  if (n == 0) {
     return 1;
   }
 
-  int ans = 2 * pow(n-1);
+  int ans = 2 * pow(n - 1);
   return ans;
 }
 
 int NfibonacciSeriesSum(int n) {
-  if(n == 0) {
+  if (n == 0) {
     return 0;
-  } 
-  if(n == 1) {
+  }
+  if (n == 1) {
     return 1;
-  } 
+  }
 
-  int ans = NfibonacciSeriesSum(n-1) + NfibonacciSeriesSum(n-2);
+  int ans = NfibonacciSeriesSum(n - 1) + NfibonacciSeriesSum(n - 2);
+  return ans;
+}
+
+int sumOfN(int n) {
+  if (n == 1) {
+    return 1;
+  }
+
+  
+
+  int ans = n + sumOfN(n - 1);
+
   return ans;
 }
 
@@ -60,6 +72,7 @@ int main() {
   // cout << factorial(5) << endl;
   // printReverseCount(20);
   // cout << pow(4) << endl;
-  cout << NfibonacciSeriesSum(4) << endl;
+  // cout << NfibonacciSeriesSum(4) << endl;
+  cout << sumOfN(5) << endl;
   return 0;
 }
