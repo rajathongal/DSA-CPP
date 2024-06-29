@@ -77,6 +77,16 @@ void evenNumsInArray(int arr[], int size, vector<int> &ans, int index) {
 
 }
 
+void doubleTheNumInArray(int arr[], int size, int index) {
+  if(index >= size) {
+    return;
+  }
+
+  arr[index] += arr[index];
+
+  doubleTheNumInArray(arr, size, index+1);
+}
+
 int main() {
   // cout << climbStairs(4) << endl;
 
@@ -97,6 +107,7 @@ int main() {
   // evenNumsInArray(arr, sizeOfArr, ans, 0);
   // printVector(ans);
 
-  
+  doubleTheNumInArray(arr, sizeOfArr, 0);
+  printArray(arr, sizeOfArr, 0);
   return 0;
 }
