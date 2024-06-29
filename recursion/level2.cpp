@@ -1,9 +1,10 @@
+#include <climits>
 #include <iostream>
 #include <limits.h> // for INT_MAX
-#include <vector> // for vector
+#include <vector>   // for vector
 using namespace std;
 
-void printVector(vector<int> v) {
+void printVector(vector< int > v) {
   cout << "Printing Vector" << endl;
   int size = v.size();
   for (int i = 0; i < size; i++) {
@@ -51,7 +52,8 @@ bool searchArray(int arr[], int size, int target, int index) {
 }
 
 // minimum number in an array
-void minNumInArr(int arr[], int size, int index, int &minNum) { // v impo &minNum
+void minNumInArr(int arr[], int size, int index,
+                 int &minNum) { // v impo &minNum
   // base case
   if (index >= size) {
     return;
@@ -60,31 +62,44 @@ void minNumInArr(int arr[], int size, int index, int &minNum) { // v impo &minNu
   // processing
   minNum = min(minNum, arr[index]);
   // recursive call
-  minNumInArr(arr, size, index+1, minNum);
+  minNumInArr(arr, size, index + 1, minNum);
 }
 
-// even nums in array
-void evenNumsInArray(int arr[], int size, vector<int> &ans, int index) {
-  if(index >= size) {
+// max number in an array
+void maxNumInArr(int arr[], int size, int index,
+                 int &maxNum) { // v impo &minNum
+  // base case
+  if (index >= size) {
     return;
   }
 
-  if(arr[index] % 2 == 0) {
+  // processing
+  maxNum = max(maxNum, arr[index]);
+  // recursive call
+  maxNumInArr(arr, size, index + 1, maxNum);
+}
+
+// even nums in array
+void evenNumsInArray(int arr[], int size, vector< int > &ans, int index) {
+  if (index >= size) {
+    return;
+  }
+
+  if (arr[index] % 2 == 0) {
     ans.push_back(arr[index]);
   }
 
-  evenNumsInArray(arr, size, ans, index+1);
-
+  evenNumsInArray(arr, size, ans, index + 1);
 }
 
 void doubleTheNumInArray(int arr[], int size, int index) {
-  if(index >= size) {
+  if (index >= size) {
     return;
   }
 
   arr[index] += arr[index];
 
-  doubleTheNumInArray(arr, size, index+1);
+  doubleTheNumInArray(arr, size, index + 1);
 }
 
 int main() {
@@ -107,7 +122,11 @@ int main() {
   // evenNumsInArray(arr, sizeOfArr, ans, 0);
   // printVector(ans);
 
-  doubleTheNumInArray(arr, sizeOfArr, 0);
-  printArray(arr, sizeOfArr, 0);
+  // doubleTheNumInArray(arr, sizeOfArr, 0);
+  // printArray(arr, sizeOfArr, 0);
+
+  int maxNum = INT_MIN;
+  maxNumInArr(arr, sizeOfArr, 0, maxNum);
+  cout << maxNum << endl;
   return 0;
 }
