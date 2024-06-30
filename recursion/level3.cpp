@@ -125,6 +125,11 @@ int solveCoinChange(vector< int > &coins, int amount) {
   if (amount == 0) {
     return 0;
   }
+
+  if (amount < 0) {
+    return INT_MAX;
+  }
+
   int minCoins = INT_MAX;
 
   int ans = INT_MAX;
@@ -137,9 +142,9 @@ int solveCoinChange(vector< int > &coins, int amount) {
       int recAns = solveCoinChange(coins, amount - coin);
       if (recAns != INT_MAX) {
         ans = 1 + recAns;
+        minCoins = min(minCoins, ans);
       }
     }
-    minCoins = min(minCoins, ans);
   }
 
   return ans;
@@ -151,6 +156,22 @@ int coinchange(vector< int > &coins, int amount) {
     return -1;
   }
   return ans;
+}
+
+// Leetcode 198. House Robber
+int rob(vector<int> &nums, int size, int index) {
+  if(index >= size) {
+    return 0;
+  }
+
+  // rob -> ith index
+  int option1 = nums[index] + rob(nums, size, index + 2);
+  // do not rob -> ith index
+  int option2 = 0 + rob(nums, size, index + 1);
+
+  int finalAns = max(option1, option2);
+  return finalAns;
+
 }
 
 int main() {
@@ -174,19 +195,36 @@ int main() {
   // cout << maximizeTheCuts(20,5,10,10) << endl;
   // cout << maximizeTheCuts(20,5,10,5) << endl;
 
-  vector< int > coinChangeCaseOne;
-  int amountOne = 11;
-  vector< int > coinChangeCaseTwo;
-  int amountTwo = 3;
+  // vector< int > coinChangeCaseOne;
+  // int amountOne = 11;
+  // vector< int > coinChangeCaseTwo;
+  // int amountTwo = 3;
 
-  coinChangeCaseOne.push_back(1);
-  coinChangeCaseOne.push_back(2);
-  coinChangeCaseOne.push_back(5);
+  // coinChangeCaseOne.push_back(1);
+  // coinChangeCaseOne.push_back(2);
+  // coinChangeCaseOne.push_back(5);
 
-  coinChangeCaseTwo.push_back(2);
+  // coinChangeCaseTwo.push_back(2);
 
-  cout << coinchange(coinChangeCaseOne, amountOne) << endl;
-  cout << coinchange(coinChangeCaseTwo, amountTwo) << endl;
+  // cout << coinchange(coinChangeCaseOne, amountOne) << endl;
+  // cout << coinchange(coinChangeCaseTwo, amountTwo) << endl;
+
+  vector<int> robOne;
+  vector<int> robTwo;
+
+  robOne.push_back(1);
+  robOne.push_back(2);
+  robOne.push_back(3);
+  robOne.push_back(1);
+
+  robTwo.push_back(2);
+  robTwo.push_back(7);
+  robTwo.push_back(9);
+  robTwo.push_back(3);
+  robTwo.push_back(1);
+
+  cout << rob(robOne, robOne.size(), 0) << endl;
+  cout << rob(robTwo, robTwo.size(), 0) << endl;
 
   return 0;
 }
