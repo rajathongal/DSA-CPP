@@ -1,6 +1,6 @@
-#include <climits>
 #include <iostream>
 #include <vector>
+#include <cstring> // for strrchr
 using namespace std;
 
 // Last occurance of a char
@@ -20,6 +20,11 @@ int main() {
   // for last occurance of char
   int ans = -1;
   findLastOccuranceOfChar("Lababdarbab", 0, ans, 'b');
+  cout << ans << endl;
+
+  // last occr using inbuilt fn
+  const char* last_occurrence = strrchr("Lababdarbab", 'b');
+  cout << last_occurrence << endl;
 
   return 0;
 }
