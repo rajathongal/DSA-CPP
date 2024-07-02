@@ -32,9 +32,10 @@ void reverseString(string &str, int start, int end) {
 // N = max(num1, num2)
 // m = constant
 // TC O(N + 1) -> O(N)
-// SC O(m(N+1)) -> O(N) 
+// SC O(m(N+1)) -> O(N)
 // by ref params reduce space complexity
-void addStrings(string &num1, int ptr1, string &num2, int ptr2, string &ans, int carry = 0) {
+void addStrings(string &num1, int ptr1, string &num2, int ptr2, string &ans,
+                int carry = 0) {
   // string ans = "";
   if (ptr1 && ptr2 < 0) {
     // extra carry might be remaining
@@ -62,6 +63,40 @@ void addStrings(string &num1, int ptr1, string &num2, int ptr2, string &ans, int
   // return ans;
 }
 
+// Check palindrome
+// 1 is for base condition below
+// Tc -> O(n/2) -> O(n)
+// SC -> O(n/2 + 1 ) -> O(n)
+
+bool checkPalindrome(string &str, int start, int end) {
+  if (start >= end) {
+    return true;
+  }
+
+  if (str[start] != str[end]) {
+    return false;
+  }
+
+  return checkPalindrome(str, start+1, end-1);
+}
+
+// Print all sub array using RE
+void subArray(vector<int> &nums, int start, int end) {
+  // base case
+  if(end >= nums.size()) {
+    return;
+  }
+
+  // processing 
+  for(int i=start; i<= end; i++) {
+    cout << nums[i] << " ";
+  }
+  cout << endl;
+
+  // RE Call
+  subArray(nums, start, end + 1);
+}
+
 int main() {
   // // for last occurance of char
   // int ans = -1;
@@ -79,17 +114,28 @@ int main() {
   // reverseString(str, start, end);
   // cout << str << endl;
 
-  // for string add
-  string num1 = "456", num2 = "77";
-  string ans1 = "";
-  addStrings(num1, num1.size() - 1, num2, num2.size() - 1, ans1);
-  reverse(ans1.begin(), ans1.end());
-  cout << ans1 << endl;
+  // // for string add
+  // string num1 = "456", num2 = "77";
+  // string ans1 = "";
+  // addStrings(num1, num1.size() - 1, num2, num2.size() - 1, ans1);
+  // reverse(ans1.begin(), ans1.end());
+  // cout << ans1 << endl;
 
-  string num3 = "11", num4 = "77";
-  string ans2 = ""; 
-  addStrings(num3, num3.size() - 1, num4, num4.size() - 1, ans2);
-  reverse(ans2.begin(), ans2.end());
-  cout << ans2 << endl;
+  // string num3 = "11", num4 = "77";
+  // string ans2 = "";
+  // addStrings(num3, num3.size() - 1, num4, num4.size() - 1, ans2);
+  // reverse(ans2.begin(), ans2.end());
+  // cout << ans2 << endl;
+
+  string str1 = "racecar";
+  cout << checkPalindrome(str1, 0, str1.size() - 1) << endl;
+
+  string str2 = "racetar";
+  cout << checkPalindrome(str2, 0, str2.size() - 1) << endl;
+
+  vector<int> nums = {1,2,3,4};
+  // nums.push_back()
+  // subArray()
+
   return 0;
 }
