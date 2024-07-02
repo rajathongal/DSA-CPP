@@ -155,6 +155,46 @@ void removeOccurances(string &str, string &part) {
   }
 }
 
+// BUY And SELL Stocks
+// LeetCode 121 Best Time to buy and sell stock
+// TC -> O(N)
+// SC -> O(N)
+void maxProfitS(vector< int > &prices, int index, int &minPrice, int &maxProfit) {
+  // base case N + 1 Times
+  if (index >= prices.size()) {
+    return;
+  }
+
+  // processing k time
+  if (prices[index] < minPrice) {
+    minPrice = prices[index];
+  }
+
+  int todaySProfit = prices[index] - minPrice;
+  if (todaySProfit > maxProfit) {
+    maxProfit = todaySProfit;
+  }
+
+  // RE
+  maxProfitS(prices, index + 1, minPrice, maxProfit);
+}
+
+// Leetcode 198. House Robber
+int rob(vector<int> &nums, int size, int index) {
+  if(index >= size) {
+    return 0;
+  }
+
+  // rob -> ith index
+  int option1 = nums[index] + rob(nums, size, index + 2);
+  // do not rob -> ith index
+  int option2 = 0 + rob(nums, size, index + 1);
+
+  int finalAns = max(option1, option2);
+  return finalAns;
+
+}
+
 int main() {
   // // for last occurance of char
   // int ans = -1;
@@ -194,15 +234,27 @@ int main() {
   // vector< int > nums = {1, 2, 3, 4, 5};
   // subArray(nums);
 
-  string s1 = "daabcbaabcbc";
-  string p1 = "abc";
-  removeOccurances(s1, p1);
-  cout << s1 << endl;
+  // string s1 = "daabcbaabcbc";
+  // string p1 = "abc";
+  // removeOccurances(s1, p1);
+  // cout << s1 << endl;
 
-  string s2 = "axxxxyyyyb";
-  string p2 = "xy";
-  removeOccurances(s2, p2);
-  cout << s2 << endl;
+  // string s2 = "axxxxyyyyb";
+  // string p2 = "xy";
+  // removeOccurances(s2, p2);
+  // cout << s2 << endl;
+
+  // vector< int > prices1 = {7, 1, 5, 3, 6, 4};
+  // int minPrice = INT_MAX;
+  // int maxProfit = INT_MIN;
+  // maxProfitS(prices1, 0, minPrice, maxProfit);
+  // cout << maxProfit << endl;
+
+  vector<int> robOne = {1,2,3,1};
+  vector<int> robTwo = {2,7,9,3, 1};
+
+  cout << rob(robOne, robOne.size(), 0) << endl;
+  cout << rob(robTwo, robTwo.size(), 0) << endl;
 
   return 0;
 }
