@@ -1,5 +1,6 @@
 #include <cstring> // for strrchr
 #include <iostream>
+#include <string>
 #include <vector>
 using namespace std;
 
@@ -113,6 +114,47 @@ void subArray(vector< int > &nums) {
   }
 }
 
+// Remove all occurances of a subarray
+// N -> str.size
+// M -> part.size
+// left part -> O(N)
+// right part -> O(M)
+// O(N)
+// O(NM) + O(N) -> O(NM) for one case
+// total RE calls = O(N/M)
+
+// TC -> O(N/M * NM) = O(N^2)
+// SC -> O(N/M)
+
+void removeOccurances(string &str, string &part) {
+
+  // processing
+  // 1. find part string position in s
+  // 2. erase that part
+  // 3. RE call for remaining string
+
+  // 1.
+  int found = str.find(part);
+
+  // 2.
+  if (found != string::npos) {
+    // part string is located
+    // we can take left string of found and concatinate it with right +
+    // len(part) of found
+
+    // pluck left str
+    string leftStr = str.substr(0, found);
+    string rightStr = str.substr(found + part.size(), str.size());
+    str = leftStr + rightStr;
+
+    removeOccurances(str, part);
+  } else {
+    // all the occurances have been removed
+    // base case
+    return;
+  }
+}
+
 int main() {
   // // for last occurance of char
   // int ans = -1;
@@ -149,8 +191,18 @@ int main() {
   // string str2 = "racetar";
   // cout << checkPalindrome(str2, 0, str2.size() - 1) << endl;
 
-  vector< int > nums = {1, 2, 3, 4, 5};
-  subArray(nums);
+  // vector< int > nums = {1, 2, 3, 4, 5};
+  // subArray(nums);
+
+  string s1 = "daabcbaabcbc";
+  string p1 = "abc";
+  removeOccurances(s1, p1);
+  cout << s1 << endl;
+
+  string s2 = "axxxxyyyyb";
+  string p2 = "xy";
+  removeOccurances(s2, p2);
+  cout << s2 << endl;
 
   return 0;
 }
