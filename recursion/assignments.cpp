@@ -77,24 +77,40 @@ bool checkPalindrome(string &str, int start, int end) {
     return false;
   }
 
-  return checkPalindrome(str, start+1, end-1);
+  return checkPalindrome(str, start + 1, end - 1);
 }
 
 // Print all sub array using RE
-void subArray(vector<int> &nums, int start, int end) {
+
+// TC -> O(N^2)
+// start run for N times
+// end runs for N, N-1, N-2 ... 1 worst case N
+// so N * N
+
+// SC -> O(N)
+// subarray runs -> N + 2 calls
+
+void subArray_util(vector< int > &nums, int start, int end) {
   // base case
-  if(end >= nums.size()) {
+  if (end >= nums.size()) {
     return;
   }
 
-  // processing 
-  for(int i=start; i<= end; i++) {
+  // processing
+  for (int i = start; i <= end; i++) {
     cout << nums[i] << " ";
   }
   cout << endl;
 
   // RE Call
-  subArray(nums, start, end + 1);
+  subArray_util(nums, start, end + 1);
+}
+
+void subArray(vector< int > &nums) {
+  for (int start = 0; start < nums.size(); start++) {
+    int end = start;
+    subArray_util(nums, start, end);
+  }
 }
 
 int main() {
@@ -127,15 +143,14 @@ int main() {
   // reverse(ans2.begin(), ans2.end());
   // cout << ans2 << endl;
 
-  string str1 = "racecar";
-  cout << checkPalindrome(str1, 0, str1.size() - 1) << endl;
+  // string str1 = "racecar";
+  // cout << checkPalindrome(str1, 0, str1.size() - 1) << endl;
 
-  string str2 = "racetar";
-  cout << checkPalindrome(str2, 0, str2.size() - 1) << endl;
+  // string str2 = "racetar";
+  // cout << checkPalindrome(str2, 0, str2.size() - 1) << endl;
 
-  vector<int> nums = {1,2,3,4};
-  // nums.push_back()
-  // subArray()
+  vector< int > nums = {1, 2, 3, 4, 5};
+  subArray(nums);
 
   return 0;
 }
