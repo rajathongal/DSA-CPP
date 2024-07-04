@@ -159,7 +159,8 @@ void removeOccurances(string &str, string &part) {
 // LeetCode 121 Best Time to buy and sell stock
 // TC -> O(N)
 // SC -> O(N)
-void maxProfitS(vector< int > &prices, int index, int &minPrice, int &maxProfit) {
+void maxProfitS(vector< int > &prices, int index, int &minPrice,
+                int &maxProfit) {
   // base case N + 1 Times
   if (index >= prices.size()) {
     return;
@@ -180,8 +181,8 @@ void maxProfitS(vector< int > &prices, int index, int &minPrice, int &maxProfit)
 }
 
 // Leetcode 198. House Robber
-int rob(vector<int> &nums, int size, int index) {
-  if(index >= size) {
+int rob(vector< int > &nums, int size, int index) {
+  if (index >= size) {
     return 0;
   }
 
@@ -192,7 +193,46 @@ int rob(vector<int> &nums, int size, int index) {
 
   int finalAns = max(option1, option2);
   return finalAns;
+}
 
+// Leetcode 273. Integer to words
+// computation is proportional to number of words generated
+// words generated is proportional to the digits in num
+// 1 digit can be represented by 2 words max
+// N -> no of digits -> ceil(logN)base10
+// TC -> proportional to no of digits
+// TC -> O(log10 N) base 10
+// N -> no of digits, constant which represents no of time it will loop in reference map
+// untill no is found ex num 23 -> 23 times loop in reference map
+// SC -> O(log10 N) base 10
+
+string numberToWords(int num, vector< pair< int, string > > &referenceMap) {
+  if (num == 0) {
+    return "Zero";
+  }
+
+  // try to find the closest reference of num
+  for (auto it : referenceMap) {
+    // breaking condition
+    if (num >= it.first) {
+      string placeValueInWords = ""; // only if num >= 100
+      string placeReferenceInString =
+          it.second; // thousand hundred or one, two or tweleve
+      string trailingValueInWords = ""; // ex 12,345 -> 345 is trail
+
+      if (num >= 100) { // to get 100, thousands
+        placeValueInWords = numberToWords(num / it.first, referenceMap) + " ";
+      }
+
+      if (num % it.first != 0) {
+        trailingValueInWords =
+            " " + numberToWords(num % it.first, referenceMap);
+      }
+
+      return placeValueInWords + placeReferenceInString + trailingValueInWords;
+    }
+  }
+  return "";
 }
 
 int main() {
@@ -250,11 +290,56 @@ int main() {
   // maxProfitS(prices1, 0, minPrice, maxProfit);
   // cout << maxProfit << endl;
 
-  vector<int> robOne = {1,2,3,1};
-  vector<int> robTwo = {2,7,9,3, 1};
+  // vector<int> robOne = {1,2,3,1};
+  // vector<int> robTwo = {2,7,9,3, 1};
 
-  cout << rob(robOne, robOne.size(), 0) << endl;
-  cout << rob(robTwo, robTwo.size(), 0) << endl;
+  // cout << rob(robOne, robOne.size(), 0) << endl;
+  // cout << rob(robTwo, robTwo.size(), 0) << endl;
+
+  vector< pair< int, string > > referenceMap = {{1000000000, "Billion"},
+                                                {1000000, "Million"},
+                                                {1000, "Thousand"},
+                                                {100, "Hundred"},
+                                                {90, "Ninety"},
+                                                {80, "Eighty"},
+                                                {70, "Seventy"},
+                                                {60, "Sixty"},
+                                                {50, "Fifty"},
+                                                {40, "Forty"},
+                                                {30, "Thirty"},
+                                                {20, "Twenty"},
+                                                {19, "Nineteen"},
+                                                {18, "Eighteen"},
+                                                {17, "Seventeen"},
+                                                {16, "Sixteen"},
+                                                {15, "Fifteen"},
+                                                {14, "Fourteen"},
+                                                {13, "Thirteen"},
+                                                {12, "Twelve"},
+                                                {11, "Eleven"},
+                                                {10, "Ten"},
+                                                {9, "Nine"},
+                                                {8, "Eight"},
+                                                {7, "Seven"},
+                                                {6, "Six"},
+                                                {5, "Five"},
+                                                {4, "Four"},
+                                                {3, "Three"},
+                                                {2, "Two"},
+                                                {1, "One"}};
+
+  int num1 = 10102;
+  int num2 = 123;
+  int num3 = 1234567;
+
+  string ans1, ans2, ans3;
+  ans1 = numberToWords(num1, referenceMap);
+  ans2 = numberToWords(num2, referenceMap);
+  ans3 = numberToWords(num3, referenceMap);
+
+  cout << ans1 << endl;
+  cout << ans2 << endl;
+  cout << ans3 << endl;
 
   return 0;
 }
