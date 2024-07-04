@@ -202,8 +202,8 @@ int rob(vector< int > &nums, int size, int index) {
 // N -> no of digits -> ceil(logN)base10
 // TC -> proportional to no of digits
 // TC -> O(log10 N) base 10
-// N -> no of digits, constant which represents no of time it will loop in reference map
-// untill no is found ex num 23 -> 23 times loop in reference map
+// N -> no of digits, constant which represents no of time it will loop in
+// reference map untill no is found ex num 23 -> 23 times loop in reference map
 // SC -> O(log10 N) base 10
 
 string numberToWords(int num, vector< pair< int, string > > &referenceMap) {
@@ -233,6 +233,49 @@ string numberToWords(int num, vector< pair< int, string > > &referenceMap) {
     }
   }
   return "";
+}
+
+// Leetcode 44, WildCard Matching Hard level
+// O(2^N)
+// O(N + 1)
+bool isMatch(string s, string p, int si = 0, int pi = 0) {
+
+  // base case
+  if (si == s.size() && pi == p.size()) {
+    return true;
+  }
+
+  // processing
+  if (si == s.size() && pi < p.size()) {
+    // in case p still has **fg -> fg are still there in p but s is already out
+    // of bound return false
+    while (pi < p.size()) {
+      if (p[pi] != '*')
+        return false;
+      pi++;
+    }
+
+    // return true only when there are all astrix in p
+
+    return true;
+  }
+
+  // single char matching
+  if (s[si] == p[pi] || p[pi] == '?') {
+    return isMatch(s, p, si + 1, pi + 1);
+  }
+
+  // handling *
+  if (p[pi] == '*') {
+    // RE Call
+    bool isCaseAstrixConsideredAsNull = isMatch(s, p, si, pi + 1);
+    bool isCaseLetAstrixConsumeOneChar =
+        isMatch(s, p, si + 1, pi); // pi will point at astrix still
+    return isCaseAstrixConsideredAsNull || isCaseLetAstrixConsumeOneChar;
+  }
+
+  // char does not match
+  return false;
 }
 
 int main() {
@@ -296,50 +339,62 @@ int main() {
   // cout << rob(robOne, robOne.size(), 0) << endl;
   // cout << rob(robTwo, robTwo.size(), 0) << endl;
 
-  vector< pair< int, string > > referenceMap = {{1000000000, "Billion"},
-                                                {1000000, "Million"},
-                                                {1000, "Thousand"},
-                                                {100, "Hundred"},
-                                                {90, "Ninety"},
-                                                {80, "Eighty"},
-                                                {70, "Seventy"},
-                                                {60, "Sixty"},
-                                                {50, "Fifty"},
-                                                {40, "Forty"},
-                                                {30, "Thirty"},
-                                                {20, "Twenty"},
-                                                {19, "Nineteen"},
-                                                {18, "Eighteen"},
-                                                {17, "Seventeen"},
-                                                {16, "Sixteen"},
-                                                {15, "Fifteen"},
-                                                {14, "Fourteen"},
-                                                {13, "Thirteen"},
-                                                {12, "Twelve"},
-                                                {11, "Eleven"},
-                                                {10, "Ten"},
-                                                {9, "Nine"},
-                                                {8, "Eight"},
-                                                {7, "Seven"},
-                                                {6, "Six"},
-                                                {5, "Five"},
-                                                {4, "Four"},
-                                                {3, "Three"},
-                                                {2, "Two"},
-                                                {1, "One"}};
+  // For int to words problem
+  // vector< pair< int, string > > referenceMap = {{1000000000, "Billion"},
+  //                                               {1000000, "Million"},
+  //                                               {1000, "Thousand"},
+  //                                               {100, "Hundred"},
+  //                                               {90, "Ninety"},
+  //                                               {80, "Eighty"},
+  //                                               {70, "Seventy"},
+  //                                               {60, "Sixty"},
+  //                                               {50, "Fifty"},
+  //                                               {40, "Forty"},
+  //                                               {30, "Thirty"},
+  //                                               {20, "Twenty"},
+  //                                               {19, "Nineteen"},
+  //                                               {18, "Eighteen"},
+  //                                               {17, "Seventeen"},
+  //                                               {16, "Sixteen"},
+  //                                               {15, "Fifteen"},
+  //                                               {14, "Fourteen"},
+  //                                               {13, "Thirteen"},
+  //                                               {12, "Twelve"},
+  //                                               {11, "Eleven"},
+  //                                               {10, "Ten"},
+  //                                               {9, "Nine"},
+  //                                               {8, "Eight"},
+  //                                               {7, "Seven"},
+  //                                               {6, "Six"},
+  //                                               {5, "Five"},
+  //                                               {4, "Four"},
+  //                                               {3, "Three"},
+  //                                               {2, "Two"},
+  //                                               {1, "One"}};
 
-  int num1 = 10102;
-  int num2 = 123;
-  int num3 = 1234567;
+  // int num1 = 10102;
+  // int num2 = 123;
+  // int num3 = 1234567;
 
-  string ans1, ans2, ans3;
-  ans1 = numberToWords(num1, referenceMap);
-  ans2 = numberToWords(num2, referenceMap);
-  ans3 = numberToWords(num3, referenceMap);
+  // string ans1, ans2, ans3;
+  // ans1 = numberToWords(num1, referenceMap);
+  // ans2 = numberToWords(num2, referenceMap);
+  // ans3 = numberToWords(num3, referenceMap);
 
-  cout << ans1 << endl;
-  cout << ans2 << endl;
-  cout << ans3 << endl;
+  // cout << ans1 << endl;
+  // cout << ans2 << endl;
+  // cout << ans3 << endl;
+
+  cout << isMatch("aa", "a") << endl;
+  cout << isMatch("aa", "*") << endl;
+  cout << isMatch("cb", "?a") << endl;
+  cout << isMatch("ca", "?a") << endl;
+  cout << isMatch("aa", "aa*") << endl;  // * acts as empty string
+  cout << isMatch("**ab", "ab") << endl; // * acts as empty string
+  cout << isMatch("abcdefg", "ab*fg")
+       << endl; // will return true as * will match with cde
+       cout << isMatch("abc", "abc***")
+       << endl;
 
   return 0;
 }
