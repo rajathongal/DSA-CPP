@@ -338,9 +338,11 @@ int numSqHelper(int n) {
 int numSquares(int n) { return numSqHelper(n) - 1; }
 
 // Leetcode 983 Minimum Cost For Tickets
+// TC -> O(3^n)
+// SC -> O(n + 1) -> O(n)
 int mincostTickets(vector< int > &days, vector< int > &costs, int index = 0) {
   // base
-  if( index >= days.size()) {
+  if (index >= days.size()) {
     return 0;
   }
   // processing or sol for 1 case
@@ -357,7 +359,7 @@ int mincostTickets(vector< int > &days, vector< int > &costs, int index = 0) {
 
   // cost of 30 day pass
   j = index;
-  int passEndDay = days[index] + 30 - 1;
+  passEndDay = days[index] + 30 - 1;
   while (j < days.size() && days[j] <= passEndDay) {
     j++;
   }
@@ -497,8 +499,8 @@ int main() {
   vector< int > daysTwo = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 30, 31};
   vector< int > costsTwo = {2, 7, 15};
 
-  cout << mincostTickets(daysOne, costsOne);
-  cout << mincostTickets(daysTwo, costsTwo);
+  cout << mincostTickets(daysOne, costsOne) << endl;
+  cout << mincostTickets(daysTwo, costsTwo) << endl;
 
   return 0;
 }
