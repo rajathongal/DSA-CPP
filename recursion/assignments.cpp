@@ -278,6 +278,65 @@ bool isMatch(string s, string p, int si = 0, int pi = 0) {
   return false;
 }
 
+// Leetcode 1155. Number of Dice Rolls With Target Sum
+// TC O(k^n)
+// SC O(n)
+int numRollsToTarget(int n, int k, int target) {
+
+  if (target < 0) {
+    return 0;
+  }
+
+  // found case
+  if (n == 0 && target == 0) {
+    return 1;
+  }
+
+  // not found case
+  if (n == 0 && target != 0) {
+    return 0;
+  }
+
+  if (n != 0 && target == 0) {
+    return 0;
+  }
+
+  int ans = 0;
+  for (int i = 1; i <= k; i++) { // i represents face value
+    ans = ans + numRollsToTarget(n - 1, k, target - i);
+  }
+
+  return ans;
+}
+
+// Leetcode 279. Perfect Squares
+// TC -> O(sqrt(n)^n) -> O(n^n)
+// SC -> O(n + 1) -> O(n)
+int numSqHelper(int n) {
+  if (n == 0)
+    return 1;
+
+  if (n < 0)
+    return 0;
+
+  int i = 1;
+  int end = sqrt(n);
+  int ans = INT_MAX;
+  while (i <= end) {
+    int perfectSquares = i * i;
+    int numberOfPerfectSquares = 1 + numSqHelper(n - perfectSquares);
+    if (numberOfPerfectSquares < ans) {
+      ans = numberOfPerfectSquares;
+    }
+    i++;
+  }
+
+  // int ans = 1 + numSqHelper(n - perfectSquares); // for getting ans using 1
+  // only
+  return ans;
+}
+int numSquares(int n) { return numSqHelper(n) - 1; }
+
 int main() {
   // // for last occurance of char
   // int ans = -1;
@@ -385,16 +444,23 @@ int main() {
   // cout << ans2 << endl;
   // cout << ans3 << endl;
 
-  cout << isMatch("aa", "a") << endl;
-  cout << isMatch("aa", "*") << endl;
-  cout << isMatch("cb", "?a") << endl;
-  cout << isMatch("ca", "?a") << endl;
-  cout << isMatch("aa", "aa*") << endl;  // * acts as empty string
-  cout << isMatch("**ab", "ab") << endl; // * acts as empty string
-  cout << isMatch("abcdefg", "ab*fg")
-       << endl; // will return true as * will match with cde
-       cout << isMatch("abc", "abc***")
-       << endl;
+  // cout << isMatch("aa", "a") << endl;
+  // cout << isMatch("aa", "*") << endl;
+  // cout << isMatch("cb", "?a") << endl;
+  // cout << isMatch("ca", "?a") << endl;
+  // cout << isMatch("aa", "aa*") << endl;  // * acts as empty string
+  // cout << isMatch("**ab", "ab") << endl; // * acts as empty string
+  // cout << isMatch("abcdefg", "ab*fg")
+  //      << endl; // will return true as * will match with cde
+  // cout << isMatch("abc", "abc***") << endl;
+
+  // 1155. Number of Dice Rolls With Target Sum
+  // cout << numRollsToTarget(1, 6, 3) << endl;
+  // cout << numRollsToTarget(2, 6, 7) << endl;
+  // cout << numRollsToTarget(3, 2, 6) << endl;
+
+  cout << numSquares(12) << endl;
+  cout << numSquares(13) << endl;
 
   return 0;
 }
