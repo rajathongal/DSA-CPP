@@ -337,6 +337,35 @@ int numSqHelper(int n) {
 }
 int numSquares(int n) { return numSqHelper(n) - 1; }
 
+// Leetcode 983 Minimum Cost For Tickets
+int mincostTickets(vector< int > &days, vector< int > &costs, int index = 0) {
+  // base
+  if( index >= days.size()) {
+    return 0;
+  }
+  // processing or sol for 1 case
+  //  cost of one day pass
+  int cost1 = costs[0] + mincostTickets(days, costs, index + 1);
+
+  // cost of seven day pass
+  int j = index;
+  int passEndDay = days[index] + 7 - 1;
+  while (j < days.size() && days[j] <= passEndDay) {
+    j++;
+  }
+  int cost7 = costs[1] + mincostTickets(days, costs, j);
+
+  // cost of 30 day pass
+  j = index;
+  int passEndDay = days[index] + 30 - 1;
+  while (j < days.size() && days[j] <= passEndDay) {
+    j++;
+  }
+  int cost30 = costs[2] + mincostTickets(days, costs, j);
+
+  return min(cost1, min(cost7, cost30));
+}
+
 int main() {
   // // for last occurance of char
   // int ans = -1;
@@ -459,8 +488,17 @@ int main() {
   // cout << numRollsToTarget(2, 6, 7) << endl;
   // cout << numRollsToTarget(3, 2, 6) << endl;
 
-  cout << numSquares(12) << endl;
-  cout << numSquares(13) << endl;
+  // cout << numSquares(12) << endl;
+  // cout << numSquares(13) << endl;
+
+  vector< int > daysOne = {1, 4, 6, 7, 8, 20};
+  vector< int > costsOne = {2, 7, 15};
+
+  vector< int > daysTwo = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 30, 31};
+  vector< int > costsTwo = {2, 7, 15};
+
+  cout << mincostTickets(daysOne, costsOne);
+  cout << mincostTickets(daysTwo, costsTwo);
 
   return 0;
 }
