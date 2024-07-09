@@ -44,7 +44,7 @@ int countDeArrangement(int n) {
 // https://www.geeksforgeeks.org/painting-fence-algorithm/
 // Returns count of ways to color k posts
 long countWays(int n, int k) {
-  
+
 }
 
 int main() {
@@ -58,10 +58,10 @@ int main() {
   // cout << robRobber2(nums3, nums3.size(), 0) << endl;
   // cout << robRobber2(nums4, nums4.size(), 0) << endl;
 
-  // cout << countDeArrangement(5) << endl;
-  // cout << countDeArrangement(4) << endl;
-  // cout << countDeArrangement(3) << endl;
-  // cout << countDeArrangement(1) << endl;
+  cout << countDeArrangement(6) << endl;
+  cout << countDeArrangement(4) << endl;
+  cout << countDeArrangement(3) << endl;
+  cout << countDeArrangement(1) << endl;
 
   cout << countWays(2, 4) << endl;
   cout << countWays(3, 2) << endl;
