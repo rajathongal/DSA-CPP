@@ -36,7 +36,11 @@ int countDeArrangement(int n) {
     return 1;
 
   // Processing
-  int ans = (n - 1) * (countDeArrangement(n - 1) + countDeArrangement(n - 2));
+  int n1 = countDeArrangement(n - 1);
+  int n2 = countDeArrangement(n - 2);
+  int ans = (n - 1) *  (n1+ n2);
+  cout << n1 << " " << n2 << " " << n << " "<< ans << endl;
+
   return ans;
 }
 
@@ -45,6 +49,17 @@ int countDeArrangement(int n) {
 // Returns count of ways to color k posts
 long countWays(int n, int k) {
 
+  // base case
+  if(n == 1) {
+    return k;
+  }
+
+  if(n == 2) {
+    return k + k * (k-1);
+  }
+
+  int ans = (k-1) * (countWays(n-1, k) + countWays(n-2, k));
+  return ans;
 }
 
 int main() {
@@ -58,13 +73,15 @@ int main() {
   // cout << robRobber2(nums3, nums3.size(), 0) << endl;
   // cout << robRobber2(nums4, nums4.size(), 0) << endl;
 
-  cout << countDeArrangement(6) << endl;
-  cout << countDeArrangement(4) << endl;
-  cout << countDeArrangement(3) << endl;
-  cout << countDeArrangement(1) << endl;
+  // cout << countDeArrangement(5) << endl;
+  // cout << countDeArrangement(4) << endl;
+  // cout << countDeArrangement(3) << endl;
+  // cout << countDeArrangement(1) << endl;
 
   cout << countWays(2, 4) << endl;
   cout << countWays(3, 2) << endl;
+  cout << countWays(3, 3) << endl;
+
 
   return 0;
 }
