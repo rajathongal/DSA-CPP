@@ -80,23 +80,46 @@ int minDistance(string word1, string word2, int i = 0, int j = 0) {
   }
 
   int ans = 0;
-  
+
   // match / no match
-  if(word1[i] == word2[j]) {
-    // match 
-    ans = 0 + minDistance(word1, word2, i+1, j+1);
+  if (word1[i] == word2[j]) {
+    // match
+    ans = 0 + minDistance(word1, word2, i + 1, j + 1);
   } else {
     // not match
     // insert
-    int optionInsert = 1 + minDistance(word1, word2, i, j+1);
-    // remove 
-    int optionRemove = 1 + minDistance(word1, word2, i+1, j);
+    int optionInsert = 1 + minDistance(word1, word2, i, j + 1);
+    // remove
+    int optionRemove = 1 + minDistance(word1, word2, i + 1, j);
     // replace
-    int optionReplace = 1 + minDistance(word1, word2, i+1, j+1);
+    int optionReplace = 1 + minDistance(word1, word2, i + 1, j + 1);
 
     ans = min(optionInsert, min(optionRemove, optionReplace));
   }
   return ans;
+}
+
+// Leetcode 221 Maximal Square
+int maximalSquare(vector< vector< char > > &matrix, int row, int col, int &maxi,
+                  int i = 0, int j = 0) {
+  if (i >= row || j >= col) {
+    return 0;
+  }
+
+  // explore all 3 directions
+  int right = maximalSquare(matrix, row, col, maxi, i, j + 1);
+  int diagonal = maximalSquare(matrix, row, col, maxi, i + 1, j + 1);
+  int down = maximalSquare(matrix, row, col, maxi, i + 1, j);
+
+  // check can we build square from current position
+  if (matrix[i][j] == '1') {
+    int ans = 1 + min(right, min(down, diagonal));
+    maxi = max(maxi, ans);
+    return ans;
+  } else {
+    // ans also 0
+    return 0;
+  }
 }
 
 int main() {
@@ -119,8 +142,36 @@ int main() {
   // cout << countWays(3, 2) << endl;
   // cout << countWays(3, 3) << endl;
 
-  cout << minDistance("horse", "ros") << endl;
-  cout << minDistance("intention", "execution") << endl;
+  // cout << minDistance("horse", "ros") << endl;
+  // cout << minDistance("intention", "execution") << endl;
+
+  // for Maximal Square
+  vector< vector< char > > matrixOne = {{'1', '0', '1', '0', '0'},
+                                        {'1', '0', '1', '1', '1'},
+                                        {'1', '1', '1', '1', '1'},
+                                        {'1', '0', '0', '1', '0'}};
+  vector< vector< char > > matrixTwo = {
+      {'1', '0', '1', '1', '1'}, 
+      {'1', '0', '1', '1', '1'},
+      {'1', '1', '1', '1', '1'}, 
+      {'1', '1', '1', '1', '0'},
+      {'1', '1', '1', '1', '0'}, 
+      {'1', '1', '1', '1', '0'},
+  };
+  int maxOne = INT_MIN;
+  int maxTwo = INT_MIN;
+
+  maximalSquare(matrixOne, matrixOne.size(), matrixOne[0].size(), maxOne);
+  if(maxOne != INT_MIN) {
+    maxOne  = maxOne * maxOne;
+  }
+  cout << maxOne << endl;
+
+  maximalSquare(matrixTwo, matrixTwo.size(), matrixTwo[0].size(), maxTwo);
+  if(maxTwo != INT_MIN) {
+    maxTwo  = maxTwo * maxTwo;
+  }
+  cout << maxTwo  << endl;
 
   return 0;
 }
