@@ -38,8 +38,8 @@ int countDeArrangement(int n) {
   // Processing
   int n1 = countDeArrangement(n - 1);
   int n2 = countDeArrangement(n - 2);
-  int ans = (n - 1) *  (n1+ n2);
-  cout << n1 << " " << n2 << " " << n << " "<< ans << endl;
+  int ans = (n - 1) * (n1 + n2);
+  cout << n1 << " " << n2 << " " << n << " " << ans << endl;
 
   return ans;
 }
@@ -50,15 +50,52 @@ int countDeArrangement(int n) {
 long countWays(int n, int k) {
 
   // base case
-  if(n == 1) {
+  if (n == 1) {
     return k;
   }
 
-  if(n == 2) {
-    return k + k * (k-1);
+  if (n == 2) {
+    return k + k * (k - 1);
   }
 
-  int ans = (k-1) * (countWays(n-1, k) + countWays(n-2, k));
+  int ans = (k - 1) * (countWays(n - 1, k) + countWays(n - 2, k));
+  return ans;
+}
+
+// Leetcode 72. Edit distance
+int minDistance(string word1, string word2, int i = 0, int j = 0) {
+  // base case
+  if (i >= word1.length()) {
+    // this means there maybe some chars still left in word 2 and word1 may have
+    // less chars than word2
+    // so we return the remaining chaars from word 2
+    return word2.length() - j;
+  }
+
+  if (j >= word2.length()) {
+    // this means there maybe some chars still left in word 1 and word2 may have
+    // less chars than word1
+    // so we return the remaining chars from word 1
+    return word1.length() - i;
+  }
+
+  int ans = 0;
+  
+  // match / no match
+  if(word1[i] == word2[j]) {
+    // match 
+    ans = 0 + minDistance(word1, word2, i+1, j+1);
+  } else {
+    // not match
+    // insert
+    int optionInsert = 1 + minDistance(word1, word2, i, j+1);
+    // remove 
+    int optionRemove = 1 + minDistance(word1, word2, i+1, j);
+    // replace
+    int optionReplace = 1 + minDistance(word1, word2, i+1, j+1);
+
+    ans = min(optionInsert, min(optionRemove, optionReplace));
+  }
   return ans;
 }
 
@@ -78,10 +115,12 @@ int main() {
   // cout << countDeArrangement(3) << endl;
   // cout << countDeArrangement(1) << endl;
 
-  cout << countWays(2, 4) << endl;
-  cout << countWays(3, 2) << endl;
-  cout << countWays(3, 3) << endl;
+  // cout << countWays(2, 4) << endl;
+  // cout << countWays(3, 2) << endl;
+  // cout << countWays(3, 3) << endl;
 
+  cout << minDistance("horse", "ros") << endl;
+  cout << minDistance("intention", "execution") << endl;
 
   return 0;
 }
