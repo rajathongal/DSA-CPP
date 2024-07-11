@@ -152,13 +152,60 @@ void merge2SortedArrays(vector< int > &a, vector< int > &b) {
   }
 }
 
+// Leetcode 53 Maximum SubArray
+int maxSubArray(vector< int > &nums, int start, int end) {
+  // m1 brute force find all sub arrays then find max of them O(n3) or O(n2)
+
+
+  if(start == end) {
+    return nums[start];
+  }
+
+  int maxOfLeftBorderSum = INT_MIN;
+  int maxOfRightBorderSum = INT_MIN;
+  int leftBorderSum = 0;
+  int rightBorderSum = 0;
+
+  int mid = start + ((end-start) >> 1);
+
+  int maxLeftSum = maxSubArray(nums, start, mid);
+  int maxRightSum = maxSubArray(nums, mid + 1, end);
+
+  // max cross border sum
+  for(int i= mid; i >= start;i-- ) {
+    leftBorderSum += nums[i];
+    if(leftBorderSum > maxOfLeftBorderSum) {
+      maxOfLeftBorderSum = leftBorderSum;
+    }
+  }
+
+   for(int i= mid + 1; i <= end;i++ ) {
+    rightBorderSum += nums[i];
+    if(rightBorderSum > maxOfRightBorderSum) {
+      maxOfRightBorderSum = rightBorderSum;
+    }
+  }
+
+  int crossBorderSum = maxOfLeftBorderSum + maxOfRightBorderSum;
+
+  return max(maxLeftSum, max(maxRightSum, crossBorderSum));
+}
+
 int main() {
   // vector< int > arrOne = {8,4,2,1};
   // cout << countInversion(arrOne) << endl;
 
-  vector< int > nums = {5, 2, 3, 1, 4, 7, 8, 9, 100};
-  sortArray(nums);
-  printVector(nums);
+  // vector< int > nums = {5, 2, 3, 1, 4, 7, 8, 9, 100};
+  // sortArray(nums);
+  // printVector(nums);
+
+  vector< int > maxSubOne = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+  vector< int > maxSubTwo = {5, 4, -1, 7, 8};
+  vector< int > maxSubThree = {1000};
+
+  cout << maxSubArray(maxSubOne, 0, maxSubOne.size() - 1) << endl;
+  cout << maxSubArray(maxSubTwo, 0, maxSubTwo.size() - 1) << endl;
+  cout << maxSubArray(maxSubThree, 0, maxSubThree.size() - 1) << endl;
 
   return 0;
 }
