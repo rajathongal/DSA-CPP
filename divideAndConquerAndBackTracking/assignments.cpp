@@ -153,6 +153,8 @@ void merge2SortedArrays(vector< int > &a, vector< int > &b) {
 }
 
 // Leetcode 53 Maximum SubArray
+// TC -> O(nlogn)
+// SC -> O(logn) 
 int maxSubArray(vector< int > &nums, int start, int end) {
   // m1 brute force find all sub arrays then find max of them O(n3) or O(n2)
 
