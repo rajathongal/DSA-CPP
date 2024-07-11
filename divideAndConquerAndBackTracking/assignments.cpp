@@ -80,9 +80,52 @@ int countInversion(vector< int > &arr) {
   return count;
 }
 
+// In Place Merge Sort
+// TC -> O(nlogn)
+// SC -> O(1)
+// sort array LC 912
+void mergeInPlace(vector< int > &nums, int start, int end, int mid) {
+  int totalLength = end - start + 1;
+  int gap = (totalLength / 2) + (totalLength % 2);
+
+  while (gap > 0) {
+    int i = start, j = start + gap;
+    while (j <= end) {
+      if (nums[i] > nums[j]) {
+        swap(nums[i], nums[j]);
+      }
+      ++i, ++j;
+    }
+
+    gap = gap <= 1 ? 0 : (gap / 2) + (gap % 2);
+  }
+}
+void mergeSortInPlace(vector< int > &nums, int start, int end) {
+  // base case
+  if (start >= end) {
+    // > invalid and == single element array
+    return;
+  }
+
+  // break
+  int mid = start + (end - start) / 2;
+  // RE
+  mergeSortInPlace(nums, start, mid);   // left
+  mergeSortInPlace(nums, mid + 1, end); // right
+  mergeInPlace(nums, start, end, mid);
+}
+
+void sortArray(vector< int > &nums) {
+  mergeSortInPlace(nums, 0, nums.size() - 1);
+  return;
+}
 int main() {
-  vector< int > arrOne = {8,4,2,1};
-  cout << countInversion(arrOne) << endl;
+  // vector< int > arrOne = {8,4,2,1};
+  // cout << countInversion(arrOne) << endl;
+
+  vector< int > nums = {5, 2, 3, 1, 4, 7, 8, 9, 100};
+  sortArray(nums);
+  printVector(nums);
 
   return 0;
 }
