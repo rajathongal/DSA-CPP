@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <set>
 using namespace std;
 
 void printVector(vector< int > v) {
@@ -10,6 +11,16 @@ void printVector(vector< int > v) {
     cout << v.at(i) << " ";
   }
   cout << endl;
+}
+
+void print2DVector(vector< vector< int > > arr) {
+  cout << "Printing Vector" << endl;
+  for (int i = 0; i < arr.size(); i++) {
+    for (int j = 0; j < arr[i].size(); j++) {
+      cout << arr[i][j] << "  ";
+    }
+    cout << endl;
+  }
 }
 
 // Hacker Rank: Count Inversion
@@ -154,12 +165,11 @@ void merge2SortedArrays(vector< int > &a, vector< int > &b) {
 
 // Leetcode 53 Maximum SubArray
 // TC -> O(nlogn)
-// SC -> O(logn) 
+// SC -> O(logn)
 int maxSubArray(vector< int > &nums, int start, int end) {
   // m1 brute force find all sub arrays then find max of them O(n3) or O(n2)
 
-
-  if(start == end) {
+  if (start == end) {
     return nums[start];
   }
 
@@ -168,22 +178,22 @@ int maxSubArray(vector< int > &nums, int start, int end) {
   int leftBorderSum = 0;
   int rightBorderSum = 0;
 
-  int mid = start + ((end-start) >> 1);
+  int mid = start + ((end - start) >> 1);
 
   int maxLeftSum = maxSubArray(nums, start, mid);
   int maxRightSum = maxSubArray(nums, mid + 1, end);
 
   // max cross border sum
-  for(int i= mid; i >= start;i-- ) {
+  for (int i = mid; i >= start; i--) {
     leftBorderSum += nums[i];
-    if(leftBorderSum > maxOfLeftBorderSum) {
+    if (leftBorderSum > maxOfLeftBorderSum) {
       maxOfLeftBorderSum = leftBorderSum;
     }
   }
 
-   for(int i= mid + 1; i <= end;i++ ) {
+  for (int i = mid + 1; i <= end; i++) {
     rightBorderSum += nums[i];
-    if(rightBorderSum > maxOfRightBorderSum) {
+    if (rightBorderSum > maxOfRightBorderSum) {
       maxOfRightBorderSum = rightBorderSum;
     }
   }
@@ -191,6 +201,66 @@ int maxSubArray(vector< int > &nums, int start, int end) {
   int crossBorderSum = maxOfLeftBorderSum + maxOfRightBorderSum;
 
   return max(maxLeftSum, max(maxRightSum, crossBorderSum));
+}
+
+// Leetcode 39 Combination Sum
+void combSumHelper(vector< int > &candidates, int target,
+                   vector< int > &possibleValues, vector< vector< int > > &ans,
+                   int index = 0) {
+  if (target == 0) {
+    ans.push_back(possibleValues);
+    return;
+  }
+  if (target < 0) {
+    return;
+  }
+  for (int i = index; i < candidates.size(); i++) {
+    possibleValues.push_back(candidates[i]);
+    combSumHelper(candidates, target - candidates[i], possibleValues, ans, i);
+    possibleValues.pop_back();
+  }
+}
+vector< vector< int > > combinationSum(vector< int > &candidates, int target) {
+  vector< vector< int > > ans;
+  vector< int > possibleValues;
+  combSumHelper(candidates, target, possibleValues, ans);
+  return ans;
+}
+
+// Leetcode 40 Combination sum 2
+void combSumHelper2(vector< int > &candidates, int target,
+                   vector< int > &possibleValues, vector< vector< int > > &ans,
+                   int index = 0) {
+  if (target == 0) {
+    ans.push_back(possibleValues);
+    return;
+  }
+  if (target < 0) {
+    return;
+  }
+  for (int i = index; i < candidates.size(); i++) {
+    if(i > index && candidates[i] == candidates[i-1]) {
+      continue;
+    }
+    possibleValues.push_back(candidates[i]);
+    combSumHelper2(candidates, target - candidates[i], possibleValues, ans, i+1);
+    possibleValues.pop_back();
+  }
+}
+vector< vector< int > > combinationSum2(vector< int > &candidates, int target) {
+  sort(candidates.begin(), candidates.end());
+  vector< vector< int > > ans;
+  vector< int > possibleValues;
+  combSumHelper2(candidates, target, possibleValues, ans);
+  // set<vector<int>> ansSet;
+  // for(auto elem: ans) {
+  //   ansSet.insert(elem);
+  // }
+  // ans.clear();
+  // for(auto elem: ansSet) {
+  //   ans.push_back(elem);
+  // }
+  return ans;
 }
 
 int main() {
@@ -201,13 +271,35 @@ int main() {
   // sortArray(nums);
   // printVector(nums);
 
-  vector< int > maxSubOne = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
-  vector< int > maxSubTwo = {5, 4, -1, 7, 8};
-  vector< int > maxSubThree = {1000};
+  // vector< int > maxSubOne = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+  // vector< int > maxSubTwo = {5, 4, -1, 7, 8};
+  // vector< int > maxSubThree = {1000};
 
-  cout << maxSubArray(maxSubOne, 0, maxSubOne.size() - 1) << endl;
-  cout << maxSubArray(maxSubTwo, 0, maxSubTwo.size() - 1) << endl;
-  cout << maxSubArray(maxSubThree, 0, maxSubThree.size() - 1) << endl;
+  // cout << maxSubArray(maxSubOne, 0, maxSubOne.size() - 1) << endl;
+  // cout << maxSubArray(maxSubTwo, 0, maxSubTwo.size() - 1) << endl;
+  // cout << maxSubArray(maxSubThree, 0, maxSubThree.size() - 1) << endl;
+
+  // For Combination Sum 1
+  // vector< int > candOne = {2, 3, 6, 7};
+  // int targetOne = 7;
+  // vector< int > candTwo = {2, 3, 5};
+  // int targetTwo = 8;
+
+  // vector< vector< int > > ansOne = combinationSum(candOne, targetOne);
+  // vector< vector< int > > ansTwo = combinationSum(candTwo, targetTwo);
+  // print2DVector(ansOne);
+  // print2DVector(ansTwo);
+
+  // For Combination Sum 2
+  vector< int > candOne = {2,5,2,1,2};
+  int targetOne = 5;
+  vector< int > candTwo = {10,1,2,7,6,1,5};
+  int targetTwo = 8;
+
+  vector< vector< int > > ansOne = combinationSum2(candOne, targetOne);
+  vector< vector< int > > ansTwo = combinationSum2(candTwo, targetTwo);
+  print2DVector(ansOne);
+  print2DVector(ansTwo);
 
   return 0;
 }
