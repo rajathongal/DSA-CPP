@@ -1,6 +1,7 @@
 #include <iostream>
-#include <vector>
 #include <set>
+#include <vector>
+#include <unordered_map>
 using namespace std;
 
 void printVector(vector< int > v) {
@@ -229,8 +230,8 @@ vector< vector< int > > combinationSum(vector< int > &candidates, int target) {
 
 // Leetcode 40 Combination sum 2
 void combSumHelper2(vector< int > &candidates, int target,
-                   vector< int > &possibleValues, vector< vector< int > > &ans,
-                   int index = 0) {
+                    vector< int > &possibleValues, vector< vector< int > > &ans,
+                    int index = 0) {
   if (target == 0) {
     ans.push_back(possibleValues);
     return;
@@ -239,11 +240,12 @@ void combSumHelper2(vector< int > &candidates, int target,
     return;
   }
   for (int i = index; i < candidates.size(); i++) {
-    if(i > index && candidates[i] == candidates[i-1]) {
+    if (i > index && candidates[i] == candidates[i - 1]) {
       continue;
     }
     possibleValues.push_back(candidates[i]);
-    combSumHelper2(candidates, target - candidates[i], possibleValues, ans, i+1);
+    combSumHelper2(candidates, target - candidates[i], possibleValues, ans,
+                   i + 1);
     possibleValues.pop_back();
   }
 }
@@ -259,6 +261,39 @@ vector< vector< int > > combinationSum2(vector< int > &candidates, int target) {
   // ans.clear();
   // for(auto elem: ansSet) {
   //   ans.push_back(elem);
+  // }
+  return ans;
+}
+
+// Leetcode 47 Permutation 2
+void permuteUniqueHelper(vector< int > &nums, vector< vector< int > > &ans, int start = 0) {
+
+  if(start == nums.size()) {
+    ans.push_back(nums);
+    return;
+  }
+  unordered_map<int, bool> visited;
+  for(int i=start; i<nums.size(); i++) {
+    if(visited.find(nums[i]) != visited.end()) {
+      continue;
+    }
+    visited[nums[i]] = true;
+    swap(nums[i], nums[start]);
+    permuteUniqueHelper(nums, ans, start + 1);
+    swap(nums[i], nums[start]);
+
+  }
+}
+vector< vector< int > > permuteUnique(vector< int > &nums) {
+  vector<vector<int>> ans;
+  permuteUniqueHelper(nums, ans);
+  // set<vector<int>> st;
+  // for(auto e:ans) {
+  //   st.insert(e);
+  // }
+  // ans.clear();
+  // for(auto e:st) {
+  //   ans.push_back(e);
   // }
   return ans;
 }
@@ -291,13 +326,20 @@ int main() {
   // print2DVector(ansTwo);
 
   // For Combination Sum 2
-  vector< int > candOne = {2,5,2,1,2};
-  int targetOne = 5;
-  vector< int > candTwo = {10,1,2,7,6,1,5};
-  int targetTwo = 8;
+  // vector< int > candOne = {2, 5, 2, 1, 2};
+  // int targetOne = 5;
+  // vector< int > candTwo = {10, 1, 2, 7, 6, 1, 5};
+  // int targetTwo = 8;
 
-  vector< vector< int > > ansOne = combinationSum2(candOne, targetOne);
-  vector< vector< int > > ansTwo = combinationSum2(candTwo, targetTwo);
+  // vector< vector< int > > ansOne = combinationSum2(candOne, targetOne);
+  // vector< vector< int > > ansTwo = combinationSum2(candTwo, targetTwo);
+  // print2DVector(ansOne);
+  // print2DVector(ansTwo);
+
+  vector< int > permaOne = {1, 1, 2};
+  vector< int > permaTwo = {1, 2, 3};
+  vector< vector< int > > ansOne = permuteUnique(permaOne);
+  vector< vector< int > > ansTwo = permuteUnique(permaTwo);
   print2DVector(ansOne);
   print2DVector(ansTwo);
 
