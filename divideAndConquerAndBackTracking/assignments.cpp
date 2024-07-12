@@ -300,16 +300,16 @@ vector< vector< int > > permuteUnique(vector< int > &nums) {
 
 // Leetcode 526 Beautiful Arrangement
 void countArrangementHelper(vector< int > &v, int &n, int &ans, int currNum) {
-  if(currNum == n + 1) {
-    for(int i = 1; i<=n; i++) {
+  if (currNum == n + 1) {
+    for (int i = 1; i <= n; i++) {
       cout << v[i] << " ";
     }
     cout << endl;
     ++ans;
     return;
   }
-  for(int i = 1; i<= n; ++i) {
-    if(v[i] == 0 && (currNum % i == 0 || i % currNum == 0)) {
+  for (int i = 1; i <= n; ++i) {
+    if (v[i] == 0 && (currNum % i == 0 || i % currNum == 0)) {
       v[i] = currNum;
       countArrangementHelper(v, n, ans, currNum + 1);
       v[i] = 0; // if not possible to make combination remove
@@ -321,6 +321,41 @@ int countArrangement(int n) {
   int ans = 0;
   countArrangementHelper(v, n, ans, 1);
   return ans;
+}
+
+// Leetcode 1655. Distribute Repeating Integers
+bool canDistributeHelper(vector< int > &counts, vector< int > &quantity, int ithCustomer) {
+  if(ithCustomer == quantity.size()) {
+    return true;
+  }
+  
+  for(int i=0; i< counts.size();i++) {
+    if(counts[i] >= quantity[ithCustomer]) {
+      counts[i] -= quantity[ithCustomer];
+      if(canDistributeHelper(counts, quantity, ithCustomer + 1)) {
+        return true;
+      } else {
+        // back track
+        counts[i] += quantity[ithCustomer];
+      }
+    }
+
+  }
+
+  return false;
+}
+bool canDistribute(vector< int > &nums, vector< int > &quantity) {
+  unordered_map<int, int> countMap;
+  for(auto num: nums) {
+    countMap[num]++;
+  }
+
+  vector<int> counts;
+  for(auto it: countMap) {
+    counts.push_back(it.second);
+  }
+  sort(quantity.rbegin(), quantity.rend()); // optimising to get false early to avoid TLE desc ordering
+  return canDistributeHelper(counts, quantity, 0);
 }
 
 int main() {
@@ -368,10 +403,20 @@ int main() {
   // print2DVector(ansOne);
   // print2DVector(ansTwo);
 
-  cout << endl << countArrangement(3) << endl;
-  cout << endl << countArrangement(5) << endl;
+  // cout << endl << countArrangement(3) << endl;
+  // cout << endl << countArrangement(5) << endl;
 
-  
+  vector< int > numsOne = {1, 2, 3, 4};
+  vector< int > quantityOne = {2};
+  cout << canDistribute(numsOne, quantityOne) << endl;
+
+  vector< int > numsTwo = {1, 2, 3, 3};
+  vector< int > quantityTwo = {2};
+  cout << canDistribute(numsTwo, quantityTwo) << endl;
+
+  vector< int > numsThree = {1, 1, 2, 2};
+  vector< int > quantityThree = {2, 2};
+  cout << canDistribute(numsThree, quantityThree) << endl;
 
   return 0;
 }
