@@ -1,7 +1,7 @@
 #include <iostream>
 #include <set>
-#include <vector>
 #include <unordered_map>
+#include <vector>
 using namespace std;
 
 void printVector(vector< int > v) {
@@ -266,26 +266,26 @@ vector< vector< int > > combinationSum2(vector< int > &candidates, int target) {
 }
 
 // Leetcode 47 Permutation 2
-void permuteUniqueHelper(vector< int > &nums, vector< vector< int > > &ans, int start = 0) {
+void permuteUniqueHelper(vector< int > &nums, vector< vector< int > > &ans,
+                         int start = 0) {
 
-  if(start == nums.size()) {
+  if (start == nums.size()) {
     ans.push_back(nums);
     return;
   }
-  unordered_map<int, bool> visited;
-  for(int i=start; i<nums.size(); i++) {
-    if(visited.find(nums[i]) != visited.end()) {
+  unordered_map< int, bool > visited;
+  for (int i = start; i < nums.size(); i++) {
+    if (visited.find(nums[i]) != visited.end()) {
       continue;
     }
     visited[nums[i]] = true;
     swap(nums[i], nums[start]);
     permuteUniqueHelper(nums, ans, start + 1);
     swap(nums[i], nums[start]);
-
   }
 }
 vector< vector< int > > permuteUnique(vector< int > &nums) {
-  vector<vector<int>> ans;
+  vector< vector< int > > ans;
   permuteUniqueHelper(nums, ans);
   // set<vector<int>> st;
   // for(auto e:ans) {
@@ -295,6 +295,31 @@ vector< vector< int > > permuteUnique(vector< int > &nums) {
   // for(auto e:st) {
   //   ans.push_back(e);
   // }
+  return ans;
+}
+
+// Leetcode 526 Beautiful Arrangement
+void countArrangementHelper(vector< int > &v, int &n, int &ans, int currNum) {
+  if(currNum == n + 1) {
+    for(int i = 1; i<=n; i++) {
+      cout << v[i] << " ";
+    }
+    cout << endl;
+    ++ans;
+    return;
+  }
+  for(int i = 1; i<= n; ++i) {
+    if(v[i] == 0 && (currNum % i == 0 || i % currNum == 0)) {
+      v[i] = currNum;
+      countArrangementHelper(v, n, ans, currNum + 1);
+      v[i] = 0; // if not possible to make combination remove
+    }
+  }
+}
+int countArrangement(int n) {
+  vector< int > v(n + 1, 0);
+  int ans = 0;
+  countArrangementHelper(v, n, ans, 1);
   return ans;
 }
 
@@ -336,12 +361,17 @@ int main() {
   // print2DVector(ansOne);
   // print2DVector(ansTwo);
 
-  vector< int > permaOne = {1, 1, 2};
-  vector< int > permaTwo = {1, 2, 3};
-  vector< vector< int > > ansOne = permuteUnique(permaOne);
-  vector< vector< int > > ansTwo = permuteUnique(permaTwo);
-  print2DVector(ansOne);
-  print2DVector(ansTwo);
+  // vector< int > permaOne = {1, 1, 2};
+  // vector< int > permaTwo = {1, 2, 3};
+  // vector< vector< int > > ansOne = permuteUnique(permaOne);
+  // vector< vector< int > > ansTwo = permuteUnique(permaTwo);
+  // print2DVector(ansOne);
+  // print2DVector(ansTwo);
+
+  cout << endl << countArrangement(3) << endl;
+  cout << endl << countArrangement(5) << endl;
+
+  
 
   return 0;
 }
