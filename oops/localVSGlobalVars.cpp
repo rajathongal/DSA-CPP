@@ -14,6 +14,9 @@ int x = 2; // Global Variable
 
 int main() {
   cout << x << endl;
+  x = 20;
+  cout << x << endl;
+
   return 0;
 
 }
