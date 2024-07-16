@@ -1,5 +1,35 @@
 # Oops
 
+## Static Keyword
+
+- `Static Data Member` -> The variable declared is going to share memory with all of class instances
+- `Static Member Function` -> There is no instance of that class paved into that method
+
+## Const Keyword
+
+- The const keyword is used to declare that a variable, function, or Object is `immutable`, i.e., its value cannot be changed after initialization
+- Ex If you declare a variable as `int x = 5;`, you cannot modify the value of x later in the program. Any attempt to modify the value will result is compilation error.
+- We can declare functions also as const, which means that it does not modify the state of the object it is called on.
+- Compiler may be able to store const variable in read-only memory, which can result in faster access time.
+
+## L-Value and R-Value Variables
+
+### L-Value Variable
+
+Variables for which memory allocation is done, or having a memory location.
+`Ex -> int x; char y;`
+
+### R-Value Variable
+
+Variables which does not have a memory location
+`Ex -> 5; int &a = b;`
+
+## Macros
+
+- In C++, macros are the preprocessor directives that allow you to define constants, functions or code snippets that can be used throught your code.
+- They are typically defined using the #define directive and are evaluated by the preprocessor before the code is compiled.
+- Macros can be used for a variety of purposes, such as defining constants or creating shorthand for commonly used expressions
+
 ## Behaviour of space in classes
 
 ### Empty Classes
