@@ -1,6 +1,8 @@
-# Behaviour of space in classes
+# Oops
 
-## Empty Classes
+## Behaviour of space in classes
+
+### Empty Classes
 
 ```c++
 class EmptyC {
@@ -10,7 +12,7 @@ class EmptyC {
 
 Empty classes occupy only 1 byte of space
 
-## Classes with variables and functions declared in it
+### Classes with variables and functions declared in it
 
 ```c++
 class Student {
