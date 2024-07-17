@@ -104,6 +104,87 @@ public:
   void guttering() { cout << "Peigon is guttering" << endl; }
 };
 
+// multiple inheritence demo
+class Teacher {
+public:
+  void teach() { cout << "Teaching" << endl; }
+};
+
+class Researcher {
+public:
+  void research() { cout << "Researching" << endl; }
+};
+
+class Professor : public Teacher, public Researcher {
+public:
+  void bore() { cout << "Boring" << endl; }
+};
+
+// Diamond problem demo
+class Person {
+public:
+  void walk() { cout << "Walking" << endl; }
+};
+
+class Teacher_ : virtual public Person {
+public:
+  void teach() { cout << "Teaching" << endl; }
+};
+
+class Researcher_ : virtual public Person {
+public:
+  void research() { cout << "Researching" << endl; }
+};
+
+class Professor_ : public Teacher_, public Researcher_ {
+public:
+  void bore() { cout << "Boring" << endl; }
+};
+
+// 1. compile time polymorphism demo
+// a. function overloading demo
+int add(int a, int b) { return a + b; }
+
+int add(int a, int b, int c) { return a + b + c; }
+
+double add(double a, double b) { return a + b; }
+
+// b. operator overloading demo
+class VectorX {
+  int x, y;
+
+  public:
+  VectorX(int x, int y): x(x), y(y) {}
+
+  // Operator Overloading
+  // whenever + is called on class VectorX below function will be called
+  void operator+(const VectorX &src) {
+    // src is v2 
+    this->x += src.x;
+    this->y += src.y;
+
+  }
+
+  // void operator-(const VectorX &src) {
+  //   // src is v2 
+  //   this->x -= src.x;
+  //   this->y -= src.y;
+
+  // }
+
+  // void operator++() {
+  //   this->x++;
+  //   this->y++;
+  // }
+
+  void display() {
+    cout << "X -> " << x << endl;
+    cout << "Y -> " << y << endl;
+
+  }
+
+};
+
 int main() {
 
   // // Copy Ctor Demo
@@ -124,18 +205,63 @@ int main() {
   // }
   // StudentWithDetor s2;
 
-  Sparrow sp(2, 22, "Mixed brown", 2);
-  Peigon p(5, 20, "White", 2);
+  // Sparrow sp(2, 22, "Mixed brown", 2);
+  // Peigon p(5, 20, "White", 2);
 
-  sp.getInfo();
-  sp.grassing();
-  sp.eat();
-  sp.fly();
+  // sp.getInfo();
+  // sp.grassing();
+  // sp.eat();
+  // sp.fly();
 
-  p.getInfo();
-  p.guttering();
-  p.eat();
-  p.fly();
+  // p.getInfo();
+  // p.guttering();
+  // p.eat();
+  // p.fly();
 
+  // Professor p;
+  // p.bore();
+  // p.research();
+  // p.teach();
+
+  Professor_ ps;
+  ps.bore();
+  ps.research();
+  ps.teach();
+  // This wont be possible as walk mthod comes from 2 base classes teacher and
+  // researcher both which inturn inherit walk method from person class
+  // so the compiler is confused which version of walk to use
+  // ps.walk();
+
+  // so you can mention specifically from which class the duplicate method to be
+  // used Method One Scope resolution remove virtual to run this code
+
+  // ps.Teacher_::walk();
+  // ps.Researcher_::walk();
+
+  // add virtual in child class
+  // virtual inheritence
+  // same copy of walk will be executed in runtime
+  // there is no specific walk for child classes
+  ps.walk();
+
+  // 1. compile time polymorphism example
+  // a. method overloading or function overloading
+  cout << add(2, 4) << endl;
+  cout << add(2, 4, 6) << endl;
+  cout << add(2.345, 4.9921) << endl;
+
+  // b. operator overloading
+  // syntax -> ++, --, ==,
+  VectorX v1(1,2);
+  VectorX v2(3,4);
+  // suppose we want to add v1 + v2 and store it in v1
+  v1 + v2;
+  v1.display();
+
+  // v1 - v2;
+  // v1.display();
+
+  // ++v1;
+  // v1.display();
   return 0;
 }

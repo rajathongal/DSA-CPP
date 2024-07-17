@@ -173,6 +173,10 @@ Definition: The ability of objects of different classes to respond to the same m
 Purpose: To allow objects to be treated as instances of their parent class rather than their actual class.
 Types:
 a) Compile-time polymorphism (method overloading)
+
+- function overloading
+- operator overloading
+
 b) Runtime polymorphism (method overriding)
 
 Benefits: Increases flexibility in design, simplifies code, and allows for more dynamic behavior.
@@ -196,3 +200,59 @@ More on public, private, protected
 - Public Members declared in base class are accessible within base class and accessible with its derived class, and are also modifiable in base class and derived class.
 - Private Members declared in base class are accessible within base class and not accessible in its derived class, and are also modifiable in base class and not modifiable in derived class.
 - Protected Members declared in base class are accessible within base class and are accessible in its derived class.
+
+### Types of Inheritence
+
+- Single Inheritence
+  A class inherits from only one parent class.
+
+  ```c++
+  class Animal {};
+  class Dog: public Animal {};
+  ```
+
+- Multiple Inheritance:
+
+A class inherits from more than one parent class.
+
+ ```c++
+  class A {};
+  class B {};
+  class C : public A, public B {};
+ ```
+
+- Multilevel Inheritance:
+
+A class inherits from a child class, forming a chain.
+
+```c++
+class Animal {};
+class Mammal: public Animal {};
+class Dog: public Mammal {};
+```
+
+- Hierarchical Inheritance:
+
+Multiple classes inherit from a single base class.
+
+```c++
+class Animal {}
+class Dog : public Animal {}
+class Cat : private Animal {}
+```
+
+- Diamond Problem Scenarios / Virtual Inheritence.
+
+![Diamond Problem](./assets/DiamondProblem.png)
+
+Example:
+
+- Person is a base class
+- Teacher is also a person
+- Researcher is also a person
+- Teacher and Researcher can be Professors too.
+- Should I assign Professor as Person explicitly ? No
+- Why ? Since Teacher and Researcher are already inheriting Person, so virtually Person already exists
+- Also called as virtual inheritence.
+- Used to prevent multiple instances of a base class in diamond problem scenarios.
+- This is specific to C++.
