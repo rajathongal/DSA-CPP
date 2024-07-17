@@ -118,3 +118,7 @@ int main() {
 ```
 
 The answer will be 24 bytes -> 2 double vars will occupy 8 bytes and now we have char and bool of 1 byte each left, the compiler will allocate 4 bytes each or you can say 4*4=8 (or double's size).
+
+## Why we need copy ctor
+
+To Deep copy a class.
