@@ -122,3 +122,19 @@ The answer will be 24 bytes -> 2 double vars will occupy 8 bytes and now we have
 ## Why we need copy ctor
 
 To Deep copy a class.
+
+## Lifecycle of variable
+
+- init
+- copy
+- destroy
+
+## Lifecycle of an object / instance of class
+
+both ctor if not provided in class compiler adds by default
+
+- ctor - constructor
+- dtor - destructor
+- copy ctor
+
+Also these 3 do not have return type
