@@ -57,6 +57,53 @@ public:
   }
 };
 
+// Inheritence Demo
+// Parent class
+class Bird {
+public:
+  string name;
+  int age, weight;
+  int nol;
+  string color;
+
+  void eat() { cout << name << " is Eating" << endl; }
+
+  void fly() { cout << name << " is Flying" << endl; }
+
+  void getInfo() {
+    cout << age << " " << weight << " " << nol << " " << color << endl;
+  }
+};
+
+// child class
+// Public here is mode of abstraction
+// or it will bring all public member variables and methods
+class Sparrow : public Bird {
+public:
+  Sparrow() { this->name = "Sparrow"; }
+  Sparrow(int age, int weight, string color, int nol) {
+    this->age = age;
+    this->nol = weight;
+    this->color = color;
+    this->weight = nol;
+    this->name = "Sparrow";
+  }
+  void grassing() { cout << "Sparrow is Grassing" << endl; }
+};
+
+class Peigon : public Bird {
+public:
+  Peigon() { this->name = "Peigon"; }
+  Peigon(int age, int weight, string color, int nol) {
+    this->age = age;
+    this->nol = weight;
+    this->color = color;
+    this->weight = nol;
+    this->name = "Peigon";
+  }
+  void guttering() { cout << "Peigon is guttering" << endl; }
+};
+
 int main() {
 
   // // Copy Ctor Demo
@@ -71,10 +118,24 @@ int main() {
   // s3.getStudent();
 
   // // dtor demo
-  {
-    StudentWithDetor s1("Hallu", 23);
-    s1.getStudent();
-  }
-  StudentWithDetor s2;
+  // {
+  //   StudentWithDetor s1("Hallu", 23);
+  //   s1.getStudent();
+  // }
+  // StudentWithDetor s2;
+
+  Sparrow sp(2, 22, "Mixed brown", 2);
+  Peigon p(5, 20, "White", 2);
+
+  sp.getInfo();
+  sp.grassing();
+  sp.eat();
+  sp.fly();
+
+  p.getInfo();
+  p.guttering();
+  p.eat();
+  p.fly();
+
   return 0;
 }

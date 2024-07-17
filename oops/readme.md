@@ -131,10 +131,68 @@ To Deep copy a class.
 
 ## Lifecycle of an object / instance of class
 
-both ctor if not provided in class compiler adds by default
+both ctor and detor if not provided in class compiler adds by default
 
 - ctor - constructor
 - dtor - destructor
 - copy ctor
 
 Also these 3 do not have return type
+
+## Pillars of OOPs
+
+- Abstraction
+
+Definition: Hiding complex implementation details and showing only the necessary features of an object.
+
+Purpose: To simplify complex systems by breaking them into more manageable parts.
+
+Benefits: Reduces complexity, allows focusing on relevant aspects without worrying about implementation details.
+
+- Inheritence
+
+Definition: The mechanism by which a class can inherit properties and methods from another class.
+
+Purpose: To create a hierarchy of classes, promoting code reuse and establishing relationships between classes.
+
+Benefits: Encourages code reusability, supports hierarchical classification, and enables polymorphism.
+
+- Encapsulation
+
+Definition: Bundling data and methods that operate on that data within a single unit (class).
+
+Purpose: To hide the internal state and functionality of an object and only allow access through a public
+interface.
+
+Benefits: Improves modularity, reduces complexity, and protects data integrity.
+
+- Polymorphism
+
+Definition: The ability of objects of different classes to respond to the same method call, potentially in different ways.
+
+Purpose: To allow objects to be treated as instances of their parent class rather than their actual class.
+Types:
+a) Compile-time polymorphism (method overloading)
+b) Runtime polymorphism (method overriding)
+
+Benefits: Increases flexibility in design, simplifies code, and allows for more dynamic behavior.
+
+## Mode of Inheritance Table
+
+![Mode](./assets/modeOfInheritanceTable.png)
+
+example
+
+Methods and variables declared as public in base class,
+
+- if in child class the mode of inheritence is public then the methods and variables are inheritated as public.
+- if in child class the mode of inheritence is Private then the methods and variables are inheritated as Private.
+- if in child class the mode of inheritence is Protected then the methods and variables are inheritated as Protected.
+
+and so on for other cases.
+
+More on public, private, protected
+
+- Public Members declared in base class are accessible within base class and accessible with its derived class, and are also modifiable in base class and derived class.
+- Private Members declared in base class are accessible within base class and not accessible in its derived class, and are also modifiable in base class and not modifiable in derived class.
+- Protected Members declared in base class are accessible within base class and are accessible in its derived class.
