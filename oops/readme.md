@@ -256,3 +256,14 @@ Example:
 - Also called as virtual inheritence.
 - Used to prevent multiple instances of a base class in diamond problem scenarios.
 - This is specific to C++.
+
+## Friend keyword
+
+- Friend is keyword in C++ that is used to share the information of a class that was previously hidden.
+- For example, the private members of a class are hidden from every other class and cannot be modified except through getters or setters member functions. Similarly, the protected members are hidden from all classes other than its children classes.
+
+### usage of friend keyword
+
+- Although information hiding is encouraged because it prevents unwanted bugs in a program there are cases where two classes need to frequently interact with each other.
+- In such a scenario, one of the classes declares another to be its friend.
+- The class declaring the friendship can now make all of its data available to its friend.
