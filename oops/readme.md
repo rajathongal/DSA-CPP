@@ -271,3 +271,35 @@ Example:
 ## Virtual Keyword
 
 when mentioned with class, function, or variable the decesion to use the version of that specific class, function, or variable will be made runtime.
+
+- Way to acheive Runtime Polymorphism
+
+### working of virtual
+
+- Vtables or virtual tables
+- Formed for every class having at least one virtual function and for its derived class.
+- It is static arrays, hence then one instance for a class.
+- VPTR ( a hidden member pointer ) is added by compiler to classes with virtual and its derived classes.
+- Depending upon the object type VPTR is bonded to a VTable.
+- VTables are created at compile time.
+- When object of a particular type is created at runtime. There will be a vPTR which is initialised to point to a static vTable at the time of construction.
+
+### Can we make virtual ctor
+
+- No.
+- Because when constructor of a class is executed there is no virtual table in memory, means no virtual pointer defined yet. so the constructor should always be non virtual.
+- A virtual call is a mechanism to get work done given partial information. In particular, "virtual" allows us to call a function knowing only any interfaces and not the exact type of the object.
+To create an object you need complete information. In particular, you need to know the exact type of what you want to create. Consequently, a "call to a constructor" cannot be virtual.
+
+### Can we make virtual detor
+
+- Yes.
+- It is really `important` to handle proper destruction of Derived classes.
+
+## Abstraction in C++
+
+1. Delivering only essential information to the outer world while masking the background details.
+2. It is a design and programming method that separates the interface from the implementation.
+3. Real life e.g., various functionalities of AirPods but don't know the actual implementation/ working. To drive a car, one only needs to know the driving process and not the mechanics of the car engine
+
+- Abstraction and loose coupling
