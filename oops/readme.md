@@ -267,3 +267,7 @@ Example:
 - Although information hiding is encouraged because it prevents unwanted bugs in a program there are cases where two classes need to frequently interact with each other.
 - In such a scenario, one of the classes declares another to be its friend.
 - The class declaring the friendship can now make all of its data available to its friend.
+
+## Virtual Keyword
+
+when mentioned with class, function, or variable the decesion to use the version of that specific class, function, or variable will be made runtime.

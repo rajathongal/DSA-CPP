@@ -1,3 +1,7 @@
 a.out
 .clang-format
 .vscode
+oops/**/*.exe
+oops/**/*.o
+oops/**/*.gch
+oops/**/main
