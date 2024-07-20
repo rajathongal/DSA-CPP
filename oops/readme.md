@@ -328,3 +328,15 @@ To create an object you need complete information. In particular, you need to kn
 
 1. Abstraction divides code into two categories: interface and implementation. So, when creating your component, keep the interface separate from the implementation so that if the underlying implementation changes, the interface stays the same.
 2. In this instance, any program that uses these interfaces would remain unaffected and would require recompilation with the most recent implementation.
+
+## Inline Functions
+
+- An Inline function is a regular function that is defined by the inline keyword.
+- THe code for an inline function is directly inserted into the code of the calling function by compiler while compiling, which can result in faster execution and less overhead compare to regular function call.
+- Instead of calling function the statement of the function are pasted in calling function.
+- Used with small sized functions. so that executables are small ( handled automatically by compiler optimization levels).
+- Inline functions consume a lot of space. To check space utilisation run command after compilation of [inlineFunctions.cpp](./inlineFunctions.cpp).
+
+```terminal
+  ls -al a.out
+```
