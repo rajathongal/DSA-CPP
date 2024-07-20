@@ -303,3 +303,28 @@ To create an object you need complete information. In particular, you need to kn
 3. Real life e.g., various functionalities of AirPods but don't know the actual implementation/ working. To drive a car, one only needs to know the driving process and not the mechanics of the car engine
 
 - Abstraction and loose coupling
+
+### Abstreaction In Header files
+
+1. Function's implementation is hidden in header files.
+2. We could use the same program without knowing its inside working.
+3. E.g., Sorto, for example, is used to sort an array, a list, or a collection of items, and we know that if we give a container to sort, it will sort it, but we don't know which sorting algorithm it uses to sort that container.
+
+### Abstraction using class
+
+![Abstraction using class](./assets//AbstractionUsingClass.png)
+
+1. Grouping data members and member functions into classes using access specifiers like public, private, protected.
+2. A class can choose which data members are visible to the outside world which are hidden.
+
+### What is abstract class
+
+- Class that contains at least one pure virtual function and these classes cannot be instantiated.
+- It has come from the idea of Abstraction.
+- Example for pure virtual function and abstract class shown in [Link to pure virtual function](./abstractClass//Bird.h)
+- Abstract class becomes an interface or blueprint for child classes.
+
+### Design Stratergy
+
+1. Abstraction divides code into two categories: interface and implementation. So, when creating your component, keep the interface separate from the implementation so that if the underlying implementation changes, the interface stays the same.
+2. In this instance, any program that uses these interfaces would remain unaffected and would require recompilation with the most recent implementation.
