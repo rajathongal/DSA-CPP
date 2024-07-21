@@ -14,6 +14,7 @@ public:
     this->data = data;
     this->nextNode = NULL;
   }
+  // ~Node() { cout << "destructor called " << data << " deleted" << endl; }
 };
 
 void printLinkedList(Node *head) {
@@ -32,7 +33,7 @@ int lenOfLL(Node *head) {
   int len = 0;
   Node *temp = head;
   while (temp != NULL) {
-    ++len;
+    len++;
     temp = temp->nextNode;
   }
 
@@ -114,6 +115,70 @@ void insertionAtPosition(Node *&head, Node *&tail, int newData,
 
     // newNode->nextNode = current;
     newNode->nextNode = curr;
+  }
+}
+
+void deleteNodeInLL(Node *&head, Node *&tail, int position) {
+  // if LL is empty
+  if (head == NULL) {
+    cout << "Cannot delete from empty LL" << endl;
+    return;
+  }
+  
+  // single element case to prevent memory leak after deletion any one 
+  // this has to be handled individually
+  if(head == tail) {
+    Node* temp = head;
+    delete temp;
+    head = NULL;
+    tail = NULL;
+  }
+  
+  int length = lenOfLL(head);
+
+  // delete from head
+  if (position == 1) {
+    // delete head or first Node
+    Node *temp = head;
+    head = temp->nextNode;
+    temp->nextNode = NULL;
+    delete temp;
+
+  } else if (position == length) {
+    // last node deletion
+    Node *prev = head;
+
+    // traverse to second last node
+    while (prev->nextNode != tail) {
+      prev = prev->nextNode;
+    }
+    // point prev node to Null
+    prev->nextNode = NULL;
+    // delete tail
+    delete tail;
+    // update tail
+    tail = prev;
+
+  } else {
+    // delete in between
+
+    // traverse to current/previous position of the new position
+    Node *prev = NULL;
+    Node *curr = head;
+
+    while (position != 1) {
+      prev = curr;
+      curr = curr->nextNode;
+      position--;
+    }
+    // point prev to next node of current
+    prev->nextNode = curr->nextNode;
+
+    // isolate current node
+    curr->nextNode = NULL;
+
+    // delete curr node
+    delete curr;
   }
 }
 
@@ -203,6 +268,21 @@ int main() {
   insertionAtPosition(headNewLL, tailNewLL, 1000, 9);
   cout << endl;
 
+  printLinkedList(headNewLL);
+  cout << endl;
+
+  // delete at head
+  deleteNodeInLL(headNewLL, tailNewLL, 1);
+  printLinkedList(headNewLL);
+  cout << endl;
+
+  // delete at tail
+  deleteNodeInLL(headNewLL, tailNewLL, 9);
+  printLinkedList(headNewLL);
+  cout << endl;
+
+  // delete in between
+  deleteNodeInLL(headNewLL, tailNewLL, 2);
   printLinkedList(headNewLL);
   cout << endl;
 
