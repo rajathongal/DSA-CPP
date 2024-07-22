@@ -49,3 +49,11 @@ example:
 - While Insertion operation always `use the LL's Nodes by reference in function parameters so that you can modify it later.`
 - Always spend 5 mins trying to break the LL. Like consider for NULL nodes while insertion, deletion operations.
 - Meaning of `empty LL is head is also NULL and tail is also NULL consider both while making changes.`
+
+## Doubly Linked List
+
+1. Node of Doubly LL
+![Node](./assets//doublyLLNode.png)
+
+2. Doubly LL chain
+![DoublyLL](./assets//doublyLL.png)

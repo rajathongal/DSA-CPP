@@ -29,7 +29,7 @@ void printLinkedList(Node *head) {
 }
 
 // Gets Length of LL
-int lenOfLL(Node *head) {
+int lenOfLL(Node *&head) {
   int len = 0;
   Node *temp = head;
   while (temp != NULL) {
