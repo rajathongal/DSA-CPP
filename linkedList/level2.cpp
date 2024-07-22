@@ -147,11 +147,11 @@ void deletionAtPosition(Node *&head, Node *&tail, int position) {
     // deletion at tail
     Node *prevNodeToTail = head;
 
-    while(prevNodeToTail != tail) {
+    while(prevNodeToTail->next != tail) {
       prevNodeToTail = prevNodeToTail->next;
     }
-
     prevNodeToTail->next = NULL;
+    tail->prev = NULL;
     delete tail;
     tail = prevNodeToTail;
   } else {
@@ -211,7 +211,7 @@ int main() {
   deletionAtPosition(head, tail, 1);
   printLinkedList(head);
 
-  // deletion at tail // needs refac
+  // deletion at tail 
   int len = lenOfLL(head);
   deletionAtPosition(head, tail, len);
   printLinkedList(head);
