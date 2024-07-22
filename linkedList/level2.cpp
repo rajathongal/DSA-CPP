@@ -145,11 +145,8 @@ void deletionAtPosition(Node *&head, Node *&tail, int position) {
     delete temp;
   } else if(position == length) {
     // deletion at tail
-    Node *prevNodeToTail = head;
+    Node *prevNodeToTail = tail->prev;
 
-    while(prevNodeToTail->next != tail) {
-      prevNodeToTail = prevNodeToTail->next;
-    }
     prevNodeToTail->next = NULL;
     tail->prev = NULL;
     delete tail;
