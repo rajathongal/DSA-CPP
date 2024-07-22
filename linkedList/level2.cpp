@@ -99,10 +99,10 @@ void insertionAtPosition(Node *&head, Node *&tail, int data, int position) {
       // create a node
       Node *newNode = new Node(data);
       // traverse for prevNode and currNode
-      Node* prevNode = NULL;
-      Node* currNode = head;
+      Node *prevNode = NULL;
+      Node *currNode = head;
 
-      while(position != 1) {
+      while (position != 1) {
         prevNode = currNode;
         currNode = currNode->next;
         position--;
@@ -116,6 +116,64 @@ void insertionAtPosition(Node *&head, Node *&tail, int data, int position) {
       // attach prev of currNode to new node
       currNode->prev = newNode;
     }
+  }
+}
+
+void deletionAtPosition(Node *&head, Node *&tail, int position) {
+  // if LL is empty
+  if (head == NULL) {
+    cout << "Cannot delete from empty LL" << endl;
+    return;
+  }
+
+  // single element case
+  if (head == tail) {
+    Node *temp = head;
+    delete temp;
+    head = NULL;
+    tail = NULL;
+  }
+
+  int length = lenOfLL(head);
+
+  // delete from head
+  if(position == 1) {
+    Node* temp = head;
+    head = temp->next;
+    temp->next = NULL;
+    head->prev = NULL;
+    delete temp;
+  } else if(position == length) {
+    // deletion at tail
+    Node *prevNodeToTail = head;
+
+    while(prevNodeToTail != tail) {
+      prevNodeToTail = prevNodeToTail->next;
+    }
+
+    prevNodeToTail->next = NULL;
+    delete tail;
+    tail = prevNodeToTail;
+  } else {
+    // deletion at position
+    Node* prevNode = NULL;
+    Node* currNode = head;
+
+    while(position != 1) {
+      prevNode = currNode;
+      currNode = currNode->next;
+      position--;
+    }
+
+    Node* currNextNode = currNode->next;
+    prevNode->next = currNextNode;
+    currNextNode->prev = prevNode;
+
+    currNode->next = NULL;
+    currNode->prev = NULL;
+
+    delete currNode;
+
   }
 }
 
@@ -149,7 +207,18 @@ int main() {
   insertionAtPosition(head, tail, 3, 3);
   printLinkedList(head);
 
+  // deletion at head
+  deletionAtPosition(head, tail, 1);
+  printLinkedList(head);
 
+  // deletion at tail // needs refac
+  int len = lenOfLL(head);
+  deletionAtPosition(head, tail, len);
+  printLinkedList(head);
+
+  // deletion at pos
+  deletionAtPosition(head, tail, 2);
+  printLinkedList(head);
 
 
   return 0;
