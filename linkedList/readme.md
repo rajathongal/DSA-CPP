@@ -27,7 +27,7 @@ example:
 
 1. Singly LL
 2. Doubly LL
-3. Circular LL
+3. Circular singly LL
 4. Circular Doubly LL
 
 ## Wastage of space in continious memory based Data structures like arrays and vectors
