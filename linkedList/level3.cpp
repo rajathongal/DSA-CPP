@@ -118,18 +118,18 @@ void insertionAtPosition(Node *&head, Node *&tail, int newData,
   }
 }
 
+// Leetcode 206
 void reverse(Node *&head) {
   Node *prev = NULL;
   Node *curr = head;
-
-  while (curr->nextNode != NULL) {
-    Node *temp = curr->nextNode;
+  while (curr != NULL) {
+    Node *next = curr->nextNode;
     curr->nextNode = prev;
     prev = curr;
-    curr = temp;
+    curr = next;
   }
-  curr->nextNode = prev;
-  head = curr;
+
+  head = prev;
 }
 
 void reverseSinglyLL() {
