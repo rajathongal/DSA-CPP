@@ -183,15 +183,16 @@ void findMiddleOfLL(Node *head) {
 // using 2 pointers or slow fast pointer or totoise method
 // slow ptr moves 1 step // moves only when fast ptr is able to move 2 steps
 // fast ptr moves 2 steps
-void findMidOfLLUsingFastSlowPtrs(Node *head) {
-  Node* slow = head;
-  Node* fast = head;
+// this find mid as n/2 + 1 in even len
+Node* findMidOfLLUsingFastSlowPtrs(Node *head) {
+  Node *slow = head;
+  Node *fast = head;
   int position = 1;
-  while(fast != NULL) {
+  while (fast != NULL) {
     // move fast once
     fast = fast->nextNode;
     // check if fast is not null
-    if(fast != NULL) {
+    if (fast != NULL) {
       // move fast for 2 nd time
       fast = fast->nextNode;
       // since fast is able to move 2 times
@@ -201,6 +202,98 @@ void findMidOfLLUsingFastSlowPtrs(Node *head) {
     }
   }
   cout << "Mid: " << slow->data << " Found at Position: " << position << endl;
+  return slow;
+}
+
+// this find mid as n/2 in even len
+Node* findMidOfLLUsingFastSlowPtrsNBy2(Node *head) {
+  Node *slow = head;
+  Node *fast = head;
+  int position = 1;
+  while (fast->nextNode != NULL) {
+    // move fast once
+    fast = fast->nextNode;
+    // check if fast is not null
+    if (fast->nextNode != NULL) {
+      // move fast for 2 nd time
+      fast = fast->nextNode;
+      // since fast is able to move 2 times
+      // move slow once
+      slow = slow->nextNode;
+      position++;
+    }
+  }
+  cout << "Mid: " << slow->data << " Found at Position: " << position << endl;
+  return slow;
+}
+
+// Leetcode 234
+bool compareLL(Node* headOne, Node* headTwo) {
+  Node* headOneCopy = headOne;
+  Node* headTwoCopy = headTwo;
+
+  while(headOneCopy != NULL && headTwoCopy != NULL) {
+    if(headOneCopy->data != headTwoCopy->data) {
+      return false;
+    } else {
+      headOneCopy = headOneCopy->nextNode;
+      headTwoCopy = headTwoCopy->nextNode;
+
+    }
+  }
+  return true;
+}
+
+void palindromeCheckOFLL() {
+  Node *head = NULL;
+  Node *tail = NULL;
+
+  // uncomment for odd len
+  // tailInsertionInLL(head, tail, 1);
+  // tailInsertionInLL(head, tail, 2);
+  // tailInsertionInLL(head, tail, 3);
+  // tailInsertionInLL(head, tail, 2);
+  // tailInsertionInLL(head, tail, 1);
+
+  // uncomment for even len
+  tailInsertionInLL(head, tail, 1);
+  tailInsertionInLL(head, tail, 2);
+  tailInsertionInLL(head, tail, 3);
+  tailInsertionInLL(head, tail, 3);
+  tailInsertionInLL(head, tail, 2);
+  tailInsertionInLL(head, tail, 1);
+
+  // uncomment for false case
+  // tailInsertionInLL(head, tail, 1);
+  // tailInsertionInLL(head, tail, 2);
+  // tailInsertionInLL(head, tail, 3);
+  // tailInsertionInLL(head, tail, 4);
+  // tailInsertionInLL(head, tail, 5);
+  // tailInsertionInLL(head, tail, 3);
+
+  printLinkedList(head);
+
+  // steps
+  // find mid
+  // 1. Break into two halves
+  // 2. Reverse 2nd half
+  // 3. Compare both 1st and 2nd half of LL
+
+  // mid
+  Node* mid = findMidOfLLUsingFastSlowPtrsNBy2(head);
+
+  // head of second half
+  Node* headOf2ndHalf = mid->nextNode;
+
+  // update mid or separate 1st half and 2nd half
+  mid->nextNode = NULL;
+
+  // reverse second half LL
+  reverse(headOf2ndHalf);
+
+  // compare both LL or 1st and 2nd half
+  bool ans = compareLL(head, headOf2ndHalf);
+  cout << ans << endl;
 }
 
 int main() {
@@ -220,9 +313,9 @@ int main() {
   insertionAtPosition(head, tail, 110, 11);
   insertionAtPosition(head, tail, 120, 12);
 
-
   // reverseSinglyLL();
   // findMiddleOfLL(head);
-  findMidOfLLUsingFastSlowPtrs(head);
+  // findMidOfLLUsingFastSlowPtrs(head);
+  palindromeCheckOFLL();
   return 0;
 }
