@@ -165,7 +165,64 @@ void reverseSinglyLL() {
   printLinkedList(head);
 }
 
+// TC O(n + n/2) -> O(n) takes 2 traversal
+void findMiddleOfLL(Node *head) {
+  int len = lenOfLL(head);
+  // mid
+  int position = len / 2 + 1;
+  int currPos = 1;
+  Node *temp = head;
+  while (currPos != position) {
+    temp = temp->nextNode;
+    currPos++;
+  }
+
+  cout << "Mid: " << temp->data << " Found at Position: " << position << endl;
+}
+
+// using 2 pointers or slow fast pointer or totoise method
+// slow ptr moves 1 step // moves only when fast ptr is able to move 2 steps
+// fast ptr moves 2 steps
+void findMidOfLLUsingFastSlowPtrs(Node *head) {
+  Node* slow = head;
+  Node* fast = head;
+  int position = 1;
+  while(fast != NULL) {
+    // move fast once
+    fast = fast->nextNode;
+    // check if fast is not null
+    if(fast != NULL) {
+      // move fast for 2 nd time
+      fast = fast->nextNode;
+      // since fast is able to move 2 times
+      // move slow once
+      slow = slow->nextNode;
+      position++;
+    }
+  }
+  cout << "Mid: " << slow->data << " Found at Position: " << position << endl;
+}
+
 int main() {
-  reverseSinglyLL();
+  Node *head = NULL;
+  Node *tail = NULL;
+
+  insertionAtPosition(head, tail, 10, 1);
+  insertionAtPosition(head, tail, 20, 2);
+  insertionAtPosition(head, tail, 30, 3);
+  insertionAtPosition(head, tail, 40, 4);
+  insertionAtPosition(head, tail, 50, 5);
+  insertionAtPosition(head, tail, 60, 6);
+  insertionAtPosition(head, tail, 70, 7);
+  insertionAtPosition(head, tail, 80, 8);
+  insertionAtPosition(head, tail, 90, 9);
+  insertionAtPosition(head, tail, 100, 10);
+  insertionAtPosition(head, tail, 110, 11);
+  insertionAtPosition(head, tail, 120, 12);
+
+
+  // reverseSinglyLL();
+  // findMiddleOfLL(head);
+  findMidOfLLUsingFastSlowPtrs(head);
   return 0;
 }
