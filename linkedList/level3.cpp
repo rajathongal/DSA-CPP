@@ -132,6 +132,20 @@ void reverse(Node *&head) {
   head = prev;
 }
 
+void reverseUsingRecursion(Node *&head, Node *curr, Node *prev = NULL,
+                           Node *next = NULL) {
+  if (curr == NULL) {
+    head = prev;
+    return;
+  }
+  next = curr->nextNode;
+  curr->nextNode = prev;
+  prev = curr;
+  curr = next;
+
+  reverseUsingRecursion(head, curr, prev, next);
+}
+
 void reverseSinglyLL() {
   Node *head = NULL;
   Node *tail = NULL;
@@ -145,6 +159,9 @@ void reverseSinglyLL() {
   printLinkedList(head);
 
   reverse(head);
+  printLinkedList(head);
+
+  reverseUsingRecursion(head, head);
   printLinkedList(head);
 }
 
