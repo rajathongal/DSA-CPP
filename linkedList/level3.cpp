@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 using namespace std;
 
 class Node {
@@ -184,7 +185,7 @@ void findMiddleOfLL(Node *head) {
 // slow ptr moves 1 step // moves only when fast ptr is able to move 2 steps
 // fast ptr moves 2 steps
 // this find mid as n/2 + 1 in even len
-Node* findMidOfLLUsingFastSlowPtrs(Node *head) {
+Node *findMidOfLLUsingFastSlowPtrs(Node *head) {
   Node *slow = head;
   Node *fast = head;
   int position = 1;
@@ -206,7 +207,7 @@ Node* findMidOfLLUsingFastSlowPtrs(Node *head) {
 }
 
 // this find mid as n/2 in even len
-Node* findMidOfLLUsingFastSlowPtrsNBy2(Node *head) {
+Node *findMidOfLLUsingFastSlowPtrsNBy2(Node *head) {
   Node *slow = head;
   Node *fast = head;
   int position = 1;
@@ -228,17 +229,16 @@ Node* findMidOfLLUsingFastSlowPtrsNBy2(Node *head) {
 }
 
 // Leetcode 234
-bool compareLL(Node* headOne, Node* headTwo) {
-  Node* headOneCopy = headOne;
-  Node* headTwoCopy = headTwo;
+bool compareLL(Node *headOne, Node *headTwo) {
+  Node *headOneCopy = headOne;
+  Node *headTwoCopy = headTwo;
 
-  while(headOneCopy != NULL && headTwoCopy != NULL) {
-    if(headOneCopy->data != headTwoCopy->data) {
+  while (headOneCopy != NULL && headTwoCopy != NULL) {
+    if (headOneCopy->data != headTwoCopy->data) {
       return false;
     } else {
       headOneCopy = headOneCopy->nextNode;
       headTwoCopy = headTwoCopy->nextNode;
-
     }
   }
   return true;
@@ -280,10 +280,10 @@ void palindromeCheckOFLL() {
   // 3. Compare both 1st and 2nd half of LL
 
   // mid
-  Node* mid = findMidOfLLUsingFastSlowPtrsNBy2(head);
+  Node *mid = findMidOfLLUsingFastSlowPtrsNBy2(head);
 
   // head of second half
-  Node* headOf2ndHalf = mid->nextNode;
+  Node *headOf2ndHalf = mid->nextNode;
 
   // update mid or separate 1st half and 2nd half
   mid->nextNode = NULL;
@@ -294,6 +294,48 @@ void palindromeCheckOFLL() {
   // compare both LL or 1st and 2nd half
   bool ans = compareLL(head, headOf2ndHalf);
   cout << ans << endl;
+}
+
+// Leetcode 141 Linked list cycle
+void hasCycle() {
+  Node *head = NULL;
+  Node *tail = NULL;
+
+  // uncomment for cycle
+  tailInsertionInLL(head, tail, 10);
+  tailInsertionInLL(head, tail, 20);
+  tailInsertionInLL(head, tail, 30);
+  Node *tailCopy = tail;
+  tailInsertionInLL(head, tail, 40);
+  tailInsertionInLL(head, tail, 50);
+  tailInsertionInLL(head, tail, 60);
+  tail->nextNode = tailCopy;
+
+  // uncomment for no cycle
+  // tailInsertionInLL(head, tail, 10);
+  // tailInsertionInLL(head, tail, 20);
+  // tailInsertionInLL(head, tail, 30);
+  // tailInsertionInLL(head, tail, 40);
+  // tailInsertionInLL(head, tail, 50);
+  // tailInsertionInLL(head, tail, 60);
+
+  // create a map and mark true for visited nodes
+  map< Node *, bool > visitedTable;
+  Node *temp = head;
+
+  while (temp != NULL) {
+    if (visitedTable[temp] == false) {
+      visitedTable[temp] = true;
+    } else {
+      cout << "cycle exists" << endl;
+      return;
+    }
+
+    temp = temp->nextNode;
+  }
+
+  cout << "no cycle exists" << endl;
+  return;
 }
 
 int main() {
@@ -316,6 +358,7 @@ int main() {
   // reverseSinglyLL();
   // findMiddleOfLL(head);
   // findMidOfLLUsingFastSlowPtrs(head);
-  palindromeCheckOFLL();
+  // palindromeCheckOFLL();
+  hasCycle();
   return 0;
 }
