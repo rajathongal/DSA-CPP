@@ -57,3 +57,9 @@ example:
 
 2. Doubly LL chain
 ![DoublyLL](./assets//doublyLL.png)
+
+## Repeated patterns
+
+1. check for loop
+2. starting point of loop ( asked for lot of reasoning)
+3. remove loop
