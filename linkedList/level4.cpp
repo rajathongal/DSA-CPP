@@ -186,7 +186,45 @@ bool hasCycleInputs(Node *&slow, Node *&fast) {
 
 // Starting point of Loop
 
-void startingPointOfLoop() {
+Node *startingPointOfCycle(Node *head) {
+
+  Node *slow = head;
+  Node *fast = head;
+  // 1. Find if cycle exists
+  bool isCycleExists = hasCycleInputs(slow, fast);
+  // 2. update slow to point at head
+  slow = head;
+  // 3. move slow and fast by 1step untill fast == slow
+  while (fast != slow) {
+    slow = slow->nextNode;
+    fast = fast->nextNode;
+  }
+
+  if (fast == NULL) {
+    cout << "No cycle exists" << endl;
+    Node *temp = NULL;
+    return temp;
+  }
+  cout << slow->data << " " << fast->data << endl; // answer
+  // position where fast & slow meet each other is
+  // the answer or starting point of cycle
+  return slow;
+}
+
+// Remove a loop
+void removeCycleInLL(Node *head) {
+  Node *start = startingPointOfCycle(head);
+
+  Node *temp = start;
+
+  while (temp->nextNode != start) {
+    temp = temp->nextNode;
+  }
+  temp->nextNode = NULL;
+  return;
+}
+
+int main() {
   Node *head = NULL;
   Node *tail = NULL;
 
@@ -200,24 +238,14 @@ void startingPointOfLoop() {
   tailInsertionInLL(head, tail, 60);
   tail->nextNode = tailCopy;
 
-  Node *slow = head;
-  Node *fast = head;
-  // 1. Find if cycle exists
-  bool isCycleExists = hasCycleInputs(slow, fast);
-  // 2. update slow to point at head
-  slow = head;
-  // 3. move slow and fast by 1step untill fast == slow
-  while (fast != slow) {
-    slow = slow->nextNode;
-    fast = fast->nextNode;
-  }
-  cout << slow->data << " " << fast->data << endl; // answer
-  // position where fast & slow meet each other is
-  // the answer or starting point of cycle
-}
+  // printLinkedList(head); goes into infinite loop since a cycle exists
 
-int main() {
   // hasCycle();
-  startingPointOfLoop();
+
+  // startingPointOfCycle(head);
+
+  removeCycleInLL(head);
+  printLinkedList(head); // prints fine since cycle is removed
+
   return 0;
 }
