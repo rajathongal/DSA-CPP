@@ -278,6 +278,43 @@ void addOneToLL(Node *&head) {
   reverse(head);
 }
 
+Node *reverseLLInKGroups(Node *head, int k) {
+  // base case
+  if (head == NULL) {
+    return head;
+  }
+
+  if (head->nextNode == NULL) {
+    return head;
+  }
+
+  int len = lenOfLL(head);
+  if (len < k) {
+    return head;
+  }
+
+  // case 1
+  Node *prev = NULL;
+  Node *curr = head;
+  Node *next = curr->nextNode;
+  int position = 0;
+
+  while (position < k) {
+    // reverse
+    position++;
+    next = curr->nextNode;
+    curr->nextNode = prev;
+    prev = curr;
+    curr = next;
+  }
+  Node *nexthead = NULL;
+  if (next != NULL) {
+    nexthead = reverseLLInKGroups(next, k); // tricky
+    head->nextNode = nexthead; // tricky
+  }
+  return prev; // tricky
+} 
+
 int main() {
   // uncomment for remove cycle && startingPointOfCycle
   // Node *head = NULL;
@@ -303,17 +340,32 @@ int main() {
   // printLinkedList(head); // prints fine since cycle is removed
 
   // uncomment for addOne
+  // Node *head = NULL;
+  // Node *tail = NULL;
+  // tailInsertionInLL(head, tail, 9);
+  // tailInsertionInLL(head, tail, 9);
+  // tailInsertionInLL(head, tail, 9);
+
+  // printLinkedList(head);
+  // addOneToLL(head);
+  // printLinkedList(head);
+  // addOneToLL(head);
+  // printLinkedList(head);
+
+  // uncomment for reverse k groups
   Node *head = NULL;
   Node *tail = NULL;
-  tailInsertionInLL(head, tail, 9);
-  tailInsertionInLL(head, tail, 9);
-  tailInsertionInLL(head, tail, 9);
+  tailInsertionInLL(head, tail, 10);
+  tailInsertionInLL(head, tail, 20);
+  tailInsertionInLL(head, tail, 30);
+  tailInsertionInLL(head, tail, 40);
+  tailInsertionInLL(head, tail, 50);
+  tailInsertionInLL(head, tail, 60);
+  tailInsertionInLL(head, tail, 70);
+  printLinkedList(head);
 
-  printLinkedList(head);
-  addOneToLL(head);
-  printLinkedList(head);
-  addOneToLL(head);
-  printLinkedList(head);
+  Node *newHead = reverseLLInKGroups(head, 2);
+  printLinkedList(newHead);
 
   return 0;
 }
