@@ -310,10 +310,36 @@ Node *reverseLLInKGroups(Node *head, int k) {
   Node *nexthead = NULL;
   if (next != NULL) {
     nexthead = reverseLLInKGroups(next, k); // tricky
-    head->nextNode = nexthead; // tricky
+    head->nextNode = nexthead;              // tricky
   }
   return prev; // tricky
-} 
+}
+
+Node *removeDuplicatesInSortedLL(Node *&head) {
+  if (head == NULL) {
+    return head;
+  }
+
+  if (head->nextNode == NULL) {
+    return head;
+  }
+
+  Node *temp = head;
+
+  while (temp != NULL) {
+    if (temp->nextNode != NULL && temp->data == temp->nextNode->data) {
+      // remove
+      Node *duplicateNode = temp->nextNode;
+      temp->nextNode = temp->nextNode->nextNode;
+      duplicateNode->nextNode = NULL;
+      delete duplicateNode;
+    } else {
+      temp = temp->nextNode;
+    }
+  }
+
+  return head;
+}
 
 int main() {
   // uncomment for remove cycle && startingPointOfCycle
@@ -353,19 +379,39 @@ int main() {
   // printLinkedList(head);
 
   // uncomment for reverse k groups
+  // Node *head = NULL;
+  // Node *tail = NULL;
+  // tailInsertionInLL(head, tail, 10);
+  // tailInsertionInLL(head, tail, 20);
+  // tailInsertionInLL(head, tail, 30);
+  // tailInsertionInLL(head, tail, 40);
+  // tailInsertionInLL(head, tail, 50);
+  // tailInsertionInLL(head, tail, 60);
+  // tailInsertionInLL(head, tail, 70);
+  // printLinkedList(head);
+
+  // Node *newHead = reverseLLInKGroups(head, 2);
+  // printLinkedList(newHead);
+
+  // uncomment for remove duplicates
   Node *head = NULL;
   Node *tail = NULL;
   tailInsertionInLL(head, tail, 10);
   tailInsertionInLL(head, tail, 20);
+  tailInsertionInLL(head, tail, 20);
+  tailInsertionInLL(head, tail, 20);
+  tailInsertionInLL(head, tail, 30);
   tailInsertionInLL(head, tail, 30);
   tailInsertionInLL(head, tail, 40);
   tailInsertionInLL(head, tail, 50);
+  tailInsertionInLL(head, tail, 50);
   tailInsertionInLL(head, tail, 60);
   tailInsertionInLL(head, tail, 70);
-  printLinkedList(head);
+  tailInsertionInLL(head, tail, 70);
 
-  Node *newHead = reverseLLInKGroups(head, 2);
-  printLinkedList(newHead);
+  printLinkedList(head);
+  removeDuplicatesInSortedLL(head);
+  printLinkedList(head);
 
   return 0;
 }
