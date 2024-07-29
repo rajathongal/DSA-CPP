@@ -118,6 +118,19 @@ void insertionAtPosition(Node *&head, Node *&tail, int newData,
   }
 }
 
+void reverse(Node *&head) {
+  Node *prev = NULL;
+  Node *curr = head;
+  while (curr != NULL) {
+    Node *next = curr->nextNode;
+    curr->nextNode = prev;
+    prev = curr;
+    curr = next;
+  }
+
+  head = prev;
+}
+
 // Leetcode 141 Linked list cycle using fast slow ptrs
 bool hasCycle() {
   Node *head = NULL;
@@ -224,19 +237,61 @@ void removeCycleInLL(Node *head) {
   return;
 }
 
-int main() {
-  Node *head = NULL;
-  Node *tail = NULL;
+// add one to num in LL
+void addOneToLL(Node *&head) {
+  // steps
+  // 1. Reverse LL
+  // 2. add 1 and add carry
+  // 3. reverse again
 
-  // uncomment for cycle
-  tailInsertionInLL(head, tail, 10);
-  tailInsertionInLL(head, tail, 20);
-  tailInsertionInLL(head, tail, 30);
-  Node *tailCopy = tail;
-  tailInsertionInLL(head, tail, 40);
-  tailInsertionInLL(head, tail, 50);
-  tailInsertionInLL(head, tail, 60);
-  tail->nextNode = tailCopy;
+  // 1.
+  reverse(head);
+  // 2.
+  int carry = 1;
+  Node *temp = head;
+  while (temp->nextNode != NULL) {
+    int totalSum = temp->data + carry;
+    int digit = totalSum % 10;
+    carry = totalSum / 10;
+    temp->data = digit;
+    temp = temp->nextNode;
+
+    if (carry == 0) {
+      break;
+    }
+  }
+
+  // process last node and addition of Node
+  if (carry != 0) {
+    int totalSum = temp->data + carry;
+    int digit = totalSum % 10;
+    carry = totalSum / 10;
+    temp->data = digit;
+    if (carry != 0) {
+      // new node
+      Node *newNode = new Node(carry);
+      temp->nextNode = newNode;
+    }
+  }
+
+  // 3.
+  reverse(head);
+}
+
+int main() {
+  // uncomment for remove cycle && startingPointOfCycle
+  // Node *head = NULL;
+  // Node *tail = NULL;
+
+  // // uncomment for cycle
+  // tailInsertionInLL(head, tail, 10);
+  // tailInsertionInLL(head, tail, 20);
+  // tailInsertionInLL(head, tail, 30);
+  // Node *tailCopy = tail;
+  // tailInsertionInLL(head, tail, 40);
+  // tailInsertionInLL(head, tail, 50);
+  // tailInsertionInLL(head, tail, 60);
+  // tail->nextNode = tailCopy;
 
   // printLinkedList(head); goes into infinite loop since a cycle exists
 
@@ -244,8 +299,21 @@ int main() {
 
   // startingPointOfCycle(head);
 
-  removeCycleInLL(head);
-  printLinkedList(head); // prints fine since cycle is removed
+  // removeCycleInLL(head);
+  // printLinkedList(head); // prints fine since cycle is removed
+
+  // uncomment for addOne
+  Node *head = NULL;
+  Node *tail = NULL;
+  tailInsertionInLL(head, tail, 9);
+  tailInsertionInLL(head, tail, 9);
+  tailInsertionInLL(head, tail, 9);
+
+  printLinkedList(head);
+  addOneToLL(head);
+  printLinkedList(head);
+  addOneToLL(head);
+  printLinkedList(head);
 
   return 0;
 }
