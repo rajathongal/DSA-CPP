@@ -97,19 +97,103 @@ void linkDelete(Node *head, int m, int n) {
   }
 }
 
+// 2. leetcode 21 merge two sorted Lists
+Node *mergeTwoLists(Node *list1, Node *list2) {
+  Node *answer = NULL;
+  Node *head = NULL;
+
+  Node *ListOneIt = list1;
+  Node *ListTwoIt = list2;
+
+  while (ListOneIt != NULL && ListTwoIt != NULL) {
+
+    if (ListOneIt->data > ListTwoIt->data) {
+      if (answer == NULL) {
+        Node *newNode = new Node(ListTwoIt->data);
+        answer = newNode;
+        head = answer;
+      } else {
+        Node *newNode = new Node(ListTwoIt->data);
+        answer->nextNode = newNode;
+        answer = answer->nextNode;
+      }
+      // move the listTwoIt
+      ListTwoIt = ListTwoIt->nextNode;
+    } else {
+      if (answer == NULL) {
+        Node *newNode = new Node(ListOneIt->data);
+        answer = newNode;
+        head = answer;
+      } else {
+        Node *newNode = new Node(ListOneIt->data);
+        answer->nextNode = newNode;
+        answer = answer->nextNode;
+      }
+      // move the ListOneIt
+      ListOneIt = ListOneIt->nextNode;
+    }
+  }
+
+  // check if extra elements are still left in either of the LL
+
+  // ListOne
+  if (ListOneIt != NULL) {
+    while (ListOneIt != NULL) {
+      Node *newNode = new Node(ListOneIt->data);
+      answer->nextNode = newNode;
+      answer = answer->nextNode;
+      ListOneIt = ListOneIt->nextNode;
+    }
+  }
+
+  // ListTwo
+  if (ListTwoIt != NULL) {
+    while (ListTwoIt != NULL) {
+      Node *newNode = new Node(ListTwoIt->data);
+      answer->nextNode = newNode;
+      answer = answer->nextNode;
+      ListTwoIt = ListTwoIt->nextNode;
+    }
+  }
+
+  return head;
+}
+
 int main() {
-  Node *headOne = NULL;
-  Node *tailOne = NULL;
+  // uncomment for 1. GFG Delete n nodes after m nodes
+  // Node *headOne = NULL;
+  // Node *tailOne = NULL;
 
-  tailInsertionInLL(headOne, tailOne, 1);
-  tailInsertionInLL(headOne, tailOne, 2);
-  tailInsertionInLL(headOne, tailOne, 3);
-  tailInsertionInLL(headOne, tailOne, 4);
-  tailInsertionInLL(headOne, tailOne, 5);
-  tailInsertionInLL(headOne, tailOne, 6);
-  printLinkedList(headOne);
-  linkDelete(headOne, 5, 2);
-  printLinkedList(headOne);
+  // tailInsertionInLL(headOne, tailOne, 1);
+  // tailInsertionInLL(headOne, tailOne, 2);
+  // tailInsertionInLL(headOne, tailOne, 3);
+  // tailInsertionInLL(headOne, tailOne, 4);
+  // tailInsertionInLL(headOne, tailOne, 5);
+  // tailInsertionInLL(headOne, tailOne, 6);
 
+  // printLinkedList(headOne);
+  // linkDelete(headOne, 5, 2);
+  // printLinkedList(headOne);
+
+  // Uncomment for lc 21 merge 2 sorted lists
+  Node *headTwo = NULL;
+  Node *tailTwo = NULL;
+
+  Node *headThree = NULL;
+  Node *tailThree = NULL;
+
+  tailInsertionInLL(headTwo, tailTwo, 1);
+  tailInsertionInLL(headTwo, tailTwo, 3);
+  tailInsertionInLL(headTwo, tailTwo, 5);
+
+  tailInsertionInLL(headThree, tailThree, 2);
+  tailInsertionInLL(headThree, tailThree, 4);
+  tailInsertionInLL(headThree, tailThree, 6);
+  tailInsertionInLL(headThree, tailThree, 7);
+  tailInsertionInLL(headThree, tailThree, 8);
+
+  Node *headOfMergedList = mergeTwoLists(headTwo, headThree);
+  printLinkedList(headOfMergedList);
+  
   return 0;
 }
