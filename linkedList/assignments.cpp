@@ -157,6 +157,26 @@ Node *mergeTwoLists(Node *list1, Node *list2) {
   }
 
   return head;
+
+}
+
+// 3. GetNode
+// https://www.hackerrank.com/challenges/get-the-value-of-the-node-at-a-specific-position-from-the-tail/problem
+
+void getNodeHelper(Node *head, int &positionFromTail, int &ans) {
+  if (head == NULL)
+    return;
+
+  getNodeHelper(head->nextNode, positionFromTail, ans);
+  if (positionFromTail == 0) {
+    ans = head->data;
+  }
+  positionFromTail--;
+}
+int getNode(Node *head, int positionFromTail) {
+  int ans = -1;
+  getNodeHelper(head, positionFromTail, ans);
+  return ans;
 }
 
 int main() {
@@ -195,5 +215,15 @@ int main() {
   Node *headOfMergedList = mergeTwoLists(headTwo, headThree);
   printLinkedList(headOfMergedList);
   
+  Node *headFour = NULL;
+  Node *tailFour = NULL;
+  tailInsertionInLL(headFour, tailFour, 1);
+  tailInsertionInLL(headFour, tailFour, 2);
+  tailInsertionInLL(headFour, tailFour, 3);
+  tailInsertionInLL(headFour, tailFour, 4);
+  tailInsertionInLL(headFour, tailFour, 5);
+  tailInsertionInLL(headFour, tailFour, 6);
+  cout << getNode(headFour, 2) << endl;
+
   return 0;
 }
