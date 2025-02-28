@@ -157,7 +157,6 @@ Node *mergeTwoLists(Node *list1, Node *list2) {
   }
 
   return head;
-
 }
 
 // 3. GetNode
@@ -179,6 +178,132 @@ int getNode(Node *head, int positionFromTail) {
   return ans;
 }
 
+// Intersection of 2 linkedlist leetcode 160
+Node *IntersetionOfLL(Node *headA, Node *headB) {
+
+  // make copies of LL recieved
+  Node *a = headA;
+  Node *b = headB;
+
+  // iterate till one of the ll reaches null or end of any one ll
+  while (a->nextNode && b->nextNode) {
+    if (a == b) {
+      return a;
+    }
+
+    a = a->nextNode;
+    b = b->nextNode;
+  }
+
+  // here we will reach with 2 cases
+  // 1. both the LL have reached their end and we need to return null because
+  // there is no intersection
+  // 2. one of LL has not reached its end so there may exists an intersection
+
+  // 1. both LL have reached end
+  // another check needs to be added so that the ending nodes are not same
+  if (a->nextNode == 0 && b->nextNode == 0 && a != b)
+    return new Node(0);
+
+  // 2. lets check for case where any one LL is bigger
+  if (a->nextNode == 0) {
+    // if a has reached end then definately b is bigger so
+    // we calculate the len of b from where the b is currently right now and
+    // skip it
+
+    int skipB = 0;
+    while (b->nextNode) { // calculate the length till b has next node
+      skipB++;
+      b = b->nextNode; // iterate b
+    }
+
+    // once we recieve the length lets skip in the head itself
+    // note head is also being copied so that the original LL stays intact
+    while (skipB--) {
+      headB = headB->nextNode;
+    }
+
+  } else {
+    // a might be the bigger LL
+    int skipA = 0;
+    while (a->nextNode) {
+      skipA++;
+      a = a->nextNode;
+    }
+
+    while (skipA--) {
+      headA = headA->nextNode;
+    }
+  }
+
+  // now we check till we get a match
+  // make sure there is a next node before iterating
+  while (headA != headB && headA->nextNode && headB->nextNode) {
+    headA = headA->nextNode;
+    headB = headB->nextNode;
+  }
+
+  // we also need to handle a case where no intersection is present and LL is of variable length
+  if(headA->nextNode == 0 && headB->nextNode ==0) {
+    return new Node(0);
+  }
+
+  return headA;
+}
+
+void IntersectionOfLLMain() {
+
+  // case 1 intersection present at variable length
+  Node *headOne = NULL;
+  Node *headTwo = NULL;
+  Node *tailOne = NULL;
+  Node *tailTwo = NULL;
+
+  tailInsertionInLL(headOne, tailOne, 1);
+  tailInsertionInLL(headOne, tailOne, 2);
+  tailInsertionInLL(headOne, tailOne, 3);
+  tailInsertionInLL(headOne, tailOne, 4);
+
+  tailInsertionInLL(headTwo, tailTwo, 4);
+  tailInsertionInLL(headTwo, tailTwo, 3);
+
+  tailTwo->nextNode = tailOne;
+
+  tailInsertionInLL(headOne, tailOne, 5);
+  tailInsertionInLL(headOne, tailOne, 6);
+  tailInsertionInLL(headOne, tailOne, 7);
+
+  printLinkedList(headOne);
+  printLinkedList(headTwo);
+
+  Node *answer = IntersetionOfLL(headOne, headTwo);
+  cout << "Answer for case 1 -> " << answer->data << endl << endl;
+
+  // case 2 intersection not present with variable length
+  Node *headThree = NULL;
+  Node *headFour = NULL;
+  Node *tailThree = NULL;
+  Node *tailFour = NULL;
+
+  tailInsertionInLL(headThree, tailThree, 1);
+  tailInsertionInLL(headFour, tailFour, 1);
+  tailInsertionInLL(headThree, tailThree, 2);
+  tailInsertionInLL(headFour, tailFour, 2);
+  tailInsertionInLL(headThree, tailThree, 3);
+  tailInsertionInLL(headFour, tailFour, 3);
+  tailInsertionInLL(headThree, tailThree, 4);
+  tailInsertionInLL(headFour, tailFour, 4);
+  tailInsertionInLL(headThree, tailThree, 5);
+  tailInsertionInLL(headFour, tailFour, 5);
+  tailInsertionInLL(headFour, tailFour, 6);
+
+  printLinkedList(headThree);
+  printLinkedList(headFour);
+
+  Node *answerTwo = IntersetionOfLL(headThree, headFour);
+  cout << "Answer for case 2 -> " << answerTwo->data << endl;
+}
+
 int main() {
   // uncomment for 1. GFG Delete n nodes after m nodes
   // Node *headOne = NULL;
@@ -196,34 +321,37 @@ int main() {
   // printLinkedList(headOne);
 
   // Uncomment for lc 21 merge 2 sorted lists
-  Node *headTwo = NULL;
-  Node *tailTwo = NULL;
+  // Node *headTwo = NULL;
+  // Node *tailTwo = NULL;
 
-  Node *headThree = NULL;
-  Node *tailThree = NULL;
+  // Node *headThree = NULL;
+  // Node *tailThree = NULL;
 
-  tailInsertionInLL(headTwo, tailTwo, 1);
-  tailInsertionInLL(headTwo, tailTwo, 3);
-  tailInsertionInLL(headTwo, tailTwo, 5);
+  // tailInsertionInLL(headTwo, tailTwo, 1);
+  // tailInsertionInLL(headTwo, tailTwo, 3);
+  // tailInsertionInLL(headTwo, tailTwo, 5);
 
-  tailInsertionInLL(headThree, tailThree, 2);
-  tailInsertionInLL(headThree, tailThree, 4);
-  tailInsertionInLL(headThree, tailThree, 6);
-  tailInsertionInLL(headThree, tailThree, 7);
-  tailInsertionInLL(headThree, tailThree, 8);
+  // tailInsertionInLL(headThree, tailThree, 2);
+  // tailInsertionInLL(headThree, tailThree, 4);
+  // tailInsertionInLL(headThree, tailThree, 6);
+  // tailInsertionInLL(headThree, tailThree, 7);
+  // tailInsertionInLL(headThree, tailThree, 8);
 
-  Node *headOfMergedList = mergeTwoLists(headTwo, headThree);
-  printLinkedList(headOfMergedList);
-  
-  Node *headFour = NULL;
-  Node *tailFour = NULL;
-  tailInsertionInLL(headFour, tailFour, 1);
-  tailInsertionInLL(headFour, tailFour, 2);
-  tailInsertionInLL(headFour, tailFour, 3);
-  tailInsertionInLL(headFour, tailFour, 4);
-  tailInsertionInLL(headFour, tailFour, 5);
-  tailInsertionInLL(headFour, tailFour, 6);
-  cout << getNode(headFour, 2) << endl;
+  // Node *headOfMergedList = mergeTwoLists(headTwo, headThree);
+  // printLinkedList(headOfMergedList);
+
+  // Node *headFour = NULL;
+  // Node *tailFour = NULL;
+  // tailInsertionInLL(headFour, tailFour, 1);
+  // tailInsertionInLL(headFour, tailFour, 2);
+  // tailInsertionInLL(headFour, tailFour, 3);
+  // tailInsertionInLL(headFour, tailFour, 4);
+  // tailInsertionInLL(headFour, tailFour, 5);
+  // tailInsertionInLL(headFour, tailFour, 6);
+  // cout << getNode(headFour, 2) << endl;
+
+  // uncomment for leet code 160 intersection of LL
+  IntersectionOfLLMain();
 
   return 0;
 }
