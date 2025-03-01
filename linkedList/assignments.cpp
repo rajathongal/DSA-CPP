@@ -243,8 +243,9 @@ Node *IntersetionOfLL(Node *headA, Node *headB) {
     headB = headB->nextNode;
   }
 
-  // we also need to handle a case where no intersection is present and LL is of variable length
-  if(headA->nextNode == 0 && headB->nextNode ==0) {
+  // we also need to handle a case where no intersection is present and LL is of
+  // variable length
+  if (headA->nextNode == 0 && headB->nextNode == 0) {
     return new Node(0);
   }
 
@@ -304,6 +305,52 @@ void IntersectionOfLLMain() {
   cout << "Answer for case 2 -> " << answerTwo->data << endl;
 }
 
+Node *findMidUsingFastSlowPointers(Node *head) {
+  Node *slow = head;
+  Node *fast = head;
+  int position = 1;
+  while (fast->nextNode != NULL) {
+    // move fast once
+    fast = fast->nextNode;
+    // check if fast is not null
+    if (fast->nextNode != NULL) {
+      // move fast for 2 nd time
+      fast = fast->nextNode;
+      // since fast is able to move 2 times
+      // move slow once
+      slow = slow->nextNode;
+      position++;
+    }
+  }
+  cout << "Mid: " << slow->data << " Found at Position: " << position << endl;
+  return slow;
+}
+
+// Sort list Leetcode 168 or sort list using merge sort
+Node *sortList(Node *head) {
+  // check if LL is null or has one element
+  if (head == 0 || head->nextNode == 0) {
+    return head;
+  }
+
+  // merge sorting
+
+  // 1. Break into left and right using mid
+
+  // get mid using fast slow ptrs
+  Node *mid = findMidUsingFastSlowPointers(head);
+  Node *left = head;
+  Node *right = mid->nextNode;
+  mid->nextNode = 0;
+
+  // 2. sort
+  left = sortList(left);
+  right = sortList(right);
+
+  Node *mergedLL = mergeTwoLists(left, right);
+  return mergedLL;
+}
+
 int main() {
   // uncomment for 1. GFG Delete n nodes after m nodes
   // Node *headOne = NULL;
@@ -351,7 +398,21 @@ int main() {
   // cout << getNode(headFour, 2) << endl;
 
   // uncomment for leet code 160 intersection of LL
-  IntersectionOfLLMain();
+  // IntersectionOfLLMain();
+
+  // Uncomment for mergesort LL
+  Node *head = NULL;
+  Node *tail = NULL;
+
+  tailInsertionInLL(head, tail, 6);
+  tailInsertionInLL(head, tail, 4);
+  tailInsertionInLL(head, tail, 3);
+  tailInsertionInLL(head, tail, 2);
+  tailInsertionInLL(head, tail, 5);
+  tailInsertionInLL(head, tail, 1);
+  printLinkedList(head);
+  Node *answerHead = sortList(head);
+  printLinkedList(head);
 
   return 0;
 }
