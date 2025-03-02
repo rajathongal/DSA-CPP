@@ -159,6 +159,35 @@ Node *mergeTwoLists(Node *list1, Node *list2) {
   return head;
 }
 
+Node *mergeV2(Node *left, Node *right) {
+    if(left == 0) return right;
+    if(right == 0) return left;
+
+    Node *answer = new Node(-1);
+    Node *mptr = answer;
+
+    while(left && right) {
+      if(left->data <= right->data) {
+        mptr->nextNode = left;
+        mptr=left;
+        left = left->nextNode;
+      } else {
+        mptr->nextNode = right;
+        mptr = right;
+        right = right->nextNode;
+      }
+    }
+
+    if(left) {
+      mptr->nextNode = left;
+    }
+    if(right) {
+      mptr->nextNode = right;
+    }
+
+    return answer->nextNode;
+}
+
 // 3. GetNode
 // https://www.hackerrank.com/challenges/get-the-value-of-the-node-at-a-specific-position-from-the-tail/problem
 
@@ -412,7 +441,7 @@ int main() {
   tailInsertionInLL(head, tail, 1);
   printLinkedList(head);
   Node *answerHead = sortList(head);
-  printLinkedList(head);
+  printLinkedList(answerHead);
 
   return 0;
 }
