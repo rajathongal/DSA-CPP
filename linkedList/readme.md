@@ -66,4 +66,5 @@ example:
 
 ## Explore
 
-1. [Time and Space Complexity](./mergeSortLLTimeAndSpaceComplexity.md)
+1. [Time and Space Complexity for merge sort on LL](./mergeSortLLTimeAndSpaceComplexity.md)
+2. [Time and Space Complexity for flattern LL](./TimeAndSpaceComplexityForFlattenLL.md)
