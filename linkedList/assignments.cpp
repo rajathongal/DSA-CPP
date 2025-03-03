@@ -17,12 +17,34 @@ public:
   // ~Node() { cout << "destructor called " << data << " deleted" << endl; }
 };
 
+class Node2D {
+public:
+  int data;
+  Node2D *next;
+  Node2D *bottom;
+
+  Node2D(int newData) {
+    data = newData;
+    next = bottom = nullptr;
+  }
+};
+
 void printLinkedList(Node *head) {
   Node *temp = head; // must make a copy always while tracing
   int len = 0;
   while (temp != NULL) {
     cout << temp->data << "->";
     temp = temp->nextNode;
+    ++len;
+  }
+  cout << endl << "Length of LL: " << len << endl;
+}
+void printLinkedListFromBottom(Node2D *head) {
+  Node2D *temp = head; // must make a copy always while tracing
+  int len = 0;
+  while (temp != NULL) {
+    cout << temp->data << "->";
+    temp = temp->bottom;
     ++len;
   }
   cout << endl << "Length of LL: " << len << endl;
@@ -160,32 +182,34 @@ Node *mergeTwoLists(Node *list1, Node *list2) {
 }
 
 Node *mergeV2(Node *left, Node *right) {
-    if(left == 0) return right;
-    if(right == 0) return left;
+  if (left == 0)
+    return right;
+  if (right == 0)
+    return left;
 
-    Node *answer = new Node(-1);
-    Node *mptr = answer;
+  Node *answer = new Node(-1);
+  Node *mptr = answer;
 
-    while(left && right) {
-      if(left->data <= right->data) {
-        mptr->nextNode = left;
-        mptr=left;
-        left = left->nextNode;
-      } else {
-        mptr->nextNode = right;
-        mptr = right;
-        right = right->nextNode;
-      }
-    }
-
-    if(left) {
+  while (left && right) {
+    if (left->data <= right->data) {
       mptr->nextNode = left;
-    }
-    if(right) {
+      mptr = left;
+      left = left->nextNode;
+    } else {
       mptr->nextNode = right;
+      mptr = right;
+      right = right->nextNode;
     }
+  }
 
-    return answer->nextNode;
+  if (left) {
+    mptr->nextNode = left;
+  }
+  if (right) {
+    mptr->nextNode = right;
+  }
+
+  return answer->nextNode;
 }
 
 // 3. GetNode
@@ -380,6 +404,31 @@ Node *sortList(Node *head) {
   return mergedLL;
 }
 
+Node2D *mergeRecursively(Node2D *a, Node2D *b) {
+  if (!a)
+    return b;
+  if (!b)
+    return a;
+
+  Node2D *answer = 0;
+  if (a->data < b->data) {
+    answer = a;
+    a->bottom = mergeRecursively(a->bottom, b);
+  } else {
+    answer = b;
+    b->bottom = mergeRecursively(a, b->bottom);
+  }
+
+  return answer;
+}
+
+Node2D *flattenLL(Node2D *root) {
+  if (!root)
+    return 0;
+  Node2D *mergedLL = mergeRecursively(root, flattenLL(root->next));
+  return mergedLL;
+}
+
 int main() {
   // uncomment for 1. GFG Delete n nodes after m nodes
   // Node *headOne = NULL;
@@ -430,18 +479,49 @@ int main() {
   // IntersectionOfLLMain();
 
   // Uncomment for mergesort LL
-  Node *head = NULL;
-  Node *tail = NULL;
+  // Node *head = NULL;
+  // Node *tail = NULL;
 
-  tailInsertionInLL(head, tail, 6);
-  tailInsertionInLL(head, tail, 4);
-  tailInsertionInLL(head, tail, 3);
-  tailInsertionInLL(head, tail, 2);
-  tailInsertionInLL(head, tail, 5);
-  tailInsertionInLL(head, tail, 1);
-  printLinkedList(head);
-  Node *answerHead = sortList(head);
-  printLinkedList(answerHead);
+  // tailInsertionInLL(head, tail, 6);
+  // tailInsertionInLL(head, tail, 4);
+  // tailInsertionInLL(head, tail, 3);
+  // tailInsertionInLL(head, tail, 2);
+  // tailInsertionInLL(head, tail, 5);
+  // tailInsertionInLL(head, tail, 1);
+  // printLinkedList(head);
+  // Node *answerHead = sortList(head);
+  // printLinkedList(answerHead);
+
+  // Uncomment for flatten LinkedList
+  // https://www.geeksforgeeks.org/flattening-a-linked-list/
+  // Create a hard-coded linked list:
+  //   5 -> 10 -> 19 -> 28
+  //   |    |     |
+  //   V    V     V
+  //   7    20    22
+  //   |          |
+  //   V          V
+  //   8          50
+  //   |
+  //   V
+  //   30
+
+  Node2D *head = new Node2D(5);
+  head->bottom = new Node2D(7);
+  head->bottom->bottom = new Node2D(8);
+  head->bottom->bottom->bottom = new Node2D(30);
+
+  head->next = new Node2D(10);
+  head->next->bottom = new Node2D(20);
+
+  head->next->next = new Node2D(19);
+  head->next->next->bottom = new Node2D(22);
+  head->next->next->bottom->bottom = new Node2D(50);
+
+  head->next->next->next = new Node2D(28);
+
+  Node2D *answer = flattenLL(head);
+  printLinkedListFromBottom(answer);
 
   return 0;
 }
