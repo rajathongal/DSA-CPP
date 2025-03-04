@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 using namespace std;
 
 class Node {
@@ -29,6 +30,19 @@ public:
   }
 };
 
+class NodeV2 {
+public:
+  int val = 0;
+  NodeV2 *next;
+  NodeV2 *random;
+
+  NodeV2(int _val) {
+    val = _val;
+    next = nullptr;
+    random = nullptr;
+  }
+};
+
 void printLinkedList(Node *head) {
   Node *temp = head; // must make a copy always while tracing
   int len = 0;
@@ -45,6 +59,37 @@ void printLinkedListFromBottom(Node2D *head) {
   while (temp != NULL) {
     cout << temp->data << "->";
     temp = temp->bottom;
+    ++len;
+  }
+  cout << endl << "Length of LL: " << len << endl;
+}
+
+void printLinkedListWithRandomPTR(NodeV2 *head) {
+  // First, create a map of node pointers to their indices
+  map< NodeV2 *, int > nodeToIndex;
+  NodeV2 *temp = head;
+  int index = 0;
+
+  // Build the map
+  while (temp != NULL) {
+    nodeToIndex[temp] = index;
+    temp = temp->next;
+    index++;
+  }
+
+  // Now print the list with random pointers showing indices
+  temp = head;
+  int len = 0;
+  while (temp != NULL) {
+    cout << "[" << temp->val << " , ";
+    // Check if random pointer is null before accessing its index
+    if (temp->random != nullptr) {
+      cout << nodeToIndex[temp->random];
+    } else {
+      cout << "nullptr";
+    }
+    cout << "], ";
+    temp = temp->next;
     ++len;
   }
   cout << endl << "Length of LL: " << len << endl;
@@ -429,6 +474,104 @@ Node2D *flattenLL(Node2D *root) {
   return mergedLL;
 }
 
+// LC 138 Copy list with random pointer
+NodeV2 *nodeMapHelper(NodeV2 *head,
+                      unordered_map< NodeV2 *, NodeV2 * > &nodeMap) {
+  if (head == 0)
+    return 0;
+  NodeV2 *newHead = new NodeV2(head->val);
+  nodeMap[head] = newHead;
+  newHead->next = nodeMapHelper(head->next, nodeMap);
+
+  // map random pointers
+  if (head->random) {
+    newHead->random = nodeMap[head->random];
+  }
+  return newHead;
+} // this function will create a new LL and a map for old->new node
+
+// method 1
+// create a map and return a new LL
+NodeV2 *copyRandomList(NodeV2 *head) {
+  unordered_map< NodeV2 *, NodeV2 * > nodeMap; // oldNode -> newNode map
+  NodeV2 *newHead = nodeMapHelper(head, nodeMap);
+  return newHead;
+} // TC O(N) SC O(N)
+
+// method 2 merge new and old LL and attach random and delink old LL
+// space complexity O(1) tc O(n)
+NodeV2 *copyRandomListMethod2(NodeV2 *head) {
+  if (head == 0)
+    return 0;
+
+  // step 1 clone A -> A'
+  NodeV2 *it = head;
+  while (it) {
+    NodeV2 *clonedNode = new NodeV2(it->val);
+    clonedNode->next = it->next;
+    it->next = clonedNode;
+    it = it->next->next;
+  }
+
+  // step 2 assign random pointer links A' with help of old node A
+  it = head;
+  while (it) {
+    NodeV2 *clonedNode = it->next;
+    clonedNode->random = it->random ? it->random->next : nullptr;
+    it = it->next->next;
+  }
+
+  // step 3 detach A' from A for detach old LL from new LL
+  it = head;
+  NodeV2 *clonedHead = it->next;
+
+  while (it) {
+    NodeV2 *clonedNode = it->next;
+    it->next = it->next->next;
+    if (clonedNode->next) {
+      clonedNode->next = clonedNode->next->next;
+    }
+    it = it->next;
+  }
+  return clonedHead;
+}
+
+// Leet code 61 rotate list
+Node *rotateRight(Node *head, int k) {
+
+  if (head == nullptr)
+    return nullptr;
+
+  int len = lenOfLL(head);
+  int actualKRotations = k % len; // rotation of k=1 is similar to k=6 so modulo
+                                  // will give actual rotations required
+  if (actualKRotations == 0)
+    return head; // the answer will be same as given LL if k=0
+
+  int newLastNodePosition = len - actualKRotations - 1;
+
+  // Move to new last node
+  Node *newLastNode = head;
+  for (int i = 0; i < newLastNodePosition; i++) {
+    newLastNode = newLastNode->nextNode;
+  }
+  // Store new head
+  // store new head and remove next of newlastnode
+  Node *newHead = newLastNode->nextNode;
+
+  newLastNode->nextNode = nullptr;
+  // lets find the end of new head
+  Node *it = newHead;
+  while (it->nextNode != nullptr) {
+    it = it->nextNode;
+  }
+
+  // now by assigning the end of new head to old head the rotated LL is ready
+  it->nextNode = head;
+
+  return newHead;
+}
+
 int main() {
   // uncomment for 1. GFG Delete n nodes after m nodes
   // Node *headOne = NULL;
@@ -506,22 +649,60 @@ int main() {
   //   V
   //   30
 
-  Node2D *head = new Node2D(5);
-  head->bottom = new Node2D(7);
-  head->bottom->bottom = new Node2D(8);
-  head->bottom->bottom->bottom = new Node2D(30);
+  // Node2D *head = new Node2D(5);
+  // head->bottom = new Node2D(7);
+  // head->bottom->bottom = new Node2D(8);
+  // head->bottom->bottom->bottom = new Node2D(30);
 
-  head->next = new Node2D(10);
-  head->next->bottom = new Node2D(20);
+  // head->next = new Node2D(10);
+  // head->next->bottom = new Node2D(20);
 
-  head->next->next = new Node2D(19);
-  head->next->next->bottom = new Node2D(22);
-  head->next->next->bottom->bottom = new Node2D(50);
+  // head->next->next = new Node2D(19);
+  // head->next->next->bottom = new Node2D(22);
+  // head->next->next->bottom->bottom = new Node2D(50);
 
-  head->next->next->next = new Node2D(28);
+  // head->next->next->next = new Node2D(28);
 
-  Node2D *answer = flattenLL(head);
-  printLinkedListFromBottom(answer);
+  // Node2D *answer = flattenLL(head);
+  // printLinkedListFromBottom(answer);
+
+  // Uncomment for copy using random pointer leetcode 138
+  // NodeV2 *head = new NodeV2(7);
+  // head->random = nullptr;
+
+  // head->next = new NodeV2(13);
+  // head->next->random = head;
+
+  // head->next->next = new NodeV2(11);
+  // head->next->next->next = new NodeV2(10);
+  // head->next->next->next->random = head->next->next;
+
+  // head->next->next->next->next = new NodeV2(1);
+  // head->next->next->next->next->random = head;
+
+  // head->next->next->random = head->next->next->next->next;
+  // cout << endl << "Method 1" << endl;
+  // printLinkedListWithRandomPTR(head); // before copy
+  // NodeV2 *answerHead = copyRandomList(head);
+  // printLinkedListWithRandomPTR(answerHead); // after copy
+
+  // cout << endl << "Method 2" << endl;
+  // answerHead = copyRandomListMethod2(head);
+  // printLinkedListWithRandomPTR(answerHead); // after copy
+
+  // uncomment for leet code 61 rotateRight list
+  Node *headOne = NULL;
+  Node *tailOne = NULL;
+  int k = 4;
+  tailInsertionInLL(headOne, tailOne, 1);
+  tailInsertionInLL(headOne, tailOne, 2);
+  tailInsertionInLL(headOne, tailOne, 3);
+  tailInsertionInLL(headOne, tailOne, 4);
+  tailInsertionInLL(headOne, tailOne, 5);
+  tailInsertionInLL(headOne, tailOne, 6);
+  printLinkedList(headOne);
+  Node *answerHead = rotateRight(headOne, k);
+  printLinkedList(answerHead);
 
   return 0;
 }
