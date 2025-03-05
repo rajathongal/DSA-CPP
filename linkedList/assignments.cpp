@@ -631,6 +631,31 @@ Node *oddEvenList(Node *head) {
   return head;
 }
 
+// Leetcode 2816 Double a number represented as linkedlist
+void solveForDoubleIt(Node *head, int &carry) {
+  if(head == nullptr) return;
+  solveForDoubleIt(head->nextNode, carry); // this will take end of ll before performing any operation
+
+  // case
+  int product = head->data * 2 + carry;
+  head->data = product % 10;
+  carry = product / 10;
+}
+
+Node *doubleIt(Node *head) {
+  int carry = 0;
+  solveForDoubleIt(head, carry);
+
+  // create node for remaining carry
+  if(carry !=0) {
+    Node *carryNode = new Node(carry);
+    carryNode->nextNode = head;
+    head = carryNode;
+  }
+  
+  return head;
+}
+
 int main() {
   // uncomment for 1. GFG Delete n nodes after m nodes
   // Node *headOne = NULL;
@@ -780,17 +805,27 @@ int main() {
   // printLinkedList(answerHead);
 
   // Uncomment for odd even list leetcode 328
+  // Node *headOne = NULL;
+  // Node *tailOne = NULL;
+  // tailInsertionInLL(headOne, tailOne, 2);
+  // tailInsertionInLL(headOne, tailOne, 1);
+  // tailInsertionInLL(headOne, tailOne, 3);
+  // tailInsertionInLL(headOne, tailOne, 5);
+  // tailInsertionInLL(headOne, tailOne, 6);
+  // tailInsertionInLL(headOne, tailOne, 4);
+  // tailInsertionInLL(headOne, tailOne, 7);
+  // printLinkedList(headOne);
+  // Node *answerHead = oddEvenList(headOne);
+  // printLinkedList(answerHead);
+
+  // Uncomment for double it LL leetcode 2816
   Node *headOne = NULL;
   Node *tailOne = NULL;
-  tailInsertionInLL(headOne, tailOne, 2);
-  tailInsertionInLL(headOne, tailOne, 1);
-  tailInsertionInLL(headOne, tailOne, 3);
-  tailInsertionInLL(headOne, tailOne, 5);
-  tailInsertionInLL(headOne, tailOne, 6);
-  tailInsertionInLL(headOne, tailOne, 4);
-  tailInsertionInLL(headOne, tailOne, 7);
+  tailInsertionInLL(headOne, tailOne, 9);
+  tailInsertionInLL(headOne, tailOne, 9);
+  tailInsertionInLL(headOne, tailOne, 9);
   printLinkedList(headOne);
-  Node *answerHead = oddEvenList(headOne);
+  Node *answerHead = doubleIt(headOne);
   printLinkedList(answerHead);
 
   return 0;
