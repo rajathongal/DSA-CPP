@@ -600,12 +600,34 @@ Node *mergeNodes(Node *head) {
   newLastNode->nextNode = nullptr;
 
   // delete remaining nodes to avoid memory leaks
-  while(oldLLLink) {
+  while (oldLLLink) {
     Node *oldNext = oldLLLink->nextNode;
     delete oldLLLink;
     oldLLLink = oldNext;
   }
 
+  return head;
+}
+
+// odd even LinkedList Leetcode 328
+Node *oddEvenList(Node *head) {
+  if (head == nullptr || head->nextNode == nullptr)
+    return head;
+
+  Node *headOne = head,
+       *headTwo = head->nextNode;  // needed to iterate h1 -> odd node list, h2
+                                   // -> even node list
+  Node *evenHead = head->nextNode; // needed to merge odd and even list
+
+  while (headTwo && headTwo->nextNode) {
+    headOne->nextNode = headTwo->nextNode;
+    headTwo->nextNode = headTwo->nextNode->nextNode;
+    headOne = headOne->nextNode;
+    headTwo = headTwo->nextNode;
+  }
+
+  // finally stich the even head to odd
+  headOne->nextNode = evenHead;
   return head;
 }
 
@@ -742,19 +764,33 @@ int main() {
   // printLinkedList(answerHead);
 
   // Uncomment for merge nodes leetcode 2181
+  // Node *headOne = NULL;
+  // Node *tailOne = NULL;
+  // tailInsertionInLL(headOne, tailOne, 0);
+  // tailInsertionInLL(headOne, tailOne, 1);
+  // tailInsertionInLL(headOne, tailOne, 0);
+  // tailInsertionInLL(headOne, tailOne, 3);
+  // tailInsertionInLL(headOne, tailOne, 0);
+  // tailInsertionInLL(headOne, tailOne, 2);
+  // tailInsertionInLL(headOne, tailOne, 2);
+  // tailInsertionInLL(headOne, tailOne, 0);
+  // printLinkedList(headOne);
+
+  // Node *answerHead = mergeNodes(headOne);
+  // printLinkedList(answerHead);
+
+  // Uncomment for odd even list leetcode 328
   Node *headOne = NULL;
   Node *tailOne = NULL;
-  tailInsertionInLL(headOne, tailOne, 0);
+  tailInsertionInLL(headOne, tailOne, 2);
   tailInsertionInLL(headOne, tailOne, 1);
-  tailInsertionInLL(headOne, tailOne, 0);
   tailInsertionInLL(headOne, tailOne, 3);
-  tailInsertionInLL(headOne, tailOne, 0);
-  tailInsertionInLL(headOne, tailOne, 2);
-  tailInsertionInLL(headOne, tailOne, 2);
-  tailInsertionInLL(headOne, tailOne, 0);
+  tailInsertionInLL(headOne, tailOne, 5);
+  tailInsertionInLL(headOne, tailOne, 6);
+  tailInsertionInLL(headOne, tailOne, 4);
+  tailInsertionInLL(headOne, tailOne, 7);
   printLinkedList(headOne);
-
-  Node *answerHead = mergeNodes(headOne);
+  Node *answerHead = oddEvenList(headOne);
   printLinkedList(answerHead);
 
   return 0;
