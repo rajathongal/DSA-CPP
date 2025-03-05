@@ -572,6 +572,43 @@ Node *rotateRight(Node *head, int k) {
   return newHead;
 }
 
+// Leetcode 2181 Merge Node in between zeros
+// using fast slow pointers
+Node *mergeNodes(Node *head) {
+  if (head == nullptr) {
+    return nullptr;
+  }
+
+  Node *slow = head, *fast = head->nextNode, *newLastNode = nullptr;
+  int sum = 0;
+
+  while (fast) {
+    if (fast->data != 0) {
+      sum += fast->data;
+    } else {
+      // fast value becomes zero
+      slow->data = sum;
+      newLastNode = slow;
+      slow = slow->nextNode;
+      sum = 0;
+    }
+
+    fast = fast->nextNode;
+  }
+
+  Node *oldLLLink = newLastNode->nextNode;
+  newLastNode->nextNode = nullptr;
+
+  // delete remaining nodes to avoid memory leaks
+  while(oldLLLink) {
+    Node *oldNext = oldLLLink->nextNode;
+    delete oldLLLink;
+    oldLLLink = oldNext;
+  }
+
+  return head;
+}
+
 int main() {
   // uncomment for 1. GFG Delete n nodes after m nodes
   // Node *headOne = NULL;
@@ -691,17 +728,33 @@ int main() {
   // printLinkedListWithRandomPTR(answerHead); // after copy
 
   // uncomment for leet code 61 rotateRight list
+  // Node *headOne = NULL;
+  // Node *tailOne = NULL;
+  // int k = 4;
+  // tailInsertionInLL(headOne, tailOne, 1);
+  // tailInsertionInLL(headOne, tailOne, 2);
+  // tailInsertionInLL(headOne, tailOne, 3);
+  // tailInsertionInLL(headOne, tailOne, 4);
+  // tailInsertionInLL(headOne, tailOne, 5);
+  // tailInsertionInLL(headOne, tailOne, 6);
+  // printLinkedList(headOne);
+  // Node *answerHead = rotateRight(headOne, k);
+  // printLinkedList(answerHead);
+
+  // Uncomment for merge nodes leetcode 2181
   Node *headOne = NULL;
   Node *tailOne = NULL;
-  int k = 4;
+  tailInsertionInLL(headOne, tailOne, 0);
   tailInsertionInLL(headOne, tailOne, 1);
-  tailInsertionInLL(headOne, tailOne, 2);
+  tailInsertionInLL(headOne, tailOne, 0);
   tailInsertionInLL(headOne, tailOne, 3);
-  tailInsertionInLL(headOne, tailOne, 4);
-  tailInsertionInLL(headOne, tailOne, 5);
-  tailInsertionInLL(headOne, tailOne, 6);
+  tailInsertionInLL(headOne, tailOne, 0);
+  tailInsertionInLL(headOne, tailOne, 2);
+  tailInsertionInLL(headOne, tailOne, 2);
+  tailInsertionInLL(headOne, tailOne, 0);
   printLinkedList(headOne);
-  Node *answerHead = rotateRight(headOne, k);
+
+  Node *answerHead = mergeNodes(headOne);
   printLinkedList(answerHead);
 
   return 0;
