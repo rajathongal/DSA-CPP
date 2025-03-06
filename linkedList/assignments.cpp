@@ -633,8 +633,11 @@ Node *oddEvenList(Node *head) {
 
 // Leetcode 2816 Double a number represented as linkedlist
 void solveForDoubleIt(Node *head, int &carry) {
-  if(head == nullptr) return;
-  solveForDoubleIt(head->nextNode, carry); // this will take end of ll before performing any operation
+  if (head == nullptr)
+    return;
+  solveForDoubleIt(
+      head->nextNode,
+      carry); // this will take end of ll before performing any operation
 
   // case
   int product = head->data * 2 + carry;
@@ -647,13 +650,106 @@ Node *doubleIt(Node *head) {
   solveForDoubleIt(head, carry);
 
   // create node for remaining carry
-  if(carry !=0) {
+  if (carry != 0) {
     Node *carryNode = new Node(carry);
     carryNode->nextNode = head;
     head = carryNode;
   }
-  
+
   return head;
+}
+
+// 1721. Swapping Nodes in a Linked List
+Node *swapNodes(Node *head, int k) {
+
+  // Case 1 for single element in ll and empty LL
+  if (head == nullptr || head->nextNode == nullptr)
+    return head;
+
+  int len = lenOfLL(head);
+  int lPos = k;
+  int rPos = len - k + 1;
+
+  if (rPos < lPos)
+    swap(lPos, rPos);
+
+  // Case 2 leftposition == right position
+  if (lPos == rPos)
+    return head; // no swapping required
+
+  // Case 3 .len and K = 2
+  if (len == 2) {
+    Node *newHead = head->nextNode;
+    newHead->nextNode = head; // newhead->oldhead
+    head->nextNode = 0;       // delink old head next to avid cycle
+    head = newHead;
+    return head;
+  }
+
+  // Case 4 K=1 or K=n or lpos ==1
+  if (lPos == 1) {
+    Node *lp = 0; // left pointer
+    Node *ln = head;
+    Node *rp = head;
+    // finding right pointer
+    for (int i = 0; i < rPos - 2; ++i) {
+      rp = rp->nextNode;
+    }
+    Node *rn = rp->nextNode; // right node
+    Node *rSave = rn->nextNode;
+
+    // swapping for case 4
+    rn->nextNode = ln->nextNode;
+    rp->nextNode = ln;
+    ln->nextNode = rSave;
+    head = rn;
+    return head;
+  }
+
+  // Case 5 ln and rn are adjacents or one beside the other
+  int noOfNodesBetweenSwapNodes = rPos - lPos - 1;
+  if (noOfNodesBetweenSwapNodes == 0) {
+    Node *lp = head;
+    for (int i = 0; i < lPos - 2; ++i) {
+      lp = lp->nextNode;
+    }
+    Node *ln = lp->nextNode;
+    Node *rp = head;
+    // finding right pointer
+    for (int i = 0; i < rPos - 2; ++i) {
+      rp = rp->nextNode;
+    }
+    Node *rn = rp->nextNode; // right node
+    Node *rSave = rn->nextNode;
+
+    // swapping
+    lp->nextNode = rp->nextNode;
+    rn->nextNode = rp;
+    rp->nextNode = rSave;
+    return head;
+  } else {
+    // Case no 6
+    // np of nodes between swap greater than equal to 1
+    Node *lp = head;
+    for (int i = 0; i < lPos - 2; ++i) {
+      lp = lp->nextNode;
+    }
+    Node *ln = lp->nextNode;
+    Node *rp = head;
+    // finding right pointer
+    for (int i = 0; i < rPos - 2; ++i) {
+      rp = rp->nextNode;
+    }
+    Node *rn = rp->nextNode; // right node
+    Node *rSave = rn->nextNode;
+
+    // swapping
+    lp->nextNode = rn;
+    rn->nextNode = ln->nextNode;
+    rp->nextNode = ln;
+    ln->nextNode = rSave;
+    return head;
+  }
 }
 
 int main() {
@@ -819,13 +915,26 @@ int main() {
   // printLinkedList(answerHead);
 
   // Uncomment for double it LL leetcode 2816
+  // Node *headOne = NULL;
+  // Node *tailOne = NULL;
+  // tailInsertionInLL(headOne, tailOne, 9);
+  // tailInsertionInLL(headOne, tailOne, 9);
+  // tailInsertionInLL(headOne, tailOne, 9);
+  // printLinkedList(headOne);
+  // Node *answerHead = doubleIt(headOne);
+  // printLinkedList(answerHead);
+
+  // Uncomment for 1721. Swapping Nodes in a Linked List
   Node *headOne = NULL;
   Node *tailOne = NULL;
-  tailInsertionInLL(headOne, tailOne, 9);
-  tailInsertionInLL(headOne, tailOne, 9);
-  tailInsertionInLL(headOne, tailOne, 9);
+  int k = 2;
+  tailInsertionInLL(headOne, tailOne, 1);
+  tailInsertionInLL(headOne, tailOne, 2);
+  tailInsertionInLL(headOne, tailOne, 3);
+  tailInsertionInLL(headOne, tailOne, 4);
+  tailInsertionInLL(headOne, tailOne, 5);
   printLinkedList(headOne);
-  Node *answerHead = doubleIt(headOne);
+  Node *answerHead = swapNodes(headOne, k); // TC O(N)
   printLinkedList(answerHead);
 
   return 0;
