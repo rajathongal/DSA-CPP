@@ -752,6 +752,41 @@ Node *swapNodes(Node *head, int k) {
   }
 }
 
+void sanitizeMap(Node *curr, unordered_map< int, Node * > &mp, int csum,
+                 Node *head) {
+  int temp = csum;
+  while (true) {
+    temp += head->data;
+    if (temp == csum)
+      break;
+    mp.erase(temp);
+    head = head->nextNode;
+  }
+}
+
+Node *removeZeroSumSublists(Node *head) {
+  if (head == nullptr || (head->nextNode == nullptr && head->data == 0))
+    return nullptr;
+  unordered_map< int, Node * > mp;
+  auto it = head;
+  int csum = 0;
+  while (it) {
+    csum += it->data;
+    if (csum == 0) {
+      head = it->nextNode;
+      mp.clear();
+    } else if (mp.find(csum) != mp.end()) {
+      sanitizeMap(mp[csum]->nextNode, mp, csum, head);
+      mp[csum]->nextNode = it->nextNode;
+    } else {
+      mp[csum] = it;
+    }
+    it = it->nextNode;
+  }
+
+  return head;
+} // O(N) TC and SC
+
 int main() {
   // uncomment for 1. GFG Delete n nodes after m nodes
   // Node *headOne = NULL;
@@ -925,16 +960,28 @@ int main() {
   // printLinkedList(answerHead);
 
   // Uncomment for 1721. Swapping Nodes in a Linked List
+  // Node *headOne = NULL;
+  // Node *tailOne = NULL;
+  // int k = 2;
+  // tailInsertionInLL(headOne, tailOne, 1);
+  // tailInsertionInLL(headOne, tailOne, 2);
+  // tailInsertionInLL(headOne, tailOne, 3);
+  // tailInsertionInLL(headOne, tailOne, 4);
+  // tailInsertionInLL(headOne, tailOne, 5);
+  // printLinkedList(headOne);
+  // Node *answerHead = swapNodes(headOne, k); // TC O(N)
+  // printLinkedList(answerHead);
+
+  // Uncomment for 1171. Remove Zero Sum Consecutive Nodes from Linked List
   Node *headOne = NULL;
   Node *tailOne = NULL;
-  int k = 2;
   tailInsertionInLL(headOne, tailOne, 1);
   tailInsertionInLL(headOne, tailOne, 2);
+  tailInsertionInLL(headOne, tailOne, -3);
   tailInsertionInLL(headOne, tailOne, 3);
-  tailInsertionInLL(headOne, tailOne, 4);
-  tailInsertionInLL(headOne, tailOne, 5);
+  tailInsertionInLL(headOne, tailOne, 1);
   printLinkedList(headOne);
-  Node *answerHead = swapNodes(headOne, k); // TC O(N)
+  Node *answerHead = removeZeroSumSublists(headOne);
   printLinkedList(answerHead);
 
   return 0;
