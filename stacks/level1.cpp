@@ -318,9 +318,8 @@ int main() {
   unsortedStack.push(20);
   unsortedStack.push(40);
   printStack(unsortedStack);
-  sortStack(unsortedStack);
+  sortStack(unsortedStack); // TC O(n^2)
   printStack(unsortedStack);
-
 
   return 0;
 }
