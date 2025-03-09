@@ -35,3 +35,4 @@ st.top(); // return top element of stack
 4. Stack and Recursion are kind of similar pattern but not the same.
 5. Finding mid method can vary for even and odd size.
 6. Using backtracking can help.
+7. Always check for empty stack before pop and base case for recursion.
