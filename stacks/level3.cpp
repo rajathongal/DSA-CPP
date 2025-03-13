@@ -98,7 +98,75 @@ vector< int > findPreviousSmallerElement(int *arr, int size) {
 }
 
 // Largest Rectangle in a Histogram leetcode 84
-int largestRectangleArea(vector< int > &heights) {}
+// finding width is the key and multiply it with height
+// w = next - prev - 1;
+
+// Next smaller element
+vector< int > findNextSmallerElementByIndex(vector< int > arr) {
+  vector< int > answer(arr.size(), 0);
+  stack< int > st;
+  // because the amswer for right most element will be -1 since
+  // there is not element to compare
+  st.push(-1);
+
+  // Traverse from right most element to left most element
+  for (int i = arr.size() - 1; i >= 0; i--) {
+    int curr = arr[i];
+
+    while (st.top() != -1 && arr[st.top()] >= curr) {
+      st.pop();
+    }
+
+    answer[i] = st.top();
+    st.push(i);
+  }
+
+  return answer;
+} // TC O(N) = N + N = 2N = O(N)
+
+// Previous Smaller Element
+vector< int > findPreviousSmallerElementByIndex(vector< int > arr) {
+  vector< int > answer(arr.size(), 0);
+  stack< int > st;
+  // because the amswer for right most element will be -1 since
+  // there is not element to compare
+  st.push(-1);
+
+  // Traverse from right most element to left most element
+  for (int i = 0; i < arr.size(); i++) {
+    int curr = arr[i];
+
+    while (st.top() != -1 && arr[st.top()] >= curr) {
+      st.pop();
+    }
+
+    answer[i] = st.top();
+    st.push(i);
+  }
+
+  return answer;
+}
+
+int largestRectangleArea(vector< int > &heights) {
+  vector< int > next = findNextSmallerElementByIndex(heights);
+  // make sure on the right side of array there are no negative values
+  for (int i = 0; i < heights.size(); i++) {
+    if (next[i] == -1) {
+      next[i] = heights.size();
+    }
+  }
+  vector< int > prev = findPreviousSmallerElementByIndex(heights);
+
+  int maxArea = INT_MIN;
+
+  for (int i = 0; i < next.size(); i++) {
+    int width = next[i] - prev[i] - 1;
+    int length = heights[i];
+    int currentArea = width * length;
+    maxArea = max(maxArea, currentArea);
+  }
+  return maxArea;
+}
 
 int main() {
   MinStack *st = new MinStack();
@@ -119,10 +187,11 @@ int main() {
   int size2 = 5;
   vector< int > answer2 = findPreviousSmallerElement(arr2, size2);
   printVector(answer2);
+  cout << endl;
 
   // largest rectangle area in a histogram
-  vector<int> h1 = {2,1,5,6,2,3};
-  vector<int> h2 = {2,4};
+  vector< int > h1 = {2, 1, 5, 6, 2, 3};
+  vector< int > h2 = {2, 4};
 
   cout << largestRectangleArea(h1) << endl;
   cout << largestRectangleArea(h2) << endl;
