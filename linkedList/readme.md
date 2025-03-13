@@ -68,3 +68,8 @@ example:
 
 1. [Time and Space Complexity for merge sort on LL](./mergeSortLLTimeAndSpaceComplexity.md)
 2. [Time and Space Complexity for flattern LL](./TimeAndSpaceComplexityForFlattenLL.md)
+
+## Notes
+
+1. Why Class not Struct ?
+Struct can also be used and all oops concepts can be applied but convention is use struct for data bundling like varibales not functions.
