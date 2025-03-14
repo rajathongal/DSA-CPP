@@ -38,10 +38,37 @@ int countRev(string s) {
   return ans;
 }
 
+// leetcode 1047 Remove all adjacent duplicates in string
+string removeDuplicates(string s) {
+  stack< char > st;
+  for (auto ch : s) {
+    if (!st.empty() && st.top() == ch) {
+      st.pop();
+    } else {
+      st.push(ch);
+    }
+  }
+  string ans;
+  while (!st.empty()) {
+    ans += st.top();
+    st.pop();
+  }
+  reverse(ans.begin(), ans.end());
+  return ans;
+}
+
 int main() {
-  string s1 = "}{{}}{{{";
-  string s2 = "{{}{{{}{{}}{{";
-  cout << "S1: " << countRev(s1) << endl;
-  cout << "S2: " << countRev(s2) << endl;
+  // Uncomment for count reversal problem
+  // string s1 = "}{{}}{{{";
+  // string s2 = "{{}{{{}{{}}{{";
+  // cout << "S1: " << countRev(s1) << endl;
+  // cout << "S2: " << countRev(s2) << endl;
+
+  // Uncomment for leetcode 1047 Remove all adjacent duplicates in string
+  string s1 = "abbaca";
+  string s2 = "azxxzy";
+
+  cout << "S1: " << s1 << " -> " << removeDuplicates(s1) << endl;
+  cout << "S2: " << s2 << " -> " << removeDuplicates(s2) << endl;
   return 0;
 }
