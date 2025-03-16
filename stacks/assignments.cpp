@@ -1,6 +1,56 @@
 #include <iostream>
 #include <stack>
+#include <vector>
 using namespace std;
+
+class Node {
+public:
+  int data;
+  Node *nextNode; // Pointer to Next Node
+
+  // default ctor
+  Node() { this->nextNode = NULL; }
+
+  // para ctor
+  Node(int data) {
+    this->data = data;
+    this->nextNode = NULL;
+  }
+  // ~Node() { cout << "destructor called " << data << " deleted" << endl; }
+};
+
+void printLinkedList(Node *head) {
+  Node *temp = head; // must make a copy always while tracing
+  int len = 0;
+  while (temp != NULL) {
+    cout << temp->data << "->";
+    temp = temp->nextNode;
+    ++len;
+  }
+  cout << endl << "Length of LL: " << len << endl;
+}
+
+void printVector(vector< int > v) {
+  cout << "Printing Vector" << endl;
+  int size = v.size();
+  for (int i = 0; i < size; i++) {
+    cout << v[i] << " "; // method 1
+    // cout << v.at(i) << endl;
+  }
+  cout << endl;
+}
+
+// Gets Length of LL
+int lenOfLL(Node *&head) {
+  int len = 0;
+  Node *temp = head;
+  while (temp != NULL) {
+    len++;
+    temp = temp->nextNode;
+  }
+
+  return len;
+}
 
 // https://www.geeksforgeeks.org/problems/count-the-reversals0401/1
 int countRev(string s) {
@@ -112,6 +162,62 @@ int celebrity(vector< vector< int > > &mat) {
   return mightBeCelebrity;
 } // TC O(N)
 
+// Leetcode 1019 Next greater element in LL
+vector< int > nextLargerNodes(Node *head) {
+  // Convert the LL into an array
+  vector< int > ll;
+  while (head) {
+    ll.push_back(head->data);
+    head = head->nextNode;
+  }
+
+  stack< int > st;
+  vector< int > ans(ll.size(), 0);
+
+  for (int i = 0; i < ll.size(); ++i) {
+    while (!st.empty() && ll[i] > ll[st.top()]) {
+      // means ith element is the next greater of the element index present in
+      // stack
+
+      int kids = st.top();
+      st.pop();
+      ans[kids] = ll[i];
+    }
+    st.push(i);
+  }
+  return ans;
+} // TC O(N) SC O(2N)
+
+vector< int > nextLargerNodesMethod2(Node *head) {
+  // Convert the LL into an array
+  vector< int > ll;
+  while (head) {
+    ll.push_back(head->data);
+    head = head->nextNode;
+  }
+
+  stack< int > st;
+  // vector< int > ans(ll.size(), 0);
+
+  for (int i = 0; i < ll.size(); ++i) {
+    while (!st.empty() && ll[i] > ll[st.top()]) {
+      // means ith element is the next greater of the element index present in
+      // stack
+
+      int kids = st.top();
+      st.pop();
+      ll[kids] = ll[i];
+    }
+    st.push(i);
+  }
+  while (!st.empty()) {
+    ll[st.top()] = 0;
+    st.pop();
+  }
+  ll[ll.size() - 1] = 0;
+  return ll;
+} // O(N) SC O(N)
+
 int main() {
   // Uncomment for count reversal problem
   // string s1 = "}{{}}{{{";
@@ -128,15 +234,53 @@ int main() {
 
   // Uncomment for The Celebrity Problem
   // https://www.geeksforgeeks.org/problems/the-celebrity-problem/1
-  vector< vector< int > > matOne = {{1, 1, 0}, {0, 1, 0}, {0, 1, 1}};
-  vector< vector< int > > matTwo = {{1, 1}, {1, 1}};
-  vector< vector< int > > matThree = {{0, 1, 0}, {0, 0, 0}, {0, 1, 0}};
-  vector< vector< int > > matFour = {{0, 0, 1}, {1, 0, 1}, {0, 0, 0}};
+  // vector< vector< int > > matOne = {{1, 1, 0}, {0, 1, 0}, {0, 1, 1}};
+  // vector< vector< int > > matTwo = {{1, 1}, {1, 1}};
+  // vector< vector< int > > matThree = {{0, 1, 0}, {0, 0, 0}, {0, 1, 0}};
+  // vector< vector< int > > matFour = {{0, 0, 1}, {1, 0, 1}, {0, 0, 0}};
 
-  cout << "The Celebrity is (matOne): " << celebrity(matOne) << endl;
-  cout << "The Celebrity is (matTwo): " << celebrity(matTwo) << endl;
-  cout << "The Celebrity is (matThree): " << celebrity(matThree) << endl;
-  cout << "The Celebrity is (matFour): " << celebrity(matFour) << endl;
+  // cout << "The Celebrity is (matOne): " << celebrity(matOne) << endl;
+  // cout << "The Celebrity is (matTwo): " << celebrity(matTwo) << endl;
+  // cout << "The Celebrity is (matThree): " << celebrity(matThree) << endl;
+  // cout << "The Celebrity is (matFour): " << celebrity(matFour) << endl;
+
+  // Uncomment for Leetcode 1019 next greater element
+  Node *one = new Node(2);
+  Node *two = new Node(1);
+  Node *three = new Node(5);
+
+  one->nextNode = two;
+  two->nextNode = three;
+
+  Node *headOne = one;
+  printLinkedList(headOne);
+
+  cout << endl;
+
+  Node *four = new Node(2);
+  Node *five = new Node(7);
+  Node *six = new Node(4);
+  Node *seven = new Node(3);
+  Node *eight = new Node(5);
+
+  four->nextNode = five;
+  five->nextNode = six;
+  six->nextNode = seven;
+  seven->nextNode = eight;
+
+  Node *headTwo = four;
+  printLinkedList(headTwo);
+
+  cout << endl;
+
+  vector< int > ansHeadOne = nextLargerNodes(headOne);
+  vector< int > ansHeadTwo = nextLargerNodes(headTwo);
+
+  cout << "Answer array of LL one: ";
+  printVector(ansHeadOne);
+
+  cout << "Answer array of LL two: ";
+  printVector(ansHeadTwo);
 
   return 0;
 }
