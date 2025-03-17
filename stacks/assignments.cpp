@@ -315,6 +315,69 @@ public:
   }
 };
 
+// Leetcode 1003 Check If Word Is Valid After Substitutions
+// Recursive O(N^2)
+bool isValidRecursiveSoln(string s) {
+  if (s.size() == 0) {
+    return true;
+  }
+
+  int fnd = s.find("abc"); // O(N)
+  if (fnd != string::npos) {
+    // found abc in string
+    string tLeft = s.substr(0, fnd);             // O(N)
+    string tRight = s.substr(fnd + 3, s.size()); // O(N)
+    return isValidRecursiveSoln(tLeft +
+                                tRight); // Recursive call. N/3 recursive call
+  }
+
+  return false;
+}
+
+// approach O(N) sc O(N)
+// Enter the chars of string in the below order and pop
+// push a as it is
+// push b only if a exists in the top
+// if you got c check if b is the top element
+// pop both a and b // ignore pushing c
+// if you get a after pushing a,b into the stack push the a into the stack in
+// the above order as when you get c a,b will be popped out
+// and for invalid case if you get c after a or a after b
+// basically mismatch in the ordering return invalid or
+// after fininshing the length of string if the stack is not empty return
+// invalid
+bool isValid(string s) {
+  if (s[0] != 'a')
+    return false;
+  stack< char > st;
+
+  for (char ch : s) {
+    if (ch == 'a') {
+      st.push(ch);
+    } else if (ch == 'b') {
+      if (!st.empty() && st.top() == 'a') {
+        st.push(ch);
+      } else {
+        return false;
+      }
+    } else {
+      // ch == 'c'
+      if (!st.empty() && st.top() == 'b') {
+        st.pop();
+        if (!st.empty() && st.top() == 'a') {
+          st.pop();
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+  }
+
+  return st.empty();
+}
+
 int main() {
   // Uncomment for count reversal problem
   // string s1 = "}{{}}{{{";
@@ -397,14 +460,23 @@ int main() {
   // cout << st.pop(2) << endl;
 
   // Uncomment for Leetcode 901 Online stock span
-  StockSpanner *obj = new StockSpanner();
-  cout << obj->next(100) << endl;
-  cout << obj->next(80) << endl;
-  cout << obj->next(60) << endl;
-  cout << obj->next(70) << endl;
-  cout << obj->next(60) << endl;
-  cout << obj->next(75) << endl;
-  cout << obj->next(85) << endl;
+  // StockSpanner *obj = new StockSpanner();
+  // cout << obj->next(100) << endl;
+  // cout << obj->next(80) << endl;
+  // cout << obj->next(60) << endl;
+  // cout << obj->next(70) << endl;
+  // cout << obj->next(60) << endl;
+  // cout << obj->next(75) << endl;
+  // cout << obj->next(85) << endl;
+
+  // Uncomment for leetcode 1003
+  cout << isValidRecursiveSoln("aabcbc") << endl;
+  cout << isValidRecursiveSoln("abcabcababcc") << endl;
+  cout << isValidRecursiveSoln("abccba") << endl;
+  cout << endl;
+  cout << isValid("aabcbc") << endl;
+  cout << isValid("abcabcababcc") << endl;
+  cout << isValid("abccba") << endl;
 
   return 0;
 }
