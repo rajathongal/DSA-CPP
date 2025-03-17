@@ -218,6 +218,79 @@ vector< int > nextLargerNodesMethod2(Node *head) {
   return ll;
 } // O(N) SC O(N)
 
+// Nstack in an array
+class NStack {
+  int *a, *top, *next;
+  int n;        // no of stacks.
+  int size;     // size of main array
+  int freespot; // tells free space in main array
+
+public:
+  NStack(int _n, int _s) : n(_n), size(_s) {
+    freespot = 0;
+    a = new int[size];
+    top = new int[n];
+    next = new int[size];
+
+    for (int i = 0; i < n; i++) {
+      top[i] = -1;
+    }
+
+    for (int i = 0; i < size; i++) {
+      next[i] = i + 1;
+    }
+
+    next[size - 1] = -1;
+  }
+
+  // Push X into m-th stack
+  bool push(int x, int m) {
+    if (freespot == -1) {
+      return false; // stack overflow
+    }
+
+    // 1. find index of insertion
+    int index = freespot;
+
+    // 2. Update freespot after use
+    freespot = next[index];
+
+    // 3. insert
+    a[index] = x;
+
+    // 4. update next
+    next[index] =
+        top[m -
+            1]; // mth array is not empty so next will store element after top
+
+    // 5. update top
+    top[m - 1] = index;
+
+    return true; // push success
+  }
+
+  // Pop from m th stack
+  int pop(int m) {
+    if (top[m - 1] == -1) {
+      return -1; // stack underflow
+    }
+
+    int index = top[m - 1];
+    top[m - 1] = next[index];
+    int popedElement = a[index];
+    next[index] = freespot;
+    freespot = index;
+    return popedElement;
+  }
+
+  // Detor
+  ~NStack() {
+    delete[] a;
+    delete[] top;
+    delete[] next;
+  }
+};
+
 int main() {
   // Uncomment for count reversal problem
   // string s1 = "}{{}}{{{";
@@ -245,42 +318,59 @@ int main() {
   // cout << "The Celebrity is (matFour): " << celebrity(matFour) << endl;
 
   // Uncomment for Leetcode 1019 next greater element
-  Node *one = new Node(2);
-  Node *two = new Node(1);
-  Node *three = new Node(5);
+  // Node *one = new Node(2);
+  // Node *two = new Node(1);
+  // Node *three = new Node(5);
 
-  one->nextNode = two;
-  two->nextNode = three;
+  // one->nextNode = two;
+  // two->nextNode = three;
 
-  Node *headOne = one;
-  printLinkedList(headOne);
+  // Node *headOne = one;
+  // printLinkedList(headOne);
 
-  cout << endl;
+  // cout << endl;
 
-  Node *four = new Node(2);
-  Node *five = new Node(7);
-  Node *six = new Node(4);
-  Node *seven = new Node(3);
-  Node *eight = new Node(5);
+  // Node *four = new Node(2);
+  // Node *five = new Node(7);
+  // Node *six = new Node(4);
+  // Node *seven = new Node(3);
+  // Node *eight = new Node(5);
 
-  four->nextNode = five;
-  five->nextNode = six;
-  six->nextNode = seven;
-  seven->nextNode = eight;
+  // four->nextNode = five;
+  // five->nextNode = six;
+  // six->nextNode = seven;
+  // seven->nextNode = eight;
 
-  Node *headTwo = four;
-  printLinkedList(headTwo);
+  // Node *headTwo = four;
+  // printLinkedList(headTwo);
 
-  cout << endl;
+  // cout << endl;
 
-  vector< int > ansHeadOne = nextLargerNodes(headOne);
-  vector< int > ansHeadTwo = nextLargerNodes(headTwo);
+  // vector< int > ansHeadOne = nextLargerNodes(headOne);
+  // vector< int > ansHeadTwo = nextLargerNodes(headTwo);
 
-  cout << "Answer array of LL one: ";
-  printVector(ansHeadOne);
+  // cout << "Answer array of LL one: ";
+  // printVector(ansHeadOne);
 
-  cout << "Answer array of LL two: ";
-  printVector(ansHeadTwo);
+  // cout << "Answer array of LL two: ";
+  // printVector(ansHeadTwo);
+
+  // Uncomment for NStacks in an array
+  NStack st(3, 6);
+  cout << st.push(1, 1) << endl;
+  cout << st.push(2, 1) << endl;
+  cout << st.push(3, 1) << endl;
+  cout << st.push(4, 1) << endl;
+  cout << st.push(5, 1) << endl;
+  cout << st.push(6, 1) << endl;
+  cout << st.push(7, 1) << endl; // will not go through because of overflow
+  cout << st.pop(1) << endl;
+  cout << st.pop(1) << endl;
+  cout << st.pop(1) << endl;
+  cout << st.push(10, 2) << endl;
+  cout << st.push(20, 2) << endl;
+  cout << st.push(30, 2) << endl;
+  cout << st.pop(2) << endl;
 
   return 0;
 }
