@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stack>
+#include <utility>
 #include <vector>
 using namespace std;
 
@@ -291,6 +292,29 @@ public:
   }
 };
 
+// Monotonic Stack type problems
+// Leetcode 901
+// Online Stock Span
+// O(N^2) by iterative approach
+// O(N) soln
+// segmented trees approach can be used as well
+class StockSpanner {
+  stack< pair< int, int > > st;
+
+public:
+  StockSpanner() {}
+
+  int next(int price) {
+    int span = 1;
+    while (!st.empty() && st.top().first <= price) {
+      span += st.top().second;
+      st.pop();
+    }
+    st.push({price, span});
+    return span;
+  }
+};
+
 int main() {
   // Uncomment for count reversal problem
   // string s1 = "}{{}}{{{";
@@ -356,21 +380,31 @@ int main() {
   // printVector(ansHeadTwo);
 
   // Uncomment for NStacks in an array
-  NStack st(3, 6);
-  cout << st.push(1, 1) << endl;
-  cout << st.push(2, 1) << endl;
-  cout << st.push(3, 1) << endl;
-  cout << st.push(4, 1) << endl;
-  cout << st.push(5, 1) << endl;
-  cout << st.push(6, 1) << endl;
-  cout << st.push(7, 1) << endl; // will not go through because of overflow
-  cout << st.pop(1) << endl;
-  cout << st.pop(1) << endl;
-  cout << st.pop(1) << endl;
-  cout << st.push(10, 2) << endl;
-  cout << st.push(20, 2) << endl;
-  cout << st.push(30, 2) << endl;
-  cout << st.pop(2) << endl;
+  // NStack st(3, 6);
+  // cout << st.push(1, 1) << endl;
+  // cout << st.push(2, 1) << endl;
+  // cout << st.push(3, 1) << endl;
+  // cout << st.push(4, 1) << endl;
+  // cout << st.push(5, 1) << endl;
+  // cout << st.push(6, 1) << endl;
+  // cout << st.push(7, 1) << endl; // will not go through because of overflow
+  // cout << st.pop(1) << endl;
+  // cout << st.pop(1) << endl;
+  // cout << st.pop(1) << endl;
+  // cout << st.push(10, 2) << endl;
+  // cout << st.push(20, 2) << endl;
+  // cout << st.push(30, 2) << endl;
+  // cout << st.pop(2) << endl;
+
+  // Uncomment for Leetcode 901 Online stock span
+  StockSpanner *obj = new StockSpanner();
+  cout << obj->next(100) << endl;
+  cout << obj->next(80) << endl;
+  cout << obj->next(60) << endl;
+  cout << obj->next(70) << endl;
+  cout << obj->next(60) << endl;
+  cout << obj->next(75) << endl;
+  cout << obj->next(85) << endl;
 
   return 0;
 }
