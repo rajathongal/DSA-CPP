@@ -378,6 +378,52 @@ bool isValid(string s) {
   return st.empty();
 }
 
+// Leetcode 394. Decode String
+string decodeString(string s) {
+  stack< string > st;
+  for (auto ch : s) {
+    if (ch == ']') {
+      string stringToRepeat = "";
+      while (!st.empty() && !isdigit(st.top()[0])) {
+        string top = st.top();
+        stringToRepeat += top == "[" ? "" : top;
+        st.pop();
+      }
+
+      // Numeric string
+      string numericTimes = "";
+      while (!st.empty() && isdigit(st.top()[0])) {
+        numericTimes += st.top();
+        st.pop();
+      }
+
+      // reverse
+      reverse(numericTimes.begin(), numericTimes.end());
+
+      int n = stoi(numericTimes);
+
+      // final decoding
+      string currentDecode = "";
+      while (n--) {
+        currentDecode += stringToRepeat;
+      }
+      st.push(currentDecode);
+    } else {
+      string temp(1, ch); // convert ch to str
+      st.push(temp);
+    }
+  }
+
+  string ans;
+  while (!st.empty()) {
+    ans += st.top();
+    st.pop();
+  }
+
+  reverse(ans.begin(), ans.end());
+  return ans;
+}
+
 int main() {
   // Uncomment for count reversal problem
   // string s1 = "}{{}}{{{";
@@ -470,13 +516,19 @@ int main() {
   // cout << obj->next(85) << endl;
 
   // Uncomment for leetcode 1003
-  cout << isValidRecursiveSoln("aabcbc") << endl;
-  cout << isValidRecursiveSoln("abcabcababcc") << endl;
-  cout << isValidRecursiveSoln("abccba") << endl;
-  cout << endl;
-  cout << isValid("aabcbc") << endl;
-  cout << isValid("abcabcababcc") << endl;
-  cout << isValid("abccba") << endl;
+  // cout << isValidRecursiveSoln("aabcbc") << endl;
+  // cout << isValidRecursiveSoln("abcabcababcc") << endl;
+  // cout << isValidRecursiveSoln("abccba") << endl;
+  // cout << endl;
+  // cout << isValid("aabcbc") << endl;
+  // cout << isValid("abcabcababcc") << endl;
+  // cout << isValid("abccba") << endl;
+
+  // Uncomment for decode string LC 394
+  cout << decodeString("3[a]2[bc]") << endl;
+  cout << decodeString("3[a2[c]]") << endl;
+  cout << decodeString("2[abc]3[cd]ef") << endl;
+  cout << decodeString("3[z]2[2[y]pq4[2[jk]e1[f]]]ef") << endl;
 
   return 0;
 }
