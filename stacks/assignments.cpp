@@ -464,6 +464,111 @@ string simplifyPath(string path) {
   return ans;
 }
 
+// Required For Leetcode 85
+// Largest Rectangle in a Histogram leetcode 84
+// finding width is the key and multiply it with height
+// w = next - prev - 1;
+
+// Next smaller element
+vector< int > findNextSmallerElementByIndex(vector< int > arr) {
+  vector< int > answer(arr.size(), 0);
+  stack< int > st;
+  // because the amswer for right most element will be -1 since
+  // there is not element to compare
+  st.push(-1);
+
+  // Traverse from right most element to left most element
+  for (int i = arr.size() - 1; i >= 0; i--) {
+    int curr = arr[i];
+
+    while (st.top() != -1 && arr[st.top()] >= curr) {
+      st.pop();
+    }
+
+    answer[i] = st.top();
+    st.push(i);
+  }
+
+  return answer;
+} // TC O(N) = N + N = 2N = O(N)
+
+// Previous Smaller Element
+vector< int > findPreviousSmallerElementByIndex(vector< int > arr) {
+  vector< int > answer(arr.size(), 0);
+  stack< int > st;
+  // because the amswer for right most element will be -1 since
+  // there is not element to compare
+  st.push(-1);
+
+  // Traverse from right most element to left most element
+  for (int i = 0; i < arr.size(); i++) {
+    int curr = arr[i];
+
+    while (st.top() != -1 && arr[st.top()] >= curr) {
+      st.pop();
+    }
+
+    answer[i] = st.top();
+    st.push(i);
+  }
+
+  return answer;
+}
+
+int largestRectangleArea(vector< int > &heights) {
+  vector< int > next = findNextSmallerElementByIndex(heights);
+  // make sure on the right side of array there are no negative values
+  for (int i = 0; i < heights.size(); i++) {
+    if (next[i] == -1) {
+      next[i] = heights.size();
+    }
+  }
+  vector< int > prev = findPreviousSmallerElementByIndex(heights);
+
+  int maxArea = INT_MIN;
+
+  for (int i = 0; i < next.size(); i++) {
+    int width = next[i] - prev[i] - 1;
+    int length = heights[i];
+    int currentArea = width * length;
+    maxArea = max(maxArea, currentArea);
+  }
+  return maxArea;
+}
+
+// Uncomment for Leetcode 85 Maximal Rectangle
+int maximalRectangle(vector< vector< char > > &matrix) {
+  vector< vector< int > > v;
+  int n = matrix.size();
+  int m = matrix[0].size();
+
+  // convert the char matrix to int
+  for (int i = 0; i < n; i++) {
+    vector< int > tempV;
+    for (int j = 0; j < m; j++) {
+      tempV.push_back(matrix[i][j] - '0');
+    }
+    v.push_back(tempV);
+  }
+
+  // add the matrix row by row from top to bottom
+  int area = largestRectangleArea(v[0]); // Find out for 1 row;
+  for (int i = 1; i < n; i++) {
+    for (int j = 0; j < m; j++) {
+      // update current row with previous row values
+      if (v[i][j]) {
+        // v[i][j] == 1
+        v[i][j] += v[i - 1][j];
+      } else {
+        // v[i][j] == 0
+        v[i][j] = 0;
+      }
+    }
+    area = max(area, largestRectangleArea(v[i]));
+  }
+  return area;
+}
+
 int main() {
   // Uncomment for count reversal problem
   // string s1 = "}{{}}{{{";
@@ -571,11 +676,23 @@ int main() {
   // cout << decodeString("3[z]2[2[y]pq4[2[jk]e1[f]]]ef") << endl;
 
   // Uncomment for Simplify Path LC 71
-  cout << simplifyPath("/home/") << endl;
-  cout << simplifyPath("/home//foo/") << endl;
-  cout << simplifyPath("/home/user/Documents/../Pictures") << endl;
-  cout << simplifyPath("/../") << endl;
-  cout << simplifyPath("/.../a/../b/c/../d/./") << endl;
+  // cout << simplifyPath("/home/") << endl;
+  // cout << simplifyPath("/home//foo/") << endl;
+  // cout << simplifyPath("/home/user/Documents/../Pictures") << endl;
+  // cout << simplifyPath("/../") << endl;
+  // cout << simplifyPath("/.../a/../b/c/../d/./") << endl;
+
+  // Uncomment for leetcode 85. Maximal Rectangle
+  vector< vector< char > > matrixOne = {{'1', '0', '1', '0', '0'},
+                                        {'1', '0', '1', '1', '1'},
+                                        {'1', '1', '1', '1', '1'},
+                                        {'1', '0', '0', '1', '0'}};
+  vector< vector< char > > matrixTwo = {{'0'}};
+  vector< vector< char > > matrixThree = {{'1'}};
+
+  cout << maximalRectangle(matrixOne) << endl;
+  cout << maximalRectangle(matrixTwo) << endl;
+  cout << maximalRectangle(matrixThree) << endl;
 
   return 0;
 }
