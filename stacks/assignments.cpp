@@ -424,6 +424,46 @@ string decodeString(string s) {
   return ans;
 }
 
+// Leetcide 71 simplify path
+void buildAns(stack< string > &st, string &ans) {
+  if (st.empty())
+    return;
+
+  string minPath = st.top();
+  st.pop();
+  buildAns(st, ans);
+  ans += minPath;
+}
+
+string simplifyPath(string path) {
+  stack< string > st;
+  int i = 0;
+  while (i < path.size()) {
+    int start = i;
+    int end = i + 1;
+    while (end < path.size() && path[end] != '/') {
+      ++end;
+    }
+
+    string minPath = path.substr(start, end - start);
+
+    i = end;
+    if (minPath == "/" || minPath == "/.") {
+      continue;
+    }
+
+    if (minPath != "/..") {
+      st.push(minPath);
+    } else if (!st.empty()) {
+      st.pop();
+    }
+  }
+
+  string ans = st.empty() ? "/" : "";
+  buildAns(st, ans);
+  return ans;
+}
+
 int main() {
   // Uncomment for count reversal problem
   // string s1 = "}{{}}{{{";
@@ -525,10 +565,17 @@ int main() {
   // cout << isValid("abccba") << endl;
 
   // Uncomment for decode string LC 394
-  cout << decodeString("3[a]2[bc]") << endl;
-  cout << decodeString("3[a2[c]]") << endl;
-  cout << decodeString("2[abc]3[cd]ef") << endl;
-  cout << decodeString("3[z]2[2[y]pq4[2[jk]e1[f]]]ef") << endl;
+  // cout << decodeString("3[a]2[bc]") << endl;
+  // cout << decodeString("3[a2[c]]") << endl;
+  // cout << decodeString("2[abc]3[cd]ef") << endl;
+  // cout << decodeString("3[z]2[2[y]pq4[2[jk]e1[f]]]ef") << endl;
+
+  // Uncomment for Simplify Path LC 71
+  cout << simplifyPath("/home/") << endl;
+  cout << simplifyPath("/home//foo/") << endl;
+  cout << simplifyPath("/home/user/Documents/../Pictures") << endl;
+  cout << simplifyPath("/../") << endl;
+  cout << simplifyPath("/.../a/../b/c/../d/./") << endl;
 
   return 0;
 }
