@@ -569,6 +569,51 @@ int maximalRectangle(vector< vector< char > > &matrix) {
   return area;
 }
 
+// Leetcode 735 Asteroid Collision
+vector< int > asteroidCollision(vector< int > &asteroids) {
+  stack< int > st; // stores asteroids after collision
+  for (auto ast : asteroids) {
+    bool destroy = false; // initially nothing is destroyed
+    if (ast > 0) {
+      // push
+      st.push(ast);
+    } else {
+      // -ve case
+      if (st.empty() || st.top() < 0) {
+        st.push(ast);
+      } else {
+        // collision
+        while (!st.empty() && st.top() > 0) {
+          if (abs(ast) == st.top()) {
+            // same weight destroy
+            destroy = true;
+            st.pop();
+            break;
+          } else if (abs(ast) > st.top()) {
+            st.pop();
+            //  incoming ast is bigger than existing ast in stack
+          } else {
+            // exisiting ast is bigger than incoming ast
+            // do nothing as bigger destroys weaker ast
+            destroy = true;
+            break;
+          }
+        }
+        if (!destroy) {
+          st.push(ast);
+        }
+      }
+    }
+  }
+
+  vector< int > ans(st.size());
+  for (int i = st.size() - 1; i >= 0; i--) {
+    ans[i] = st.top();
+    st.pop();
+  }
+  return ans;
+}
+
 int main() {
   // Uncomment for count reversal problem
   // string s1 = "}{{}}{{{";
@@ -683,16 +728,29 @@ int main() {
   // cout << simplifyPath("/.../a/../b/c/../d/./") << endl;
 
   // Uncomment for leetcode 85. Maximal Rectangle
-  vector< vector< char > > matrixOne = {{'1', '0', '1', '0', '0'},
-                                        {'1', '0', '1', '1', '1'},
-                                        {'1', '1', '1', '1', '1'},
-                                        {'1', '0', '0', '1', '0'}};
-  vector< vector< char > > matrixTwo = {{'0'}};
-  vector< vector< char > > matrixThree = {{'1'}};
+  // vector< vector< char > > matrixOne = {{'1', '0', '1', '0', '0'},
+  //                                       {'1', '0', '1', '1', '1'},
+  //                                       {'1', '1', '1', '1', '1'},
+  //                                       {'1', '0', '0', '1', '0'}};
+  // vector< vector< char > > matrixTwo = {{'0'}};
+  // vector< vector< char > > matrixThree = {{'1'}};
 
-  cout << maximalRectangle(matrixOne) << endl;
-  cout << maximalRectangle(matrixTwo) << endl;
-  cout << maximalRectangle(matrixThree) << endl;
+  // cout << maximalRectangle(matrixOne) << endl;
+  // cout << maximalRectangle(matrixTwo) << endl;
+  // cout << maximalRectangle(matrixThree) << endl;
+
+  // Uncomment for leetcode 735. Asteroid Collision
+  vector< int > vOne = {5, 10, -5};
+  vector< int > ansOne = asteroidCollision(vOne);
+  printVector(ansOne);
+
+  vector< int > vTwo = {10, 2, -5};
+  vector< int > ansTwo = asteroidCollision(vTwo);
+  printVector(ansTwo);
+
+  vector< int > vThree = {8, -8};
+  vector< int > ansThree = asteroidCollision(vThree);
+  printVector(ansThree);
 
   return 0;
 }
