@@ -668,8 +668,8 @@ vector< double > getCollisionTimes(vector< vector< int > > &cars) {
     // we keep cars which can collide
     while (!st.empty()) {
       // check if collion happens or not
-      double colTime = (double)(cars[st.top()][0] - cars[i][0]) / (cars[i][1] -
-                       cars[st.top()][1]);
+      double colTime = (double)(cars[st.top()][0] - cars[i][0]) /
+                       (cars[i][1] - cars[st.top()][1]);
 
       if (answer[st.top()] == -1 || colTime <= answer[st.top()]) {
         answer[i] = colTime;
@@ -682,6 +682,28 @@ vector< double > getCollisionTimes(vector< vector< int > > &cars) {
   }
 
   return answer;
+}
+
+// Leetcode 32 Longest Valid Paratheses
+int longestValidParenthesesM1(string s) {
+  stack< int > st;
+  st.push(-1);
+  int maxLen = 0;
+  for (int i = 0; i < s.length(); i++) {
+    char ch = s[i];
+    if (ch == '(') {
+      st.push(i);
+    } else {
+      st.pop();
+      if (st.empty()) {
+        st.push(i);
+      } else {
+        int len = i - st.top();
+        maxLen = max(len, maxLen);
+      }
+    }
+  }
+  return maxLen;
 }
 
 int main() {
@@ -842,13 +864,17 @@ int main() {
   // cout << carFleet(targetThree, positionsThree, speedThree) << endl;
 
   // Uncomment for Leetcode 1776 Car fleet 2
-  vector< vector< int > > carsOne = {{1, 2}, {2, 1}, {4, 3}, {7, 2}};
-  vector< vector< int > > carsTwo = {{3, 4}, {5, 4}, {6, 3}, {9, 1}};
+  // vector< vector< int > > carsOne = {{1, 2}, {2, 1}, {4, 3}, {7, 2}};
+  // vector< vector< int > > carsTwo = {{3, 4}, {5, 4}, {6, 3}, {9, 1}};
 
-  vector< double > ansOne = getCollisionTimes((carsOne));
-  vector< double > ansTwo = getCollisionTimes((carsTwo));
+  // vector< double > ansOne = getCollisionTimes((carsOne));
+  // vector< double > ansTwo = getCollisionTimes((carsTwo));
 
-  printVectorOfTypeDouble(ansOne);
-  printVectorOfTypeDouble(ansTwo);
+  // printVectorOfTypeDouble(ansOne);
+  // printVectorOfTypeDouble(ansTwo);
+
+  // Uncomment for leetcode 32 Longest valid Parentheses
+  cout << longestValidParenthesesM1("(()") << endl;
+  cout << longestValidParenthesesM1(")()())") << endl;
   return 0;
 }
