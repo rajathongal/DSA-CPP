@@ -41,6 +41,16 @@ void printVector(vector< int > v) {
   cout << endl;
 }
 
+void printVectorOfTypeDouble(vector< double > v) {
+  cout << "Printing Vector" << endl;
+  int size = v.size();
+  for (int i = 0; i < size; i++) {
+    cout << v[i] << " "; // method 1
+    // cout << v.at(i) << endl;
+  }
+  cout << endl;
+}
+
 // Gets Length of LL
 int lenOfLL(Node *&head) {
   int len = 0;
@@ -632,16 +642,46 @@ int carFleet(int target, vector< int > &position, vector< int > &speed) {
 
   sort(cars.begin(), cars.end(), carComparator);
 
-  stack<float> st;
-  for(auto car:cars) {
-    float time = (target-car.pos) / ((float) car.speed);
-    while(!st.empty() && time >= st.top()) {
+  stack< float > st;
+  for (auto car : cars) {
+    float time = (target - car.pos) / ((float)car.speed);
+    while (!st.empty() && time >= st.top()) {
       st.pop();
     }
     st.push(time);
   }
 
   return st.size();
+}
+
+// Leetcode 1776 Car fleet 2
+vector< double > getCollisionTimes(vector< vector< int > > &cars) {
+  vector< double > answer(cars.size(),
+                          -1); // collision time of i-th car with the next car
+  stack< int > st;
+
+  for (int i = cars.size() - 1; i >= 0; --i) {
+    // check if car ahead of the current car is faster
+    while (!st.empty() && cars[st.top()][1] >= cars[i][1]) {
+      st.pop(); // these cars wont collide
+    }
+    // we keep cars which can collide
+    while (!st.empty()) {
+      // check if collion happens or not
+      double colTime = (double)(cars[st.top()][0] - cars[i][0]) / (cars[i][1] -
+                       cars[st.top()][1]);
+
+      if (answer[st.top()] == -1 || colTime <= answer[st.top()]) {
+        answer[i] = colTime;
+        break;
+      }
+      // there exists a next cars where collision time is less than the next car
+      st.pop();
+    }
+    st.push(i);
+  }
+
+  return answer;
 }
 
 int main() {
@@ -783,23 +823,32 @@ int main() {
   // printVector(ansThree);
 
   // Uncomment for Leetcode 853 Car Fleet
-  int targetOne = 12;
-  vector< int > positionsOne = {10, 8, 0, 5, 3};
-  vector< int > speedOne = {2, 4, 1, 1, 3};
+  // int targetOne = 12;
+  // vector< int > positionsOne = {10, 8, 0, 5, 3};
+  // vector< int > speedOne = {2, 4, 1, 1, 3};
 
-  cout << carFleet(targetOne, positionsOne, speedOne) << endl;
+  // cout << carFleet(targetOne, positionsOne, speedOne) << endl;
 
-  int targetTwo = 10;
-  vector< int > positionsTwo = {3};
-  vector< int > speedTwo = {3};
+  // int targetTwo = 10;
+  // vector< int > positionsTwo = {3};
+  // vector< int > speedTwo = {3};
 
-  cout << carFleet(targetTwo, positionsTwo, speedTwo) << endl;
+  // cout << carFleet(targetTwo, positionsTwo, speedTwo) << endl;
 
-  int targetThree = 100;
-  vector< int > positionsThree = {0, 2, 4};
-  vector< int > speedThree = {4, 2, 1};
+  // int targetThree = 100;
+  // vector< int > positionsThree = {0, 2, 4};
+  // vector< int > speedThree = {4, 2, 1};
 
-  cout << carFleet(targetThree, positionsThree, speedThree) << endl;
+  // cout << carFleet(targetThree, positionsThree, speedThree) << endl;
 
+  // Uncomment for Leetcode 1776 Car fleet 2
+  vector< vector< int > > carsOne = {{1, 2}, {2, 1}, {4, 3}, {7, 2}};
+  vector< vector< int > > carsTwo = {{3, 4}, {5, 4}, {6, 3}, {9, 1}};
+
+  vector< double > ansOne = getCollisionTimes((carsOne));
+  vector< double > ansTwo = getCollisionTimes((carsTwo));
+
+  printVectorOfTypeDouble(ansOne);
+  printVectorOfTypeDouble(ansTwo);
   return 0;
 }
