@@ -614,6 +614,36 @@ vector< int > asteroidCollision(vector< int > &asteroids) {
   return ans;
 }
 
+// Leetcode 853 Car Fleet
+class Car {
+public:
+  int pos, speed;
+  Car(int p, int s) : pos(p), speed(s) {};
+};
+
+static bool carComparator(Car &a, Car &b) { return a.pos < b.pos; }
+
+int carFleet(int target, vector< int > &position, vector< int > &speed) {
+  vector< Car > cars;
+  for (int i = 0; i < position.size(); ++i) {
+    Car car(position[i], speed[i]);
+    cars.push_back(car);
+  }
+
+  sort(cars.begin(), cars.end(), carComparator);
+
+  stack<float> st;
+  for(auto car:cars) {
+    float time = (target-car.pos) / ((float) car.speed);
+    while(!st.empty() && time >= st.top()) {
+      st.pop();
+    }
+    st.push(time);
+  }
+
+  return st.size();
+}
+
 int main() {
   // Uncomment for count reversal problem
   // string s1 = "}{{}}{{{";
@@ -740,17 +770,36 @@ int main() {
   // cout << maximalRectangle(matrixThree) << endl;
 
   // Uncomment for leetcode 735. Asteroid Collision
-  vector< int > vOne = {5, 10, -5};
-  vector< int > ansOne = asteroidCollision(vOne);
-  printVector(ansOne);
+  // vector< int > vOne = {5, 10, -5};
+  // vector< int > ansOne = asteroidCollision(vOne);
+  // printVector(ansOne);
 
-  vector< int > vTwo = {10, 2, -5};
-  vector< int > ansTwo = asteroidCollision(vTwo);
-  printVector(ansTwo);
+  // vector< int > vTwo = {10, 2, -5};
+  // vector< int > ansTwo = asteroidCollision(vTwo);
+  // printVector(ansTwo);
 
-  vector< int > vThree = {8, -8};
-  vector< int > ansThree = asteroidCollision(vThree);
-  printVector(ansThree);
+  // vector< int > vThree = {8, -8};
+  // vector< int > ansThree = asteroidCollision(vThree);
+  // printVector(ansThree);
+
+  // Uncomment for Leetcode 853 Car Fleet
+  int targetOne = 12;
+  vector< int > positionsOne = {10, 8, 0, 5, 3};
+  vector< int > speedOne = {2, 4, 1, 1, 3};
+
+  cout << carFleet(targetOne, positionsOne, speedOne) << endl;
+
+  int targetTwo = 10;
+  vector< int > positionsTwo = {3};
+  vector< int > speedTwo = {3};
+
+  cout << carFleet(targetTwo, positionsTwo, speedTwo) << endl;
+
+  int targetThree = 100;
+  vector< int > positionsThree = {0, 2, 4};
+  vector< int > speedThree = {4, 2, 1};
+
+  cout << carFleet(targetThree, positionsThree, speedThree) << endl;
 
   return 0;
 }
