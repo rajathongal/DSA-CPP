@@ -720,6 +720,46 @@ vector< int > dailyTemperatures(vector< int > &temperatures) {
   return ans;
 }
 
+// Leetcode 402. Remove K Digits
+string removeKdigits(string num, int k) {
+  string ans;
+  stack< char > st;
+  for (auto digit : num) {
+    if (k > 0) {
+      while (!st.empty() && st.top() > digit) {
+        st.pop();
+        k--;
+        if (k == 0) {
+          break;
+        }
+      }
+    }
+    st.push(digit);
+  }
+
+  if (k > 0) {
+    while (!st.empty() && k) {
+      st.pop();
+      k--;
+    }
+  }
+
+  while (!st.empty()) {
+    ans.push_back(st.top());
+    st.pop();
+  }
+
+  // remove leading zeros
+  while (ans.size() > 0 && ans.back() == '0') {
+    ans.pop_back();
+  }
+
+  // reverse ans
+  reverse(ans.begin(), ans.end());
+
+  return ans == "" ? "0" : ans;
+}
+
 int main() {
   // Uncomment for count reversal problem
   // string s1 = "}{{}}{{{";
@@ -892,16 +932,35 @@ int main() {
   // cout << longestValidParenthesesM1(")()())") << endl;
 
   // Uncomment for leetcode 739. Daily Temperatures
-  vector< int > tempOne = {73, 74, 75, 71, 69, 72, 76, 73};
-  vector< int > tempTwo = {30, 40, 50, 60};
-  vector< int > tempThree = {30, 60, 90};
+  // vector< int > tempOne = {73, 74, 75, 71, 69, 72, 76, 73};
+  // vector< int > tempTwo = {30, 40, 50, 60};
+  // vector< int > tempThree = {30, 60, 90};
 
-  vector< int > ansOne = dailyTemperatures(tempOne);
-  vector< int > ansTwo = dailyTemperatures(tempTwo);
-  vector< int > ansThree = dailyTemperatures(tempThree);
+  // vector< int > ansOne = dailyTemperatures(tempOne);
+  // vector< int > ansTwo = dailyTemperatures(tempTwo);
+  // vector< int > ansThree = dailyTemperatures(tempThree);
 
-  printVector(ansOne);
-  printVector(ansTwo);
-  printVector(ansThree);
+  // printVector(ansOne);
+  // printVector(ansTwo);
+  // printVector(ansThree);
+
+  // Uncomment for Leetcode 402. Remove K Digits
+  string numOne = "1432219";
+  int kOne = 3;
+
+  string numTwo = "10200";
+  int kTwo = 1;
+
+  string numThree = "10";
+  int kThree = 2;
+
+  string numFour = "2561305";
+  int kFour = 4;
+
+  cout << removeKdigits(numOne, kOne) << endl;
+  cout << removeKdigits(numTwo, kTwo) << endl;
+  cout << removeKdigits(numThree, kThree) << endl;
+  cout << removeKdigits(numFour, kFour) << endl;
+
   return 0;
 }
