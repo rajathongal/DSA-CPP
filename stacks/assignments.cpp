@@ -784,6 +784,59 @@ int minAddToMakeValid(string s) {
   return ans;
 }
 
+// Leetcode 1472. Design Browser History
+class BrowserHistory {
+  stack< string > browserStack;
+  stack< string > forwardStack;
+
+public:
+  BrowserHistory(string homepage) {
+    browserStack.push(homepage);
+    cout << homepage << endl;
+  }
+
+  void visit(string url) {
+    browserStack.push(url);
+    cout << url << endl;
+
+    // clear all forward history
+    while (!forwardStack.empty()) {
+      forwardStack.pop();
+    }
+  }
+
+  string back(int steps) {
+    while (steps--) {
+      // move back once every step
+      // BS size should be greater than one
+      if (browserStack.size() > 1) {
+        forwardStack.push(browserStack.top());
+        browserStack.pop();
+      } else {
+        // only homepage is present so ignore steps and back
+        break;
+      }
+    }
+    cout << browserStack.top() << endl;
+
+    return browserStack.top();
+  }
+
+  string forward(int steps) {
+    while (steps--) {
+      if (!forwardStack.empty()) {
+        browserStack.push(forwardStack.top());
+        forwardStack.pop();
+      } else {
+        break;
+      }
+    }
+    cout << browserStack.top() << endl;
+
+    return browserStack.top();
+  }
+};
+
 int main() {
   // Uncomment for count reversal problem
   // string s1 = "}{{}}{{{";
@@ -987,13 +1040,27 @@ int main() {
   // cout << removeKdigits(numFour, kFour) << endl;
 
   // Uncomment for 921. Minimum Add to Make Parentheses Valid
-  string sOne = "())";
-  string sTwo = "(((";
-  string sThree = "))())(";
+  // string sOne = "())";
+  // string sTwo = "(((";
+  // string sThree = "))())(";
 
-  cout << minAddToMakeValid(sOne) << endl;
-  cout << minAddToMakeValid(sTwo) << endl;
-  cout << minAddToMakeValid(sThree) << endl;
+  // cout << minAddToMakeValid(sOne) << endl;
+  // cout << minAddToMakeValid(sTwo) << endl;
+  // cout << minAddToMakeValid(sThree) << endl;
+
+  // Uncomment for Leetcode 1472. Design Browser History
+  string homepage = "leetcode.com";
+  BrowserHistory *browserHistory = new BrowserHistory(homepage);
+  browserHistory->visit("google.com");
+  browserHistory->visit("facebook.com");
+  browserHistory->visit("youtube.com");
+  browserHistory->back(1);
+  browserHistory->back(1);
+  browserHistory->forward(1);
+  browserHistory->visit("linkedin.com");
+  browserHistory->forward(2);
+  browserHistory->back(2);
+  browserHistory->back(7);
 
   return 0;
 }
