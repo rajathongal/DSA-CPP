@@ -760,6 +760,30 @@ string removeKdigits(string num, int k) {
   return ans == "" ? "0" : ans;
 }
 
+// Leetcode 921. Minimum Add to Make Parentheses Valid TCSC-> O(N)
+int minAddToMakeValid(string s) {
+  int ans = 0;
+  stack< char > st;
+
+  for (auto ch : s) {
+    if (ch == '(') {
+      ++ans;
+      st.push(ch);
+    } else {
+      if (!st.empty()) {
+        // pair found
+        st.pop();
+        ans--;
+      } else {
+        // No opening pair found for ')'
+        ans++;
+      }
+    }
+  }
+
+  return ans;
+}
+
 int main() {
   // Uncomment for count reversal problem
   // string s1 = "}{{}}{{{";
@@ -945,22 +969,31 @@ int main() {
   // printVector(ansThree);
 
   // Uncomment for Leetcode 402. Remove K Digits
-  string numOne = "1432219";
-  int kOne = 3;
+  // string numOne = "1432219";
+  // int kOne = 3;
 
-  string numTwo = "10200";
-  int kTwo = 1;
+  // string numTwo = "10200";
+  // int kTwo = 1;
 
-  string numThree = "10";
-  int kThree = 2;
+  // string numThree = "10";
+  // int kThree = 2;
 
-  string numFour = "2561305";
-  int kFour = 4;
+  // string numFour = "2561305";
+  // int kFour = 4;
 
-  cout << removeKdigits(numOne, kOne) << endl;
-  cout << removeKdigits(numTwo, kTwo) << endl;
-  cout << removeKdigits(numThree, kThree) << endl;
-  cout << removeKdigits(numFour, kFour) << endl;
+  // cout << removeKdigits(numOne, kOne) << endl;
+  // cout << removeKdigits(numTwo, kTwo) << endl;
+  // cout << removeKdigits(numThree, kThree) << endl;
+  // cout << removeKdigits(numFour, kFour) << endl;
+
+  // Uncomment for 921. Minimum Add to Make Parentheses Valid
+  string sOne = "())";
+  string sTwo = "(((";
+  string sThree = "))())(";
+
+  cout << minAddToMakeValid(sOne) << endl;
+  cout << minAddToMakeValid(sTwo) << endl;
+  cout << minAddToMakeValid(sThree) << endl;
 
   return 0;
 }
