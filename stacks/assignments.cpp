@@ -706,6 +706,20 @@ int longestValidParenthesesM1(string s) {
   return maxLen;
 }
 
+// Leetcode 739. Daily Temperatures
+vector< int > dailyTemperatures(vector< int > &temperatures) {
+  vector< int > ans(temperatures.size(), 0);
+  stack< int > st;
+  for (int i = 0; i < temperatures.size(); i++) {
+    while (!st.empty() && temperatures[i] > temperatures[st.top()]) {
+      ans[st.top()] = i - st.top();
+      st.pop();
+    }
+    st.push(i);
+  }
+  return ans;
+}
+
 int main() {
   // Uncomment for count reversal problem
   // string s1 = "}{{}}{{{";
@@ -874,7 +888,20 @@ int main() {
   // printVectorOfTypeDouble(ansTwo);
 
   // Uncomment for leetcode 32 Longest valid Parentheses
-  cout << longestValidParenthesesM1("(()") << endl;
-  cout << longestValidParenthesesM1(")()())") << endl;
+  // cout << longestValidParenthesesM1("(()") << endl;
+  // cout << longestValidParenthesesM1(")()())") << endl;
+
+  // Uncomment for leetcode 739. Daily Temperatures
+  vector< int > tempOne = {73, 74, 75, 71, 69, 72, 76, 73};
+  vector< int > tempTwo = {30, 40, 50, 60};
+  vector< int > tempThree = {30, 60, 90};
+
+  vector< int > ansOne = dailyTemperatures(tempOne);
+  vector< int > ansTwo = dailyTemperatures(tempTwo);
+  vector< int > ansThree = dailyTemperatures(tempThree);
+
+  printVector(ansOne);
+  printVector(ansTwo);
+  printVector(ansThree);
   return 0;
 }
