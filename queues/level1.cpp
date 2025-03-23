@@ -111,6 +111,7 @@ int main() {
   cout << endl << "Custom Queue" << endl;
 
   CustomQueueUsingArray que(10);
+  que.printQueue();
   cout << "Size: " << que.getSize() << endl;
 
   cout << "Front: " << que.getFront() << " Back: " << que.getRear() << endl
