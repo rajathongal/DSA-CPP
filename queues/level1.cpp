@@ -133,6 +133,8 @@ int main() {
 
   // overflow
   que.push(21);
+  que.push(22);
+  que.push(23);
 
   que.printQueue();
   cout << "Size: " << que.getSize() << endl;
