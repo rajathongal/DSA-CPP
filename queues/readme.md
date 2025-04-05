@@ -25,3 +25,6 @@
 
 - Push will happen at rear/back.
 - Pop will happen at front.
+- Types of Queue Normal, Circular, Doubly Ended (Deque).
+- In Normal Queue Push happens at rear and pop happens at front.
+- In **Deque** Push and POP can happen at both ends Rear and Front.
